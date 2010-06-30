@@ -1,33 +1,29 @@
 package paper4all.tests;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import org.jruby.embed.LocalContextScope;
 import org.jruby.embed.PathType;
 import org.jruby.embed.ScriptingContainer;
  
 public class ConverterTests {
 	
-	private final static String filename = "ruby/tree_with_ivars.rb";
+	private final static String filename = "edi2xml.rb";
  
 	private ConverterTests() 
 	{
-		System.out.println("[" + getClass().getName() + "]");
-		ScriptingContainer container = new ScriptingContainer();
-		 
-		Object receiver = container.runScriptlet(PathType.CLASSPATH, filename);
-		container.put("@name", "cherry blossom");
-		container.put("@shape", "oval");
-		container.put("@foliage", "deciduous");
-		container.put("@color", "pink");
-		container.put("@bloomtime", "March - April");
-		container.callMethod(receiver, "update", Object.class);
-		System.out.println(container.callMethod(receiver, "to_s", String.class));
-		 
-		container.put("@name", "cedar");
-		container.put("@shape", "pyramidal");
-		container.put("@foliage", "evergreen");
-		container.put("@color", "nondescript");
-		container.put("@bloomtime", "April - May");
-		container.callMethod(receiver, "update", Object.class);
-		System.out.println(container.callMethod(receiver, "to_s", String.class));
+		System.out.println("[" + getClass().getName() + "]");		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		PrintStream ps = new PrintStream(baos);
+		
+		ScriptingContainer container = new ScriptingContainer(LocalContextScope.SINGLETHREAD);
+		container.setArgv(new String[]{"edi/in1.edi"});
+		container.setOutput(ps);
+		container.runScriptlet(PathType.CLASSPATH, filename);
+		String content = baos.toString();
+		System.out.println(content);
+		
 	}
 	 
 	public static void main(String[] args) {
