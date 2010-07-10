@@ -5,6 +5,11 @@ import java.io.FileWriter;
 
 import javax.jws.*; 
 import javax.jws.soap.SOAPBinding; 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
+import paper4all.rubyParser.Interchange;
  
 @WebService(name="BuchhaltungWebService") 
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT) 
@@ -48,4 +53,40 @@ public class Buchhaltung
 		  
 		  return null; 
 	  }
+	  
+	  @WebMethod(operationName="parse-bestellungen") 
+	  @WebResult(name = "interchange-result") 
+	  public String parseBest( @WebParam(name="inputFile")String s, @WebParam(name="ciudatenie")Interchange inter) 
+	  {
+		  try
+		  {
+			  if(s != null)
+			  {
+				  File f = new File("temp/tempFile.xml");
+				  FileWriter writer = new FileWriter(f);
+				  writer.write(s);
+				  writer.close();
+				  
+				  JAXBContext jc = JAXBContext.newInstance("paper4all.rubyParser");
+				  Unmarshaller u = jc.createUnmarshaller();
+				  Interchange interchange = (Interchange ) u.unmarshal(f);
+				
+				 // return interchange;
+				  				  
+			  }
+		  }
+		  catch (JAXBException e) 
+		  {
+			 // TODO Auto-generated catch block
+			  System.out.println("here");
+			 e.printStackTrace();
+		  }
+		  catch(Exception e)
+		  {
+			  System.out.println("here2");
+			  e.printStackTrace();
+		  }
+		  return null;
+	  }
+
 }
