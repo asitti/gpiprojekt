@@ -14,9 +14,23 @@ import paper4all.webservices.LagerWebService;
 
 public class ClientForGeneratedStubs 
 {
+	
+	public void runApp()
+	{
+		File f = new File("in");
+		while(true)
+		{
+			if(f.isDirectory())
+			{
+				//f.get
+			}
+		}
+	}
 	public static void main( String[] args )
 	{   
 	  
+		ClientForGeneratedStubs stub = new ClientForGeneratedStubs();
+		stub.runApp();
 		  BuchhaltungWebService buchPort = new BuchhaltungService().getBuchhaltungWebServicePort();
 		  File file = new File("files/file");
 		  System.out.println("Buchhaltung - sending input from a file and receving:" + buchPort.receiveAString(getInput(file)));
