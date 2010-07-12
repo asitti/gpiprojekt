@@ -6,6 +6,10 @@ import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
+
+import paper4all.rubyParser.Interchange;
 import paper4all.webservices.BuchhaltungService;
 import paper4all.webservices.BuchhaltungWebService;
 
@@ -18,7 +22,7 @@ public class ClientForGeneratedStubs
 		{
 			BuchhaltungWebService buchPort = new BuchhaltungService().getBuchhaltungWebServicePort();
 			
-			//directorul din care citim mesajele primite momentam, pana merge din noul hubul
+			//directorul din care citim mesajele primite momentan, pana merge din noul hubul
 			File f = new File("in");
 			//while(true)
 			//{
@@ -39,12 +43,30 @@ public class ClientForGeneratedStubs
 						System.out.println("processing file: " + files[i]);
 						File currentFile = new File("in/" + files[i]);
 						String input = this.getInput(currentFile);
-						System.out.println("an the input looks like this: " + input);
+						//System.out.println("an the input looks like this: " + input);
+						
+						buchPort.parseBestellungen(input);
+						
+						
+						
+						/* JAXBContext jc = JAXBContext.newInstance("paper4all.rubyParser");
+						 Unmarshaller u = jc.createUnmarshaller();
+						 System.out.println("intoarce ceva...");
+						 Interchange interchange = (Interchange ) u.unmarshal(currentFile);
+						 System.out.println("unmarshal..." + interchange.getVersion());*/
+						
+						
+						/*Interchange inter = buchPort.parseBestellungen(input);
+						if(inter != null)
+							System.out.println(inter.getVersion());
+						else
+							System.out.println("buba");*/
 						
 						//la sf stergem fisierul ca nu mai avem nevoie de el
 						
-						boolean delete = currentFile.delete();
+						/*boolean delete = currentFile.delete();
 						System.out.println("an the file was deleted: " + delete);
+						*/
 						System.out.println();
 					}
 				}
@@ -55,11 +77,18 @@ public class ClientForGeneratedStubs
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public void runProgram()
+	{
+		
+		
+	}
 	public static void main( String[] args )
 	{   
 	  
 		ClientForGeneratedStubs stub = new ClientForGeneratedStubs();
-		stub.runApp();
+		stub.runProgram();
 		  /*BuchhaltungWebService buchPort = new BuchhaltungService().getBuchhaltungWebServicePort();
 		  File file = new File("files/file");
 		  System.out.println("Buchhaltung - sending input from a file and receving:" + buchPort.receiveAString(getInput(file)));

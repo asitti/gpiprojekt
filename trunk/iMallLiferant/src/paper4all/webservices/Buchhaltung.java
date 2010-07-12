@@ -5,11 +5,13 @@ import java.io.FileWriter;
 
 import javax.jws.*; 
 import javax.jws.soap.SOAPBinding; 
+import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import paper4all.rubyParser.Interchange;
+import paper4all.webservices.utils.MyInterchange;
  
 @WebService(name="BuchhaltungWebService") 
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT) 
@@ -56,7 +58,7 @@ public class Buchhaltung
 	  
 	  @WebMethod(operationName="parse-bestellungen") 
 	  @WebResult(name = "interchange-result") 
-	  public String parseBest( @WebParam(name="inputFile")String s, @WebParam(name="ciudatenie")Interchange inter) 
+	  public MyInterchange parseBest( @WebParam(name="inputFile")String s) 
 	  {
 		  try
 		  {
@@ -69,8 +71,12 @@ public class Buchhaltung
 				  
 				  JAXBContext jc = JAXBContext.newInstance("paper4all.rubyParser");
 				  Unmarshaller u = jc.createUnmarshaller();
+				  System.out.println("intoarce ceva...");
 				  Interchange interchange = (Interchange ) u.unmarshal(f);
+				  System.out.println("unmarshal..." + interchange.getVersion());
 				
+				   return new MyInterchange(interchange);
+				  
 				 // return interchange;
 				  				  
 			  }
