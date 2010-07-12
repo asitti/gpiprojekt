@@ -12,6 +12,7 @@ import javax.xml.bind.Unmarshaller;
 import paper4all.rubyParser.Interchange;
 import paper4all.webservices.BuchhaltungService;
 import paper4all.webservices.BuchhaltungWebService;
+import paper4all.wsdl.*;
 
 public class Main 
 {
@@ -81,7 +82,12 @@ public class Main
 	
 	public void runProgram()
 	{
-		
+		ReadInboxWebService read = new ReadInboxService().getReadInboxWebServicePort();
+		String name = read.readFromInbox();
+		if(name != null)
+			System.out.println(name);
+		else
+			System.out.println("null");
 		
 	}
 	public static void main( String[] args )
