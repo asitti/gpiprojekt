@@ -24,12 +24,14 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _HelloLagerResponse_QNAME = new QName("http://webservices.paper4all/", "helloLagerResponse");
-    private final static QName _AddTwoNumbers_QNAME = new QName("http://webservices.paper4all/", "add-two-numbers");
-    private final static QName _AddTwoNumbersResponse_QNAME = new QName("http://webservices.paper4all/", "add-two-numbersResponse");
-    private final static QName _SendedProductsResponse_QNAME = new QName("http://webservices.paper4all/", "sended-productsResponse");
-    private final static QName _HelloLager_QNAME = new QName("http://webservices.paper4all/", "helloLager");
-    private final static QName _SendedProducts_QNAME = new QName("http://webservices.paper4all/", "sended-products");
+    private final static QName _ParseBestellungenResponse_QNAME = new QName("http://webservices.paper4all/", "parse-bestellungenResponse");
+    private final static QName _ReceiveAString_QNAME = new QName("http://webservices.paper4all/", "receive-a-string");
+    private final static QName _HelloBuchhaltungResponse_QNAME = new QName("http://webservices.paper4all/", "helloBuchhaltungResponse");
+    private final static QName _MultiplyTwoNumbersResponse_QNAME = new QName("http://webservices.paper4all/", "multiply-two-numbersResponse");
+    private final static QName _ReceiveAStringResponse_QNAME = new QName("http://webservices.paper4all/", "receive-a-stringResponse");
+    private final static QName _MultiplyTwoNumbers_QNAME = new QName("http://webservices.paper4all/", "multiply-two-numbers");
+    private final static QName _HelloBuchhaltung_QNAME = new QName("http://webservices.paper4all/", "helloBuchhaltung");
+    private final static QName _ParseBestellungen_QNAME = new QName("http://webservices.paper4all/", "parse-bestellungen");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: paper4all.webservices
@@ -39,113 +41,139 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link AddTwoNumbersResponse }
+     * Create an instance of {@link ParseBestellungenResponse }
      * 
      */
-    public AddTwoNumbersResponse createAddTwoNumbersResponse() {
-        return new AddTwoNumbersResponse();
+    public ParseBestellungenResponse createParseBestellungenResponse() {
+        return new ParseBestellungenResponse();
     }
 
     /**
-     * Create an instance of {@link SendedProductsResponse }
+     * Create an instance of {@link MultiplyTwoNumbers }
      * 
      */
-    public SendedProductsResponse createSendedProductsResponse() {
-        return new SendedProductsResponse();
+    public MultiplyTwoNumbers createMultiplyTwoNumbers() {
+        return new MultiplyTwoNumbers();
     }
 
     /**
-     * Create an instance of {@link HelloLager }
+     * Create an instance of {@link HelloBuchhaltung }
      * 
      */
-    public HelloLager createHelloLager() {
-        return new HelloLager();
+    public HelloBuchhaltung createHelloBuchhaltung() {
+        return new HelloBuchhaltung();
     }
 
     /**
-     * Create an instance of {@link AddTwoNumbers }
+     * Create an instance of {@link HelloBuchhaltungResponse }
      * 
      */
-    public AddTwoNumbers createAddTwoNumbers() {
-        return new AddTwoNumbers();
+    public HelloBuchhaltungResponse createHelloBuchhaltungResponse() {
+        return new HelloBuchhaltungResponse();
     }
 
     /**
-     * Create an instance of {@link SendedProducts }
+     * Create an instance of {@link MultiplyTwoNumbersResponse }
      * 
      */
-    public SendedProducts createSendedProducts() {
-        return new SendedProducts();
+    public MultiplyTwoNumbersResponse createMultiplyTwoNumbersResponse() {
+        return new MultiplyTwoNumbersResponse();
     }
 
     /**
-     * Create an instance of {@link Sended }
+     * Create an instance of {@link ParseBestellungen }
      * 
      */
-    public Sended createSended() {
-        return new Sended();
+    public ParseBestellungen createParseBestellungen() {
+        return new ParseBestellungen();
     }
 
     /**
-     * Create an instance of {@link HelloLagerResponse }
+     * Create an instance of {@link ReceiveAString }
      * 
      */
-    public HelloLagerResponse createHelloLagerResponse() {
-        return new HelloLagerResponse();
+    public ReceiveAString createReceiveAString() {
+        return new ReceiveAString();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link HelloLagerResponse }{@code >}}
+     * Create an instance of {@link ReceiveAStringResponse }
      * 
      */
-    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "helloLagerResponse")
-    public JAXBElement<HelloLagerResponse> createHelloLagerResponse(HelloLagerResponse value) {
-        return new JAXBElement<HelloLagerResponse>(_HelloLagerResponse_QNAME, HelloLagerResponse.class, null, value);
+    public ReceiveAStringResponse createReceiveAStringResponse() {
+        return new ReceiveAStringResponse();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AddTwoNumbers }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ParseBestellungenResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "add-two-numbers")
-    public JAXBElement<AddTwoNumbers> createAddTwoNumbers(AddTwoNumbers value) {
-        return new JAXBElement<AddTwoNumbers>(_AddTwoNumbers_QNAME, AddTwoNumbers.class, null, value);
+    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "parse-bestellungenResponse")
+    public JAXBElement<ParseBestellungenResponse> createParseBestellungenResponse(ParseBestellungenResponse value) {
+        return new JAXBElement<ParseBestellungenResponse>(_ParseBestellungenResponse_QNAME, ParseBestellungenResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link AddTwoNumbersResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ReceiveAString }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "add-two-numbersResponse")
-    public JAXBElement<AddTwoNumbersResponse> createAddTwoNumbersResponse(AddTwoNumbersResponse value) {
-        return new JAXBElement<AddTwoNumbersResponse>(_AddTwoNumbersResponse_QNAME, AddTwoNumbersResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "receive-a-string")
+    public JAXBElement<ReceiveAString> createReceiveAString(ReceiveAString value) {
+        return new JAXBElement<ReceiveAString>(_ReceiveAString_QNAME, ReceiveAString.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SendedProductsResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link HelloBuchhaltungResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "sended-productsResponse")
-    public JAXBElement<SendedProductsResponse> createSendedProductsResponse(SendedProductsResponse value) {
-        return new JAXBElement<SendedProductsResponse>(_SendedProductsResponse_QNAME, SendedProductsResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "helloBuchhaltungResponse")
+    public JAXBElement<HelloBuchhaltungResponse> createHelloBuchhaltungResponse(HelloBuchhaltungResponse value) {
+        return new JAXBElement<HelloBuchhaltungResponse>(_HelloBuchhaltungResponse_QNAME, HelloBuchhaltungResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link HelloLager }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link MultiplyTwoNumbersResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "helloLager")
-    public JAXBElement<HelloLager> createHelloLager(HelloLager value) {
-        return new JAXBElement<HelloLager>(_HelloLager_QNAME, HelloLager.class, null, value);
+    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "multiply-two-numbersResponse")
+    public JAXBElement<MultiplyTwoNumbersResponse> createMultiplyTwoNumbersResponse(MultiplyTwoNumbersResponse value) {
+        return new JAXBElement<MultiplyTwoNumbersResponse>(_MultiplyTwoNumbersResponse_QNAME, MultiplyTwoNumbersResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link SendedProducts }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ReceiveAStringResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "sended-products")
-    public JAXBElement<SendedProducts> createSendedProducts(SendedProducts value) {
-        return new JAXBElement<SendedProducts>(_SendedProducts_QNAME, SendedProducts.class, null, value);
+    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "receive-a-stringResponse")
+    public JAXBElement<ReceiveAStringResponse> createReceiveAStringResponse(ReceiveAStringResponse value) {
+        return new JAXBElement<ReceiveAStringResponse>(_ReceiveAStringResponse_QNAME, ReceiveAStringResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link MultiplyTwoNumbers }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "multiply-two-numbers")
+    public JAXBElement<MultiplyTwoNumbers> createMultiplyTwoNumbers(MultiplyTwoNumbers value) {
+        return new JAXBElement<MultiplyTwoNumbers>(_MultiplyTwoNumbers_QNAME, MultiplyTwoNumbers.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link HelloBuchhaltung }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "helloBuchhaltung")
+    public JAXBElement<HelloBuchhaltung> createHelloBuchhaltung(HelloBuchhaltung value) {
+        return new JAXBElement<HelloBuchhaltung>(_HelloBuchhaltung_QNAME, HelloBuchhaltung.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ParseBestellungen }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://webservices.paper4all/", name = "parse-bestellungen")
+    public JAXBElement<ParseBestellungen> createParseBestellungen(ParseBestellungen value) {
+        return new JAXBElement<ParseBestellungen>(_ParseBestellungen_QNAME, ParseBestellungen.class, null, value);
     }
 
 }
