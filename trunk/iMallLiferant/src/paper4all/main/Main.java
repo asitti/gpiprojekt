@@ -1,4 +1,4 @@
-package paper4all.WSbinder;
+package paper4all.main;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,7 +13,7 @@ import paper4all.rubyParser.Interchange;
 import paper4all.webservices.BuchhaltungService;
 import paper4all.webservices.BuchhaltungWebService;
 
-public class ClientForGeneratedStubs 
+public class Main 
 {
 	
 	public void runApp()
@@ -87,7 +87,7 @@ public class ClientForGeneratedStubs
 	public static void main( String[] args )
 	{   
 	  
-		ClientForGeneratedStubs stub = new ClientForGeneratedStubs();
+		Main stub = new Main();
 		stub.runProgram();
 		  /*BuchhaltungWebService buchPort = new BuchhaltungService().getBuchhaltungWebServicePort();
 		  File file = new File("files/file");

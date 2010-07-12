@@ -11,7 +11,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import paper4all.rubyParser.Interchange;
-import paper4all.webservices.utils.MyInterchange;
  
 @WebService(name="BuchhaltungWebService") 
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT) 
@@ -56,7 +55,7 @@ public class Buchhaltung
 		  return null; 
 	  }
 	  
-	  @WebMethod(operationName="parse-bestellungen") 
+	 /* @WebMethod(operationName="parse-bestellungen") 
 	  @WebResult(name = "interchange-result") 
 	  public MyInterchange parseBest( @WebParam(name="inputFile")String s) 
 	  {
@@ -94,5 +93,6 @@ public class Buchhaltung
 		  }
 		  return null;
 	  }
+	  */
 
 }
