@@ -1,7 +1,9 @@
 package paper4all.services;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.OutputStream;
 
@@ -47,17 +49,22 @@ public class ReadInbox
 		       
 		       if(files.length>0)
 		       {
-		    	   System.out.println(files[0].toString());
 		    	   File file = new File("in/temp.edi");
 		    	   OutputStream out = new FileOutputStream(file);
 		    	   
 		    	   if(f.retrieveFile("in/"+files[0].getName(), out))
 		    	   {
-		    		   System.out.println("success");
-		    		   return file.getName();
-		    	   }
-		    	   else
-		    		   System.out.println("failure");		    		   
+		    		   out.close();
+		    		   String input = "";
+			   		   BufferedReader in = new BufferedReader(new FileReader(file));
+			   		   String str;
+			   		   while ((str = in.readLine()) != null) 
+			   		   {
+			   		      input += str;
+			   		   }
+			   		   in.close();
+			   		   return input;
+		    	   }	    		   
 		       }
 		    }
 		    

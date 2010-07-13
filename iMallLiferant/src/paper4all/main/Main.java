@@ -10,74 +10,15 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
 import paper4all.rubyParser.Interchange;
-import paper4all.webservices.BuchhaltungService;
-import paper4all.webservices.BuchhaltungWebService;
+import paper4all.webservices.utils.Sended;
 import paper4all.wsdl.*;
 
 public class Main 
 {
 	
-	public void runApp()
-	{
-		try
-		{
-			BuchhaltungWebService buchPort = new BuchhaltungService().getBuchhaltungWebServicePort();
-			
-			//directorul din care citim mesajele primite momentan, pana merge din noul hubul
-			File f = new File("in");
-			//while(true)
-			//{
-				if(f.isDirectory())
-				{
-					String[] files = f.list(new FilenameFilter() {
+
 						
-						@Override
-						public boolean accept(File dir, String name) 
-						{
-							if (name.endsWith(".xml")) return true;
-							   return false;
-						}
-					});
-					System.out.println("The number of files: " + files.length);
-					for(int i=0; i<files.length; i++)
-					{
-						System.out.println("processing file: " + files[i]);
-						File currentFile = new File("in/" + files[i]);
-						String input = this.getInput(currentFile);
-						//System.out.println("an the input looks like this: " + input);
-						
-						buchPort.parseBestellungen(input);
-						
-						
-						
-						/* JAXBContext jc = JAXBContext.newInstance("paper4all.rubyParser");
-						 Unmarshaller u = jc.createUnmarshaller();
-						 System.out.println("intoarce ceva...");
-						 Interchange interchange = (Interchange ) u.unmarshal(currentFile);
-						 System.out.println("unmarshal..." + interchange.getVersion());*/
-						
-						
-						/*Interchange inter = buchPort.parseBestellungen(input);
-						if(inter != null)
-							System.out.println(inter.getVersion());
-						else
-							System.out.println("buba");*/
-						
-						//la sf stergem fisierul ca nu mai avem nevoie de el
-						
-						/*boolean delete = currentFile.delete();
-						System.out.println("an the file was deleted: " + delete);
-						*/
-						System.out.println();
-					}
-				}
-			//}
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+					
 	
 	
 	public void runProgram()
@@ -88,6 +29,9 @@ public class Main
 			System.out.println(name);
 		else
 			System.out.println("null");
+		
+		WriteOutboxWebService write = new WriteOutboxService().getWriteOutboxWebServicePort();
+		System.out.println(write.writeToOutbox("in1.xml"));
 		
 	}
 	public static void main( String[] args )
@@ -129,7 +73,7 @@ public class Main
 	  
 	}
   
-	public static String display(paper4all.webservices.Sended obj)
+	public static String display(Sended obj)
 	{
 		return "[SGTIN: " + obj.getSgtin()
 				+ ", GTIN: " + obj.getGtin()

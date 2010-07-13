@@ -25,7 +25,6 @@ public interface WriteOutboxWebService {
 
     /**
      * 
-     * @param arg1
      * @param arg0
      * @return
      *     returns boolean
@@ -36,8 +35,6 @@ public interface WriteOutboxWebService {
     @ResponseWrapper(localName = "write-to-outboxResponse", targetNamespace = "http://services.paper4all/", className = "paper4all.wsdl.WriteToOutboxResponse")
     public boolean writeToOutbox(
         @WebParam(name = "arg0", targetNamespace = "")
-        String arg0,
-        @WebParam(name = "arg1", targetNamespace = "")
-        String arg1);
+        String arg0);
 
 }
