@@ -5,6 +5,7 @@ import javax.xml.ws.Endpoint;
 
 import paper4all.services.DeleteFile;
 import paper4all.services.EDIToXML;
+import paper4all.services.OrderProcessor;
 import paper4all.services.ReadInbox;
 import paper4all.services.WriteOutbox;
 import paper4all.services.XMLToEDI;
@@ -28,6 +29,8 @@ public class Server
               new XMLToEDI() ); 
 	  Endpoint endpoint5 = Endpoint.publish( "http://localhost:8080/editoxml", 
               new EDIToXML() ); 
+	  Endpoint endpoint6 = Endpoint.publish( "http://localhost:8080/orderprocessor", 
+              new OrderProcessor() ); 
 	  
      
   } 

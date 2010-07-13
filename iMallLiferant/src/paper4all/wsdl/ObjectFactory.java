@@ -24,8 +24,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _WriteToOutbox_QNAME = new QName("http://services.paper4all/", "write-to-outbox");
-    private final static QName _WriteToOutboxResponse_QNAME = new QName("http://services.paper4all/", "write-to-outboxResponse");
+    private final static QName _ProcessIncomingOrderResponse_QNAME = new QName("http://services.paper4all/", "process-incoming-orderResponse");
+    private final static QName _ProcessIncomingOrder_QNAME = new QName("http://services.paper4all/", "process-incoming-order");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: paper4all.wsdl
@@ -35,37 +35,37 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link WriteToOutbox }
+     * Create an instance of {@link ProcessIncomingOrder }
      * 
      */
-    public WriteToOutbox createWriteToOutbox() {
-        return new WriteToOutbox();
+    public ProcessIncomingOrder createProcessIncomingOrder() {
+        return new ProcessIncomingOrder();
     }
 
     /**
-     * Create an instance of {@link WriteToOutboxResponse }
+     * Create an instance of {@link ProcessIncomingOrderResponse }
      * 
      */
-    public WriteToOutboxResponse createWriteToOutboxResponse() {
-        return new WriteToOutboxResponse();
+    public ProcessIncomingOrderResponse createProcessIncomingOrderResponse() {
+        return new ProcessIncomingOrderResponse();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link WriteToOutbox }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ProcessIncomingOrderResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://services.paper4all/", name = "write-to-outbox")
-    public JAXBElement<WriteToOutbox> createWriteToOutbox(WriteToOutbox value) {
-        return new JAXBElement<WriteToOutbox>(_WriteToOutbox_QNAME, WriteToOutbox.class, null, value);
+    @XmlElementDecl(namespace = "http://services.paper4all/", name = "process-incoming-orderResponse")
+    public JAXBElement<ProcessIncomingOrderResponse> createProcessIncomingOrderResponse(ProcessIncomingOrderResponse value) {
+        return new JAXBElement<ProcessIncomingOrderResponse>(_ProcessIncomingOrderResponse_QNAME, ProcessIncomingOrderResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link WriteToOutboxResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ProcessIncomingOrder }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://services.paper4all/", name = "write-to-outboxResponse")
-    public JAXBElement<WriteToOutboxResponse> createWriteToOutboxResponse(WriteToOutboxResponse value) {
-        return new JAXBElement<WriteToOutboxResponse>(_WriteToOutboxResponse_QNAME, WriteToOutboxResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://services.paper4all/", name = "process-incoming-order")
+    public JAXBElement<ProcessIncomingOrder> createProcessIncomingOrder(ProcessIncomingOrder value) {
+        return new JAXBElement<ProcessIncomingOrder>(_ProcessIncomingOrder_QNAME, ProcessIncomingOrder.class, null, value);
     }
 
 }
