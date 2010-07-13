@@ -23,7 +23,7 @@ public class Main
 	
 	public void runProgram()
 	{
-		ReadInboxWebService read = new ReadInboxService().getReadInboxWebServicePort();
+		/*ReadInboxWebService read = new ReadInboxService().getReadInboxWebServicePort();
 		String name = read.readFromInbox();
 		if(name != null)
 			System.out.println(name);
@@ -31,7 +31,10 @@ public class Main
 			System.out.println("null");
 		
 		WriteOutboxWebService write = new WriteOutboxService().getWriteOutboxWebServicePort();
-		System.out.println(write.writeToOutbox("in1.xml"));
+		System.out.println(write.writeToOutbox("in1.xml"));*/
+		
+		OrderProcessorWebService order = new OrderProcessorService().getOrderProcessorWebServicePort();
+		order.processIncomingOrder(getInput(new File("in/order1henry.xml")));
 		
 	}
 	public static void main( String[] args )
