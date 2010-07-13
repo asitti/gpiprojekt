@@ -122,22 +122,23 @@ public class OrderProcessor
 				
 			}*/
 			
-			/* DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
-			    domFactory.setNamespaceAware(true); // never forget this!
-			    DocumentBuilder builder = domFactory.newDocumentBuilder();
-			    Document doc = builder.parse("temp.xml");
+			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+		    domFactory.setNamespaceAware(true); // never forget this!
+		    DocumentBuilder builder = domFactory.newDocumentBuilder();
+		    Document doc = builder.parse("temp.xml");
 
-			    XPathFactory factory = XPathFactory.newInstance();
-			    XPath xpath = factory.newXPath();
-			    XPathExpression expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28']/Segment[@name='LIN']/CDE[@name='C212']/DE[@name='7140']/text()");
+		    XPathFactory factory = XPathFactory.newInstance();
+		    XPath xpath = factory.newXPath();
+		    XPathExpression expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28']/Segment[@name='LIN']/CDE[@name='C212']/DE[@name='7140']/text()");
 
-			    Object result = expr.evaluate(doc, XPathConstants.NODESET);
-			    NodeList nodes = (NodeList) result;
-			    for (int i = 0; i < nodes.getLength(); i++) {
-			        System.out.println(nodes.item(i).getNodeValue()); 
-			    }
-			*/
-			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+		    Object result = expr.evaluate(doc, XPathConstants.NODESET);
+		    NodeList nodes = (NodeList) result;
+		    for (int i = 0; i < nodes.getLength(); i++) 
+		    {
+		        System.out.println(nodes.item(i).getNodeValue()); 
+		    }
+			
+			/*DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
 			String url = "jdbc:oracle:thin:@localhost:1521:xe";
 			String user = "darie17";
 			String psw = "1q2w3e";
@@ -151,7 +152,7 @@ public class OrderProcessor
 			
 		    Statement stmt = conn.createStatement();
 		    ResultSet rset =
-		         stmt.executeQuery("select * from produkt;");
+		         stmt.executeQuery("select * from produkt");
 
 			if(rset != null)
 				System.out.println("rset nu e null");
@@ -165,7 +166,7 @@ public class OrderProcessor
 		    }
 		    stmt.close();
 		    
-		    System.out.println("END");
+		    System.out.println("END");*/
 			
 			
 			
