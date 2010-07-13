@@ -50,118 +50,62 @@ public class OrderProcessor
 			fw.write(input);
 			fw.close();
 			Interchange interchange = (Interchange ) u.unmarshal(new File("temp.xml"));
-			/*List<Segment> msgSegments = interchange.getMessage().getSegment();
-			
-			for(Segment s : msgSegments)
-			{
-				List<CDE> cde = s.getCDE();
-				for(CDE c : cde)
-				{
-					if(c.getName().equals("C507"))
-					{
-						List<DE> de1 = c.getDE();
-						for(DE de : de1)
-						{
-							System.out.println(de.getName() + " : " + de.getContent());
-						}
-					}
-				}
-			}*/
-			
-			// ### Produkte aus der Bestellung extrahieren und die entsprechende Menge aus der DB loeschen ###
-			
-			/*List<SegmentGroup> segGroup = interchange.getMessage().getSegmentGroup();
-			
-			for(SegmentGroup sg : segGroup)
-			{
-				String gtin=null,quantity=null;
-				if(sg.getName().equals("SG28"))
-				{
-					List<Segment> linAndQty = sg.getSegment();
-					for(Segment s : linAndQty)
-					{
-						
-						if(s.getName().equals("LIN"))
-						{
-							List<CDE> listCde = s.getCDE();
-							for(CDE cde: listCde)
-							{
-								if(cde.getName().equals("C212"))
-								{
-									List<DE> productGTIN = cde.getDE();
-									for(DE de:productGTIN)
-									{
-										if(de.getName().equals("7140"))
-											gtin = de.getContent();
-									}
-								}
-							}
-						}
-						else
-							if(s.getName().equals("QTY"))
-							{
-								List<CDE> listCde = s.getCDE();
-								for(CDE cde: listCde)
-								{
-									if(cde.getName().equals("C186"))
-									{
-										List<DE> productGTIN = cde.getDE();
-										for(DE de:productGTIN)
-										{
-											if(de.getName().equals("6060"))
-												quantity = de.getContent();
-										}
-									}
-								}
-							}
-						
-					}
-					System.out.println(gtin + " : " + quantity);
-				}
-				
-				
-			}*/
-			
+		
+			//conexiune la baza de date
+			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "darie17";
+			String psw = "1q2w3e";
+			Connection conn = DriverManager.getConnection(url,user,psw);
+			Statement stmt = conn.createStatement();
+
+			//initializarea docum pt xpath
 			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 		    domFactory.setNamespaceAware(true); // never forget this!
 		    DocumentBuilder builder = domFactory.newDocumentBuilder();
 		    Document doc = builder.parse("temp.xml");
 
+		    //aici aflam cate produse au fost cerute
 		    XPathFactory factory = XPathFactory.newInstance();
 		    XPath xpath = factory.newXPath();
-		    XPathExpression expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28']/Segment[@name='LIN']/CDE[@name='C212']/DE[@name='7140']/text()");
+		    XPathExpression expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28']");
 
 		    Object result = expr.evaluate(doc, XPathConstants.NODESET);
 		    NodeList nodes = (NodeList) result;
+		    //pt fiecare produs cerut ne uitam sa vedem ce gtin si in ce cantitate tb trimis
 		    for (int i = 0; i < nodes.getLength(); i++) 
 		    {
-		        System.out.println(nodes.item(i).getNodeValue()); 
+		       expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28'][" 
+		    		   + (i+1) + "]/Segment[@name='LIN']/CDE[@name='C212']/DE[@name='7140']/text()");
+		       Object gtin = expr.evaluate(doc, XPathConstants.NODESET);
+		       NodeList gtinNode= (NodeList) gtin;
+		       
+		       expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28'][" 
+		    		   + (i+1) + "]/Segment[@name='QTY']/CDE[@name='C186']/DE[@name='6060']/text()");
+		       Object qty = expr.evaluate(doc, XPathConstants.NODESET);
+		       NodeList qtyNode= (NodeList) qty;
+		       
+		       System.out.println(gtinNode.item(0).getNodeValue());
+		       
+		       ResultSet rset =
+			         stmt.executeQuery("select * from produkt where gtin="+ gtinNode.item(0).getNodeValue());
+		       while (rset.next()) 
+		       {
+		    	   //cate sunt disponibile in baza de date - anzahl_verfuegbar
+			    	System.out.println(gtinNode.item(0).getNodeValue() + " : cerute " + qtyNode.item(0).getNodeValue() + ": avute " +rset.getLong(6));
+			    	if(Integer.parseInt(rset.getString(6))>=Integer.parseInt(qtyNode.item(0).getNodeValue()))
+			    	{
+			    		System.out.println("se poate trimite toata cant");
+			    	}
+			    	else
+			    		System.out.println("se poate trimite doar o parte");
+			    }
+		       
+		       
 		    }
 			
-			/*DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
-			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			String user = "darie17";
-			String psw = "1q2w3e";
-			Connection conn =
-		         DriverManager.getConnection(url,user,psw);
-
-			if(conn != null)
-				System.out.println("nu e null");
-			else
-				System.out.println("null");
-			
-		    Statement stmt = conn.createStatement();
-		    ResultSet rset =
-		         stmt.executeQuery("select * from produkt");
-
-		    while (rset.next()) {
-		    	System.out.println (rset.getLong(1));
-		    }
-		    stmt.close();
+			stmt.close();
 		    
-		    System.out.println("END");*/
-			
-			
 			
 			/*
 			JAXBContext jc2 = JAXBContext.newInstance("paper4all.ORDERS");
