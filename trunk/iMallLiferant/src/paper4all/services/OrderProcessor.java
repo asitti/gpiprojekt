@@ -12,6 +12,15 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import paper4all.ORDERS.CDE;
 import paper4all.ORDERS.DE;
@@ -57,7 +66,7 @@ public class OrderProcessor
 			
 			// ### Produkte aus der Bestellung extrahieren und die entsprechende Menge aus der DB loeschen ###
 			
-			List<SegmentGroup> segGroup = interchange.getMessage().getSegmentGroup();
+			/*List<SegmentGroup> segGroup = interchange.getMessage().getSegmentGroup();
 			
 			for(SegmentGroup sg : segGroup)
 			{
@@ -107,7 +116,22 @@ public class OrderProcessor
 				}
 				
 				
-			}
+			}*/
+			
+			 DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+			    domFactory.setNamespaceAware(true); // never forget this!
+			    DocumentBuilder builder = domFactory.newDocumentBuilder();
+			    Document doc = builder.parse("temp.xml");
+
+			    XPathFactory factory = XPathFactory.newInstance();
+			    XPath xpath = factory.newXPath();
+			    XPathExpression expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28']/Segment[@name='LIN']/CDE[@name='C212']/DE[@name='7140']/text()");
+
+			    Object result = expr.evaluate(doc, XPathConstants.NODESET);
+			    NodeList nodes = (NodeList) result;
+			    for (int i = 0; i < nodes.getLength(); i++) {
+			        System.out.println(nodes.item(i).getNodeValue()); 
+			    }
 			
 			
 			
