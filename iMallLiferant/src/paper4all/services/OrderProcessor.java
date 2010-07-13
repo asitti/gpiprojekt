@@ -3,6 +3,10 @@ package paper4all.services;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 
 import javax.jws.WebMethod;
@@ -118,7 +122,7 @@ public class OrderProcessor
 				
 			}*/
 			
-			 DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+			/* DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 			    domFactory.setNamespaceAware(true); // never forget this!
 			    DocumentBuilder builder = domFactory.newDocumentBuilder();
 			    Document doc = builder.parse("temp.xml");
@@ -132,6 +136,36 @@ public class OrderProcessor
 			    for (int i = 0; i < nodes.getLength(); i++) {
 			        System.out.println(nodes.item(i).getNodeValue()); 
 			    }
+			*/
+			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "darie17";
+			String psw = "1q2w3e";
+			Connection conn =
+		         DriverManager.getConnection(url,user,psw);
+
+			if(conn != null)
+				System.out.println("nu e null");
+			else
+				System.out.println("null");
+			
+		    Statement stmt = conn.createStatement();
+		    ResultSet rset =
+		         stmt.executeQuery("select * from produkt;");
+
+			if(rset != null)
+				System.out.println("rset nu e null");
+			else
+				System.out.println("rset null");
+		    
+		    System.out.println(rset.next());
+		    while (rset.next()) {
+		    	System.out.println("while");
+		         System.out.println (rset.getLong(0));
+		    }
+		    stmt.close();
+		    
+		    System.out.println("END");
 			
 			
 			
