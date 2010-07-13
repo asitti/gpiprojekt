@@ -8,5 +8,16 @@
 	<classpathentry kind="lib" path="lib/rubyGems.jar"/>
 	<classpathentry kind="lib" path="lib/edi4r5.jar"/>
 	<classpathentry kind="lib" path="lib/ojdbc14_g.jar"/>
+	<classpathentry kind="lib" path="lib/classes111_g.jar"/>
+	<classpathentry kind="lib" path="lib/classes111.jar"/>
+	<classpathentry kind="lib" path="lib/classes12_g.jar"/>
+	<classpathentry kind="lib" path="lib/classes12.jar"/>
+	<classpathentry kind="lib" path="lib/classes12dms_g.jar"/>
+	<classpathentry kind="lib" path="lib/classes12dms.jar"/>
+	<classpathentry kind="lib" path="lib/edi4r_gems.jar"/>
+	<classpathentry kind="lib" path="lib/nls_charset11.jar"/>
+	<classpathentry kind="lib" path="lib/nls_charset12.jar"/>
+	<classpathentry kind="lib" path="lib/ocrs12.jar"/>
+	<classpathentry kind="lib" path="lib/ojdbc14.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
