@@ -4,10 +4,10 @@ import javax.swing.JOptionPane;
 import javax.xml.ws.Endpoint;
 
 import paper4all.services.DeleteFile;
+import paper4all.services.EDIToXML;
 import paper4all.services.ReadInbox;
 import paper4all.services.WriteOutbox;
-import paper4all.webservices.Buchhaltung;
-import paper4all.webservices.Lager;
+import paper4all.services.XMLToEDI;
 
 public class Server 
 { 
@@ -24,6 +24,10 @@ public class Server
               new DeleteFile() ); 
 	  Endpoint endpoint3 = Endpoint.publish( "http://localhost:8080/writeoutbox", 
               new WriteOutbox() ); 
+	  Endpoint endpoint4 = Endpoint.publish( "http://localhost:8080/xmltoedi", 
+              new XMLToEDI() ); 
+	  Endpoint endpoint5 = Endpoint.publish( "http://localhost:8080/editoxml", 
+              new EDIToXML() ); 
 	  
      
   } 

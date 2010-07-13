@@ -3,20 +3,21 @@ package paper4all.wsdl;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for write-to-outbox complex type.
+ * <p>Java class for edi-to-xmlResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="write-to-outbox">
+ * &lt;complexType name="edi-to-xmlResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="filenameXML-result" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -26,35 +27,36 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "write-to-outbox", propOrder = {
-    "arg0"
+@XmlType(name = "edi-to-xmlResponse", propOrder = {
+    "filenameXMLResult"
 })
-public class WriteToOutbox {
+public class EdiToXmlResponse {
 
-    protected String arg0;
+    @XmlElement(name = "filenameXML-result")
+    protected String filenameXMLResult;
 
     /**
-     * Gets the value of the arg0 property.
+     * Gets the value of the filenameXMLResult property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg0() {
-        return arg0;
+    public String getFilenameXMLResult() {
+        return filenameXMLResult;
     }
 
     /**
-     * Sets the value of the arg0 property.
+     * Sets the value of the filenameXMLResult property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg0(String value) {
-        this.arg0 = value;
+    public void setFilenameXMLResult(String value) {
+        this.filenameXMLResult = value;
     }
 
 }

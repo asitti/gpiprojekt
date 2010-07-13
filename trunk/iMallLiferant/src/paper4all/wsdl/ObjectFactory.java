@@ -24,8 +24,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _ReadFromInbox_QNAME = new QName("http://services.paper4all/", "read-from-inbox");
-    private final static QName _ReadFromInboxResponse_QNAME = new QName("http://services.paper4all/", "read-from-inboxResponse");
+    private final static QName _WriteToOutbox_QNAME = new QName("http://services.paper4all/", "write-to-outbox");
+    private final static QName _WriteToOutboxResponse_QNAME = new QName("http://services.paper4all/", "write-to-outboxResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: paper4all.wsdl
@@ -35,37 +35,37 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ReadFromInbox }
+     * Create an instance of {@link WriteToOutbox }
      * 
      */
-    public ReadFromInbox createReadFromInbox() {
-        return new ReadFromInbox();
+    public WriteToOutbox createWriteToOutbox() {
+        return new WriteToOutbox();
     }
 
     /**
-     * Create an instance of {@link ReadFromInboxResponse }
+     * Create an instance of {@link WriteToOutboxResponse }
      * 
      */
-    public ReadFromInboxResponse createReadFromInboxResponse() {
-        return new ReadFromInboxResponse();
+    public WriteToOutboxResponse createWriteToOutboxResponse() {
+        return new WriteToOutboxResponse();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ReadFromInbox }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link WriteToOutbox }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://services.paper4all/", name = "read-from-inbox")
-    public JAXBElement<ReadFromInbox> createReadFromInbox(ReadFromInbox value) {
-        return new JAXBElement<ReadFromInbox>(_ReadFromInbox_QNAME, ReadFromInbox.class, null, value);
+    @XmlElementDecl(namespace = "http://services.paper4all/", name = "write-to-outbox")
+    public JAXBElement<WriteToOutbox> createWriteToOutbox(WriteToOutbox value) {
+        return new JAXBElement<WriteToOutbox>(_WriteToOutbox_QNAME, WriteToOutbox.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ReadFromInboxResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link WriteToOutboxResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://services.paper4all/", name = "read-from-inboxResponse")
-    public JAXBElement<ReadFromInboxResponse> createReadFromInboxResponse(ReadFromInboxResponse value) {
-        return new JAXBElement<ReadFromInboxResponse>(_ReadFromInboxResponse_QNAME, ReadFromInboxResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://services.paper4all/", name = "write-to-outboxResponse")
+    public JAXBElement<WriteToOutboxResponse> createWriteToOutboxResponse(WriteToOutboxResponse value) {
+        return new JAXBElement<WriteToOutboxResponse>(_WriteToOutboxResponse_QNAME, WriteToOutboxResponse.class, null, value);
     }
 
 }
