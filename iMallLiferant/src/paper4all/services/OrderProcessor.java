@@ -154,15 +154,8 @@ public class OrderProcessor
 		    ResultSet rset =
 		         stmt.executeQuery("select * from produkt");
 
-			if(rset != null)
-				System.out.println("rset nu e null");
-			else
-				System.out.println("rset null");
-		    
-		    System.out.println(rset.next());
 		    while (rset.next()) {
-		    	System.out.println("while");
-		         System.out.println (rset.getLong(0));
+		    	System.out.println (rset.getLong(1));
 		    }
 		    stmt.close();
 		    
