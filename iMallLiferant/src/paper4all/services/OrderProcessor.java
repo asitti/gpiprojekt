@@ -11,12 +11,10 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import paper4all.ORDERS.CDE;
 import paper4all.ORDERS.DE;
-import paper4all.ORDERS.Header;
 import paper4all.ORDERS.Interchange;
 import paper4all.ORDERS.Segment;
 import paper4all.ORDERS.SegmentGroup;
@@ -63,14 +61,52 @@ public class OrderProcessor
 			
 			for(SegmentGroup sg : segGroup)
 			{
+				String gtin=null,quantity=null;
 				if(sg.getName().equals("SG28"))
 				{
 					List<Segment> linAndQty = sg.getSegment();
 					for(Segment s : linAndQty)
 					{
-						if()
+						
+						if(s.getName().equals("LIN"))
+						{
+							List<CDE> listCde = s.getCDE();
+							for(CDE cde: listCde)
+							{
+								if(cde.getName().equals("C212"))
+								{
+									List<DE> productGTIN = cde.getDE();
+									for(DE de:productGTIN)
+									{
+										if(de.getName().equals("7140"))
+											gtin = de.getContent();
+									}
+								}
+							}
+						}
+						else
+							if(s.getName().equals("QTY"))
+							{
+								List<CDE> listCde = s.getCDE();
+								for(CDE cde: listCde)
+								{
+									if(cde.getName().equals("C186"))
+									{
+										List<DE> productGTIN = cde.getDE();
+										for(DE de:productGTIN)
+										{
+											if(de.getName().equals("6060"))
+												quantity = de.getContent();
+										}
+									}
+								}
+							}
+						
 					}
+					System.out.println(gtin + " : " + quantity);
 				}
+				
+				
 			}
 			
 			
