@@ -9,12 +9,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import paper4all.nachrichten.CDE;
+import paper4all.messages.CDE;
 
 
 public class InvoicGenerator {
 	
-	private paper4all.nachrichten.Interchange interchange;
+	private paper4all.messages.Interchange interchange;
 	
 	public InvoicGenerator()
 	{
@@ -22,7 +22,7 @@ public class InvoicGenerator {
 		{
 			JAXBContext jc = JAXBContext.newInstance("paper4all.INVOIC");
 			Unmarshaller u = jc.createUnmarshaller();
-			this.interchange = (paper4all.nachrichten.Interchange) u.unmarshal(new File("src/paper4all/templates/invoic_template.xml"));
+			this.interchange = (paper4all.messages.Interchange) u.unmarshal(new File("src/paper4all/templates/invoic_template.xml"));
 			//System.out.println(interchange.getHeader().getSegment().getCDE().getName());
 		}
 		catch(Exception e)
@@ -44,12 +44,12 @@ public class InvoicGenerator {
 		return null;
 	}
 	
-	public paper4all.nachrichten.Interchange getInterchange()
+	public paper4all.messages.Interchange getInterchange()
 	{
 		return this.interchange;
 	}
 	
-	public void marshall(paper4all.nachrichten.Interchange i)
+	public void marshall(paper4all.messages.Interchange i)
 	{
 		File output = new File("src/paper4all/INVOIC/result.xml");
 		try 

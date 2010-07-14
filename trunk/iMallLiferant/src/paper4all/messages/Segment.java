@@ -6,15 +6,19 @@
 //
 
 
-package paper4all.nachrichten;
+package paper4all.messages;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -22,68 +26,72 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "segment",
-    "parameter"
+    "cdeOrDE"
 })
-@XmlRootElement(name = "Header")
-public class Header {
+@XmlRootElement(name = "Segment")
+public class Segment {
 
-    @XmlElement(name = "Segment", required = true)
-    protected Segment segment;
-    @XmlElement(name = "Parameter")
-    protected List<Parameter> parameter;
+    @XmlAttribute(required = true)
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected String name;
+    @XmlElements({
+        @XmlElement(name = "CDE", required = true, type = CDE.class),
+        @XmlElement(name = "DE", required = true, type = DE.class)
+    })
+    protected List<Object> cdeOrDE;
 
     /**
-     * Gets the value of the segment property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
-     *     {@link Segment }
+     *     {@link String }
      *     
      */
-    public Segment getSegment() {
-        return segment;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the segment property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Segment }
+     *     {@link String }
      *     
      */
-    public void setSegment(Segment value) {
-        this.segment = value;
+    public void setName(String value) {
+        this.name = value;
     }
 
     /**
-     * Gets the value of the parameter property.
+     * Gets the value of the cdeOrDE property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the parameter property.
+     * This is why there is not a <CODE>set</CODE> method for the cdeOrDE property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getParameter().add(newItem);
+     *    getCDEOrDE().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Parameter }
+     * {@link CDE }
+     * {@link DE }
      * 
      * 
      */
-    public List<Parameter> getParameter() {
-        if (parameter == null) {
-            parameter = new ArrayList<Parameter>();
+    public List<Object> getCDEOrDE() {
+        if (cdeOrDE == null) {
+            cdeOrDE = new ArrayList<Object>();
         }
-        return this.parameter;
+        return this.cdeOrDE;
     }
 
 }

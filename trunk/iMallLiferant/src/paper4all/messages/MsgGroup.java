@@ -6,20 +6,15 @@
 //
 
 
-package paper4all.nachrichten;
+package paper4all.messages;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -28,75 +23,18 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "header",
-    "messageOrMsgGroup",
+    "message",
     "trailer"
 })
-@XmlRootElement(name = "Interchange")
-public class Interchange {
+@XmlRootElement(name = "MsgGroup")
+public class MsgGroup {
 
-    @XmlAttribute(name = "standard_key", required = true)
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String standardKey;
-    @XmlAttribute(required = true)
-    @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
-    protected String version;
-    @XmlElement(name = "Header")
+    @XmlElement(name = "Header", required = true)
     protected Header header;
-    @XmlElements({
-        @XmlElement(name = "Message", type = Message.class),
-        @XmlElement(name = "MsgGroup", type = MsgGroup.class)
-    })
-    protected List<Object> messageOrMsgGroup;
+    @XmlElement(name = "Message", required = true)
+    protected List<Message> message;
     @XmlElement(name = "Trailer")
     protected Trailer trailer;
-
-    /**
-     * Gets the value of the standardKey property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getStandardKey() {
-        return standardKey;
-    }
-
-    /**
-     * Sets the value of the standardKey property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setStandardKey(String value) {
-        this.standardKey = value;
-    }
-
-    /**
-     * Gets the value of the version property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getVersion() {
-        return version;
-    }
-
-    /**
-     * Sets the value of the version property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setVersion(String value) {
-        this.version = value;
-    }
 
     /**
      * Gets the value of the header property.
@@ -123,33 +61,32 @@ public class Interchange {
     }
 
     /**
-     * Gets the value of the messageOrMsgGroup property.
+     * Gets the value of the message property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the messageOrMsgGroup property.
+     * This is why there is not a <CODE>set</CODE> method for the message property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getMessageOrMsgGroup().add(newItem);
+     *    getMessage().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link Message }
-     * {@link MsgGroup }
      * 
      * 
      */
-    public List<Object> getMessageOrMsgGroup() {
-        if (messageOrMsgGroup == null) {
-            messageOrMsgGroup = new ArrayList<Object>();
+    public List<Message> getMessage() {
+        if (message == null) {
+            message = new ArrayList<Message>();
         }
-        return this.messageOrMsgGroup;
+        return this.message;
     }
 
     /**
