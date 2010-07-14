@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -123,7 +124,8 @@ public class OrderProcessor
 		    				|| gtin.equals("2965197100323") || gtin.equals("2965197100422") || gtin.equals("2965197100521")  )
 		    		{
 		    			String sgtinVerpackung = header + filterVPE + partition + basisNr + produktNr; //+ serial number
-		    			//mai tb sgtin generate pt toate unitatile din interior
+		    			//mai tb sgtin generate pt nr de cartoane care sunt inauntru si pt fiecare unitate in parte
+		    			
 		    			
 		    		}
 			    	else
@@ -133,44 +135,82 @@ public class OrderProcessor
 				    			gtin.equals("2965197100316") || gtin.equals("2965197100415") 
 				    			|| gtin.equals("2965197100514")  )
 				    	{
-				    		String sgtinVerpackung = header + filterVPE + partition + basisNr + produktNr; //+ serial number
+				    		 
+				    		//tb vazut cate bucati vke sunt intr-un carton
+				    		ResultSet karton =  stmt.executeQuery("select anzahl,gtin_vke from karton where gtin_karton='" 
+				    				+ gtin +"'");
+				    		int anzahl=0;
+				    		String gtinVKE=null;
+				    		if(karton.next())
+				    		{
+				    			String  anz = karton.getString(1);
+				    			
+				    			if(anz != null)
+				    				anzahl = Integer.parseInt(anz);
+				    			gtinVKE = karton.getString(2);
+				    		}
+				    		System.out.println("gtin_karton: " + gtin + ", gtin_vke: " + gtinVKE + ", anzahl: " + anzahl );
 				    		
-				    		//mai tb sgtin generate pt nr de cartoane care sunt inauntru si pt fiecare unitate in parte
+				    		//vedem daca avem atatea disponibile si generam snr pt cartoane si vke
+				    		if(verfugbar >= Integer.parseInt(qty))
+				    		{
+				    	//------kartons-------
+				    			//vedem care e ultimul srn pt vpe din baza de date
+					    		String serialNrKarton = getSRNEPC(stmt);
+					    		System.out.println("ultimul snr este:" + serialNrKarton);
+					    		
+					    		//acuma tb generate "qty" snr pt kartons
+				    			String teilSGTIN = header + filterVPE + partition + basisNr + produktNr;
+				    			List<String> sgtinList = generateSrn(Integer.parseInt(qty), serialNrKarton);
+				    			insertEPC(stmt, teilSGTIN, sgtinList, teilSGTIN, gln);
+				    	//-----ende kartons------
+				    			
+				    	//-------aici incep vke----------
+				    			//generare snr pt (gty kartons cerute) * (anzahl der vke) dintr-un carton
+				    			String serialNrVKE = getSRNEPC(stmt);
+					    		System.out.println("ultimul snr_vpe este:" + serialNrVKE);
+					    		
+					    		//acuma tb generate "qty" snr pt kartons
+				    			teilSGTIN = header + filterVKE + partition + basisNr + produktNr;
+				    			List<String> sgtinListVKE = generateSrn(Integer.parseInt(qty)*anzahl, serialNrVKE);
+				    			insertEPC(stmt, teilSGTIN, sgtinListVKE, gtinVKE, gln);
+				    			
+				    			//ordonarea karton - anzahl vke care se afla intr-un carton 
+				    			int k=0;
+				    			for(String sgtinVPE : sgtinList)
+				    			{
+				    				System.out.println("pt kartonul cu sgtin: " + sgtinVPE);
+				    				
+				    				//fiecare vke intre k si k+anzahl vor fi trecute la kartonul k
+				    				for(int j = k; j<(k+anzahl); j++)
+				    				{
+				    					System.out.println("	sgtin_vke: " + sgtinListVKE.get(j));
+				    				}
+				    				k+=anzahl;				    				
+				    			}
+				    			
+				    			
+				    			
+				    		}
+				    		
+				    		String sgtinVerpackung = header + filterVPE + partition + basisNr + produktNr; //+ serial number
+				    		//mai tb sgtin generate pt toate unitatile din interior
+				    		
 				    	}
 				    	
 				    	//atunci e vke
 				    	else
 				    	{
-				    		String serialNr = null;
-				    		ResultSet sgtinVPE =  stmt.executeQuery("select max(srn) from epc");
-				    		if(sgtinVPE.next())
-				    		{
-				    			serialNr = sgtinVPE.getString(1);
-				    		}
-				    		if(serialNr == null)
-				    			serialNr = "1000";//pt ca e 4-stellig
+				    		String serialNr = getSRNEPC(stmt);
 				    		System.out.println("ultimul snr este:" + serialNr);
-				    		
 				    		
 				    		//6-anzahl verfugbare produkte	
 				    		//daca avem mai multe decat se cer generam pt fiecare produs un sgtin si il bagam  in baza de date
 				    		if(verfugbar >= Integer.parseInt(qty))
 				    		{
-				    			List<String> sgtinList = geneateSrn(Integer.parseInt(qty), serialNr);
-				    			Calendar cal = Calendar.getInstance();
-				    	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				    	        String date = sdf.format(cal.getTime());
-				    	        
-				    	        System.out.println(date);
-				    			
-				    			for(String s : sgtinList)
-				    			{
-				    				System.out.println(s);
-				    				String sgtinVKE = header + filterVKE + partition + basisNr + produktNr + s;
-				    				stmt.executeQuery("insert into epc values("+sgtinVKE + "," + gtin + ", " 
-				    						+ gln + ", " + s + ",'" + date + "')");
-				    				
-				    			}
+				    			String teilSGTIN = header + filterVKE + partition + basisNr + produktNr;
+				    			List<String> sgtinList = generateSrn(Integer.parseInt(qty), serialNr);
+				    			insertEPC(stmt, teilSGTIN, sgtinList, gtin, gln);
 				    		}
 				    	}
 			    	}
@@ -195,7 +235,7 @@ public class OrderProcessor
 	}
 	
 	//metoda intoarce "anzahl" serial numbers produse, egal de care
-	private List<String> geneateSrn(int anzahl, String srn)
+	private List<String> generateSrn(int anzahl, String srn)
 	{
 		List<String> srnList = new ArrayList<String>();
 		for(int i=0; i<anzahl; i++)
@@ -208,4 +248,59 @@ public class OrderProcessor
 		
 		return srnList;
 	}
-}
+	
+	
+	private void insertEPC(Statement stmt, String teilSGTIN, List<String> sgtinList, String gtin, String gln )
+	{
+		try 
+		{
+			Calendar cal = Calendar.getInstance();
+	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	        String date = sdf.format(cal.getTime());
+			
+			for(String s : sgtinList)
+			{
+				System.out.println(s);
+				String sgtinStuck = teilSGTIN + s;
+				
+					stmt.executeQuery("insert into epc values("+sgtinStuck + "," + gtin + ", " 
+							+ gln + ", " + s + ",'" + date + "')");
+			} 
+		}
+			
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+	}
+	
+	
+	private String getSRNEPC(Statement stmt)
+	{
+		try 
+		{
+			String serial = null;
+			ResultSet sgtinVKE;
+			
+				sgtinVKE = stmt.executeQuery("select max(srn) from epc");
+			
+			if(sgtinVKE.next())
+			{
+				serial = sgtinVKE.getString(1);
+			}
+			if(serial == null)
+				serial = "1000";//pt ca e 4-stellig
+			return serial;
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+	}
+}	
