@@ -6,7 +6,7 @@
 //
 
 
-package paper4all.nachrichten;
+package paper4all.messages;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
@@ -25,19 +26,19 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "de"
+    "segmentOrSegmentGroup"
 })
-@XmlRootElement(name = "CDE")
-public class CDE {
+@XmlRootElement(name = "SegmentGroup")
+public class SegmentGroup {
 
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String name;
-    @XmlAttribute
-    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-    protected String instance;
-    @XmlElement(name = "DE", required = true)
-    protected List<DE> de;
+    @XmlElements({
+        @XmlElement(name = "Segment", required = true, type = Segment.class),
+        @XmlElement(name = "SegmentGroup", required = true, type = SegmentGroup.class)
+    })
+    protected List<Object> segmentOrSegmentGroup;
 
     /**
      * Gets the value of the name property.
@@ -64,60 +65,33 @@ public class CDE {
     }
 
     /**
-     * Gets the value of the instance property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getInstance() {
-        if (instance == null) {
-            return "1";
-        } else {
-            return instance;
-        }
-    }
-
-    /**
-     * Sets the value of the instance property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setInstance(String value) {
-        this.instance = value;
-    }
-
-    /**
-     * Gets the value of the de property.
+     * Gets the value of the segmentOrSegmentGroup property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the de property.
+     * This is why there is not a <CODE>set</CODE> method for the segmentOrSegmentGroup property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getDE().add(newItem);
+     *    getSegmentOrSegmentGroup().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link DE }
+     * {@link Segment }
+     * {@link SegmentGroup }
      * 
      * 
      */
-    public List<DE> getDE() {
-        if (de == null) {
-            de = new ArrayList<DE>();
+    public List<Object> getSegmentOrSegmentGroup() {
+        if (segmentOrSegmentGroup == null) {
+            segmentOrSegmentGroup = new ArrayList<Object>();
         }
-        return this.de;
+        return this.segmentOrSegmentGroup;
     }
 
 }

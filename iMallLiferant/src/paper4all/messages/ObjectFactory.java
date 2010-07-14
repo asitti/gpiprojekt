@@ -6,7 +6,7 @@
 //
 
 
-package paper4all.nachrichten;
+package paper4all.messages;
 
 import javax.xml.bind.annotation.XmlRegistry;
 

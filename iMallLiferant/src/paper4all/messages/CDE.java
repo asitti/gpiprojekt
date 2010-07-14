@@ -6,14 +6,16 @@
 //
 
 
-package paper4all.nachrichten;
+package paper4all.messages;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -23,10 +25,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "value"
+    "de"
 })
-@XmlRootElement(name = "DE")
-public class DE {
+@XmlRootElement(name = "CDE")
+public class CDE {
 
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
@@ -34,8 +36,8 @@ public class DE {
     @XmlAttribute
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String instance;
-    @XmlValue
-    protected String value;
+    @XmlElement(name = "DE", required = true)
+    protected List<DE> de;
 
     /**
      * Gets the value of the name property.
@@ -90,27 +92,32 @@ public class DE {
     }
 
     /**
-     * Gets the value of the value property.
+     * Gets the value of the de property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getvalue() {
-        return value;
-    }
-
-    /**
-     * Sets the value of the value property.
+     * <p>
+     * This accessor method returns a reference to the live list,
+     * not a snapshot. Therefore any modification you make to the
+     * returned list will be present inside the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the de property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     * <p>
+     * For example, to add a new item, do as follows:
+     * <pre>
+     *    getDE().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list
+     * {@link DE }
+     * 
+     * 
      */
-    public void setvalue(String value) {
-        this.value = value;
+    public List<DE> getDE() {
+        if (de == null) {
+            de = new ArrayList<DE>();
+        }
+        return this.de;
     }
 
 }

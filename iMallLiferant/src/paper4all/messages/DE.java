@@ -6,7 +6,7 @@
 //
 
 
-package paper4all.nachrichten;
+package paper4all.messages;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,12 +25,15 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "", propOrder = {
     "value"
 })
-@XmlRootElement(name = "Parameter")
-public class Parameter {
+@XmlRootElement(name = "DE")
+public class DE {
 
     @XmlAttribute(required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String name;
+    @XmlAttribute
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    protected String instance;
     @XmlValue
     protected String value;
 
@@ -56,6 +59,34 @@ public class Parameter {
      */
     public void setName(String value) {
         this.name = value;
+    }
+
+    /**
+     * Gets the value of the instance property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getInstance() {
+        if (instance == null) {
+            return "1";
+        } else {
+            return instance;
+        }
+    }
+
+    /**
+     * Sets the value of the instance property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setInstance(String value) {
+        this.instance = value;
     }
 
     /**
