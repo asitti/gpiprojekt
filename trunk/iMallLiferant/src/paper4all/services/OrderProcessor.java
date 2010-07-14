@@ -41,6 +41,11 @@ public class OrderProcessor
 	@WebResult(name = "success-result") 
 	public boolean processOrder( @WebParam(name="xmlOrderContent")String input) 
 	{ 
+		String header = "48";
+		String basisNr = "2965197";
+		String filterVKE = "1";
+		String filterVPE = "2";
+		String partition = "4";
 		try
 		{
 			JAXBContext jc = JAXBContext.newInstance("paper4all.ORDERS");
@@ -77,13 +82,16 @@ public class OrderProcessor
 		    {
 		       expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28'][" 
 		    		   + (i+1) + "]/Segment[@name='LIN']/CDE[@name='C212']/DE[@name='7140']/text()");
-		       Object gtin = expr.evaluate(doc, XPathConstants.NODESET);
-		       NodeList gtinNode= (NodeList) gtin;
+		       Object gtinObj = expr.evaluate(doc, XPathConstants.NODESET);
+		       NodeList gtinNode= (NodeList) gtinObj;
+		       String gtin = gtinNode.item(0).getNodeValue();
 		       
 		       expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28'][" 
 		    		   + (i+1) + "]/Segment[@name='QTY']/CDE[@name='C186']/DE[@name='6060']/text()");
-		       Object qty = expr.evaluate(doc, XPathConstants.NODESET);
-		       NodeList qtyNode= (NodeList) qty;
+		       Object qtyObj = expr.evaluate(doc, XPathConstants.NODESET);
+		       NodeList qtyNode= (NodeList) qtyObj;
+		       String qty = qtyNode.item(0).getNodeValue();
+		      
 		       
 		       System.out.println(gtinNode.item(0).getNodeValue());
 		       
@@ -92,7 +100,32 @@ public class OrderProcessor
 		       while (rset.next()) 
 		       {
 		    	   //cate sunt disponibile in baza de date - anzahl_verfuegbar
-			    	System.out.println(gtinNode.item(0).getNodeValue() + " : cerute " + qtyNode.item(0).getNodeValue() + ": avute " +rset.getLong(6));
+			    	System.out.println(gtin + " : cerute " + qty + ": avute " +rset.getLong(6));
+			    	
+			    	String produktNr = gtin.substring(7,11);
+			    	
+			    	//daca e palette
+		    		if(gtin.equals("2965197100125") || gtin.equals("2965197100224")
+		    				|| gtin.equals("2965197100323") || gtin.equals("2965197100422") || gtin.equals("2965197100521")  )
+		    		{
+		    			String sgtinVerpackung = header + filterVPE + partition + basisNr + produktNr; //+ serial number
+		    			//mai tb sgtin generate pt toate unitatile din interior
+		    			
+		    		}
+			    	else
+			    	{
+			    		//daca e karton
+				    	if(gtin.equals("2965197100118") || gtin.equals("2965197100217") ||
+				    			gtin.equals("2965197100316") || gtin.equals("2965197100415") 
+				    			|| gtin.equals("2965197100514")  )
+				    	{
+				    		String sgtinVerpackung = header + filterVPE + partition + basisNr + produktNr; //+ serial number
+				    		
+				    		//mai tb sgtin generate pt nr de cartoane care sunt inauntru si pt fiecare unitate in parte
+				    	}
+			    		
+			    	}
+			    	
 			    	if(Integer.parseInt(rset.getString(6))>=Integer.parseInt(qtyNode.item(0).getNodeValue()))
 			    	{
 			    		System.out.println("se poate trimite toata cant");
