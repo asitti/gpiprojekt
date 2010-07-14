@@ -33,8 +33,11 @@ public class Main
 		WriteOutboxWebService write = new WriteOutboxService().getWriteOutboxWebServicePort();
 		System.out.println(write.writeToOutbox("in1.xml"));*/
 		
-		OrderProcessorWebService order = new OrderProcessorService().getOrderProcessorWebServicePort();
-		order.processIncomingOrder(getInput(new File("in/order1henry.xml")));
+		EDIToXMLWebService edi = new EDIToXMLService().getEDIToXMLWebServicePort();
+		System.out.println(edi.ediToXml(getInput(new File("in/in.edi"))));
+		
+		//OrderProcessorWebService order = new OrderProcessorService().getOrderProcessorWebServicePort();
+		//order.processIncomingOrder(getInput(new File("in/order1henry.xml")));
 		
 	}
 	public static void main( String[] args )
