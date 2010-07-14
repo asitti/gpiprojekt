@@ -8,16 +8,16 @@
                 <DE name="0002">3</DE>
             </CDE>
             <CDE name="S002">
-                <DE name="0004">5412345678908</DE> <!-- GLN des Absenders -->
+                <DE name="0004">2965197100002</DE> <!-- GLN des Absenders -->
                 <DE name="0007">14</DE> <!-- EAN International -->
             </CDE>
             <CDE name="S003">
-                <DE name="0010">8798765432106</DE> <!-- GLN des Empfaengers -->
+                <DE name="0010"></DE> <!-- GLN des Empfaengers -->
                 <DE name="0007">14</DE>
             </CDE>
             <CDE name="S004">
-                <DE name="0017">100102</DE> <!-- Datum (YYMMDD) -->
-                <DE name="0019">1000</DE> <!-- Uhrzeit -->
+                <DE name="0017"></DE> <!-- Datum (YYMMDD) -->
+                <DE name="0019"></DE> <!-- Uhrzeit (HHMM) -->
             </CDE>
             <DE name="0020">1</DE> <!-- Interchange ID -->
         </Segment>
