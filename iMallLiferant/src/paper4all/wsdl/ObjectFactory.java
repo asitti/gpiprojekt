@@ -24,8 +24,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _ProcessIncomingOrderResponse_QNAME = new QName("http://services.paper4all/", "process-incoming-orderResponse");
-    private final static QName _ProcessIncomingOrder_QNAME = new QName("http://services.paper4all/", "process-incoming-order");
+    private final static QName _XmlToEdiResponse_QNAME = new QName("http://services.paper4all/", "xml-to-ediResponse");
+    private final static QName _XmlToEdi_QNAME = new QName("http://services.paper4all/", "xml-to-edi");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: paper4all.wsdl
@@ -35,37 +35,37 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ProcessIncomingOrder }
+     * Create an instance of {@link XmlToEdiResponse }
      * 
      */
-    public ProcessIncomingOrder createProcessIncomingOrder() {
-        return new ProcessIncomingOrder();
+    public XmlToEdiResponse createXmlToEdiResponse() {
+        return new XmlToEdiResponse();
     }
 
     /**
-     * Create an instance of {@link ProcessIncomingOrderResponse }
+     * Create an instance of {@link XmlToEdi }
      * 
      */
-    public ProcessIncomingOrderResponse createProcessIncomingOrderResponse() {
-        return new ProcessIncomingOrderResponse();
+    public XmlToEdi createXmlToEdi() {
+        return new XmlToEdi();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ProcessIncomingOrderResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link XmlToEdiResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://services.paper4all/", name = "process-incoming-orderResponse")
-    public JAXBElement<ProcessIncomingOrderResponse> createProcessIncomingOrderResponse(ProcessIncomingOrderResponse value) {
-        return new JAXBElement<ProcessIncomingOrderResponse>(_ProcessIncomingOrderResponse_QNAME, ProcessIncomingOrderResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://services.paper4all/", name = "xml-to-ediResponse")
+    public JAXBElement<XmlToEdiResponse> createXmlToEdiResponse(XmlToEdiResponse value) {
+        return new JAXBElement<XmlToEdiResponse>(_XmlToEdiResponse_QNAME, XmlToEdiResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link ProcessIncomingOrder }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link XmlToEdi }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://services.paper4all/", name = "process-incoming-order")
-    public JAXBElement<ProcessIncomingOrder> createProcessIncomingOrder(ProcessIncomingOrder value) {
-        return new JAXBElement<ProcessIncomingOrder>(_ProcessIncomingOrder_QNAME, ProcessIncomingOrder.class, null, value);
+    @XmlElementDecl(namespace = "http://services.paper4all/", name = "xml-to-edi")
+    public JAXBElement<XmlToEdi> createXmlToEdi(XmlToEdi value) {
+        return new JAXBElement<XmlToEdi>(_XmlToEdi_QNAME, XmlToEdi.class, null, value);
     }
 
 }
