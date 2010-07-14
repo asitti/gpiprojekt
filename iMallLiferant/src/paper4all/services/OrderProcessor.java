@@ -35,6 +35,7 @@ import paper4all.messages.CDE;
 import paper4all.messages.Interchange;
 import paper4all.messages.Message;
 import paper4all.messages.Segment;
+import paper4all.messages.SegmentGroup;
 
 
 @WebService(name="OrderProcessorWebService") 
@@ -106,7 +107,23 @@ public class OrderProcessor
 					get(0)).getCDEOrDE().get(1)).getDE().get(0).setvalue("IN" + invoiceNr);
 			stmt.executeQuery("insert into invoices values(" + invoiceNr + ", " + gln + ", " + getActualDate() + ")");
 			
+			//dok datum
+			((CDE)((Segment)((Message) interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().
+					get(1)).getCDEOrDE().get(0)).getDE().get(1).setvalue("20" + getActualDate());
 			
+			//bestellnr
+			((CDE)((Segment)((SegmentGroup)((Message)interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup()
+					.get(2)).getSegmentOrSegmentGroup().get(0)).getCDEOrDE().get(0)).getDE().get(1).setvalue("ORD"+invoiceNr);
+			
+			//referenzdatum der bestellung
+			expr = xpath.compile("/Interchange/Message/Segment[@name='DTM']/CDE[@name='C507']/DE[@name='2380']/text()");
+		    Object refDate = expr.evaluate(doc, XPathConstants.NODESET);
+		    NodeList dateNodes = (NodeList) refDate;
+			((CDE)((Segment)((SegmentGroup)((Message)interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup()
+					.get(2)).getSegmentOrSegmentGroup().get(1)).getCDEOrDE().get(0)).getDE().get(1).
+					setvalue(dateNodes.item(0).getNodeValue());
+			
+					
 		    
 		    //aici aflam cate produse au fost cerute
 		    expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28']");//cate sunt
