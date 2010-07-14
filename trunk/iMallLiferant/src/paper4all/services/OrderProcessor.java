@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.jws.WebMethod;
@@ -51,6 +54,7 @@ public class OrderProcessor
 			JAXBContext jc = JAXBContext.newInstance("paper4all.ORDERS");
 			Unmarshaller u = jc.createUnmarshaller();
 			
+			//copiam continutul intr-un fisier pt a putea lucra cu el
 			FileWriter fw = new FileWriter(new File("temp.xml"));
 			fw.write(input);
 			fw.close();
@@ -70,31 +74,37 @@ public class OrderProcessor
 		    DocumentBuilder builder = domFactory.newDocumentBuilder();
 		    Document doc = builder.parse("temp.xml");
 
-		    //aici aflam cate produse au fost cerute
 		    XPathFactory factory = XPathFactory.newInstance();
 		    XPath xpath = factory.newXPath();
-		    XPathExpression expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28']");
-
+		    
+		    //gln der kaufer
+		    XPathExpression expr = xpath.compile("/Interchange/Header/Segment[@name='UNB']/CDE[@name='S002']/DE[@name='0004']/text()");
+		    Object glnObj = expr.evaluate(doc, XPathConstants.NODESET);
+		    NodeList glnNode= (NodeList) glnObj;
+		    String gln = glnNode.item(0).getNodeValue();
+		    
+		    
+		    //aici aflam cate produse au fost cerute
+		    expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28']");//cate sunt
 		    Object result = expr.evaluate(doc, XPathConstants.NODESET);
 		    NodeList nodes = (NodeList) result;
 		    //pt fiecare produs cerut ne uitam sa vedem ce gtin si in ce cantitate tb trimis
 		    for (int i = 0; i < nodes.getLength(); i++) 
 		    {
+		    	//gtin
 		       expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28'][" 
 		    		   + (i+1) + "]/Segment[@name='LIN']/CDE[@name='C212']/DE[@name='7140']/text()");
 		       Object gtinObj = expr.evaluate(doc, XPathConstants.NODESET);
 		       NodeList gtinNode= (NodeList) gtinObj;
 		       String gtin = gtinNode.item(0).getNodeValue();
 		       
+		       //qty
 		       expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28'][" 
 		    		   + (i+1) + "]/Segment[@name='QTY']/CDE[@name='C186']/DE[@name='6060']/text()");
 		       Object qtyObj = expr.evaluate(doc, XPathConstants.NODESET);
 		       NodeList qtyNode= (NodeList) qtyObj;
 		       String qty = qtyNode.item(0).getNodeValue();
 		      
-		       
-		       System.out.println(gtinNode.item(0).getNodeValue());
-		       
 		       ResultSet rset =
 			         stmt.executeQuery("select * from produkt where gtin="+ gtinNode.item(0).getNodeValue());
 		       while (rset.next()) 
@@ -104,6 +114,7 @@ public class OrderProcessor
 			    	
 			    	String produktNr = gtin.substring(7,11);
 			    	
+			    	//pt sa generam sgtin pt ce vindem
 			    	//daca e palette
 		    		if(gtin.equals("2965197100125") || gtin.equals("2965197100224")
 		    				|| gtin.equals("2965197100323") || gtin.equals("2965197100422") || gtin.equals("2965197100521")  )
@@ -122,6 +133,38 @@ public class OrderProcessor
 				    		String sgtinVerpackung = header + filterVPE + partition + basisNr + produktNr; //+ serial number
 				    		
 				    		//mai tb sgtin generate pt nr de cartoane care sunt inauntru si pt fiecare unitate in parte
+				    	}
+				    	
+				    	//atunci e vke
+				    	else
+				    	{
+				    		String serialNr;
+				    		ResultSet sgtinVPE =  stmt.executeQuery("select max(srn) from epc");
+				    		if(sgtinVPE.next())
+				    		{
+				    			serialNr = sgtinVPE.getString(1);
+				    		}
+				    		else
+				    			serialNr = "1000";//pt ca e 4-stellig
+				    		//6-anzahl verfugbare produkte	
+				    		//daca avem mai multe decat se cer generam pt fiecare produs un sgtin si il bagam  in baza de date
+				    		if(Integer.parseInt(rset.getString(6))>= Integer.parseInt(qty))
+				    		{
+				    			List<String> sgtinList = geneateSrn(Integer.parseInt(qty), serialNr);
+				    			Calendar cal = Calendar.getInstance();
+				    	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				    	        String date = sdf.format(cal.getTime());
+				    			
+				    			for(String s : sgtinList)
+				    			{
+				    				String sgtinVKE = header + filterVKE + partition + basisNr + produktNr + s;
+				    				stmt.executeQuery("insert into epc values("+sgtinVKE + "," + gtin + ", " 
+				    						+ gln + ", " + s + "," + date + ");");
+				    				
+				    			}
+				    		}
+				    		
+				    		
 				    	}
 			    		
 			    	}
@@ -152,5 +195,19 @@ public class OrderProcessor
 		}
 		
 		return false;
+	}
+	
+	//metoda intoarce "anzahl" serial numbers produse, egal de care
+	private List<String> geneateSrn(int anzahl, String srn)
+	{
+		List<String> srnList = new ArrayList<String>();
+		for(int i=0; i<anzahl; i++)
+		{
+			int nr = Integer.parseInt(srn)+(i+1);
+			srn = Integer.toString(nr);
+			srnList.add(srn);
+		}
+		
+		return srnList;
 	}
 }
