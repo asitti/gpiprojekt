@@ -105,12 +105,15 @@ public class OrderProcessor
 		       NodeList qtyNode= (NodeList) qtyObj;
 		       String qty = qtyNode.item(0).getNodeValue();
 		      
+		       System.out.println(gtin + " : cerute " + qty);
+		       
 		       ResultSet rset =
 			         stmt.executeQuery("select * from produkt where gtin="+ gtinNode.item(0).getNodeValue());
 		       while (rset.next()) 
 		       {
 		    	   //cate sunt disponibile in baza de date - anzahl_verfuegbar
-			    	System.out.println(gtin + " : cerute " + qty + ": avute " +rset.getLong(6));
+		    	   	int verfugbar = Integer.parseInt(rset.getString(6));
+			    	System.out.println(gtin + " : cerute " + qty + ": avute " + verfugbar);
 			    	
 			    	String produktNr = gtin.substring(7,11);
 			    	
@@ -138,46 +141,40 @@ public class OrderProcessor
 				    	//atunci e vke
 				    	else
 				    	{
-				    		String serialNr;
+				    		String serialNr = null;
 				    		ResultSet sgtinVPE =  stmt.executeQuery("select max(srn) from epc");
 				    		if(sgtinVPE.next())
 				    		{
 				    			serialNr = sgtinVPE.getString(1);
 				    		}
-				    		else
+				    		if(serialNr == null)
 				    			serialNr = "1000";//pt ca e 4-stellig
+				    		System.out.println("ultimul snr este:" + serialNr);
+				    		
+				    		
 				    		//6-anzahl verfugbare produkte	
 				    		//daca avem mai multe decat se cer generam pt fiecare produs un sgtin si il bagam  in baza de date
-				    		if(Integer.parseInt(rset.getString(6))>= Integer.parseInt(qty))
+				    		if(verfugbar >= Integer.parseInt(qty))
 				    		{
 				    			List<String> sgtinList = geneateSrn(Integer.parseInt(qty), serialNr);
 				    			Calendar cal = Calendar.getInstance();
 				    	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 				    	        String date = sdf.format(cal.getTime());
+				    	        
+				    	        System.out.println(date);
 				    			
 				    			for(String s : sgtinList)
 				    			{
+				    				System.out.println(s);
 				    				String sgtinVKE = header + filterVKE + partition + basisNr + produktNr + s;
 				    				stmt.executeQuery("insert into epc values("+sgtinVKE + "," + gtin + ", " 
-				    						+ gln + ", " + s + "," + date + ");");
+				    						+ gln + ", " + s + ",'" + date + "')");
 				    				
 				    			}
 				    		}
-				    		
-				    		
 				    	}
-			    		
 			    	}
-			    	
-			    	if(Integer.parseInt(rset.getString(6))>=Integer.parseInt(qtyNode.item(0).getNodeValue()))
-			    	{
-			    		System.out.println("se poate trimite toata cant");
-			    	}
-			    	else
-			    		System.out.println("se poate trimite doar o parte");
 			    }
-		       
-		       
 		    }
 			
 			stmt.close();
@@ -203,7 +200,8 @@ public class OrderProcessor
 		List<String> srnList = new ArrayList<String>();
 		for(int i=0; i<anzahl; i++)
 		{
-			int nr = Integer.parseInt(srn)+(i+1);
+			
+			int nr = Integer.parseInt(srn)+1;
 			srn = Integer.toString(nr);
 			srnList.add(srn);
 		}
