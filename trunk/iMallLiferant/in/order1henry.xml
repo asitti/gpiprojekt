@@ -84,7 +84,7 @@
       <Segment name="LIN">
         <DE name="1082">1</DE> <!--Zähler der bestellten Produkte-->
         <CDE name="C212">
-          <DE name="7140">2965197100101</DE> <!--GTIN-->
+          <DE name="7140">2965197100118</DE> <!--GTIN-->
           <DE name="7143">SRV</DE>
         </CDE>
       </Segment>
