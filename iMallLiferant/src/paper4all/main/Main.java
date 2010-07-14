@@ -44,15 +44,6 @@ public class Main
 	  
 		Main stub = new Main();
 		stub.runProgram();
-		  /*BuchhaltungWebService buchPort = new BuchhaltungService().getBuchhaltungWebServicePort();
-		  File file = new File("files/file");
-		  System.out.println("Buchhaltung - sending input from a file and receving:" + buchPort.receiveAString(getInput(file)));
-		  
-		  System.out.println("-------------------------------------------------");
-		  LagerWebService lagerPort = new LagerService().getLagerWebServicePort();
-		  List<paper4all.webservices.Sended> send = lagerPort.sendedProducts();
-		  for(int i=0;i<send.size();i++)
-			  System.out.println(display(send.get(i)));*/
 	 } 
   
 	private String getInput(File f)

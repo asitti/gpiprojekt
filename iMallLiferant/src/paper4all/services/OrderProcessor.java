@@ -49,7 +49,7 @@ public class OrderProcessor
 		String partition = "4";
 		try
 		{
-			JAXBContext jc = JAXBContext.newInstance("paper4all.ORDERS");
+			JAXBContext jc = JAXBContext.newInstance("paper4all.messages");
 			Unmarshaller u = jc.createUnmarshaller();
 			
 			//copiam continutul intr-un fisier pt a putea lucra cu el
@@ -153,8 +153,46 @@ public class OrderProcessor
 		    			System.out.println("	karton: " + gtinKarton + " x " + anzahlKarton);
 		    			System.out.println("		vke: " + gtinVKE + " x " + anzahlVKE);
 			    		
-		    			String sgtinVerpackung = header + filterVPE + partition + basisNr + produktNr; //+ serial number
-		    			//mai tb sgtin generate pt nr de cartoane care sunt inauntru si pt fiecare unitate in parte
+		    			
+		    			//daca avem atatea disponibile
+		    			if(verfugbar >= Integer.parseInt(qty) )
+		    			{    			
+			    			//generare qty sgtin pallette
+			    			String serialNrPalette= getSRNEPC(stmt);
+			    			String teilSGTIN = header + filterVPE + partition + basisNr + produktNr;
+			    			List<String> sgtinPaletteList = generateSrn(Integer.parseInt(qty), serialNrPalette);
+			    			insertEPC(stmt, teilSGTIN, sgtinPaletteList, gtin, gln);
+			    			
+			    			//generare qty*anzahlKatron sgtin pt kartons
+			    			String serialNrKarton= getSRNEPC(stmt);
+			    			teilSGTIN = header + filterVPE + partition + basisNr + produktNr;
+			    			List<String> sgtinKartonList = generateSrn(Integer.parseInt(qty)* anzahlKarton, serialNrKarton);
+			    			insertEPC(stmt, teilSGTIN, sgtinKartonList, gtinKarton, gln);
+			    			
+			    			//generare qty*anzahlKarton*anzahlVKE sgtin vke
+			    			String serialNrVKE= getSRNEPC(stmt);
+			    			teilSGTIN = header + filterVKE + partition + basisNr + produktNr;
+			    			List<String> sgtinVKEList = generateSrn(Integer.parseInt(qty)*anzahlKarton*anzahlVKE, serialNrPalette);
+			    			insertEPC(stmt, teilSGTIN, sgtinVKEList, gtinVKE, gln);
+			    			
+			    			int kKarton=0, kVKE=0;
+			    			for(String sp : sgtinPaletteList)
+			    			{
+			    				System.out.println("pt palette cu sgtin: " + sp);
+			    				
+			    				//fiecare vke intre k si k+anzahl vor fi trecute la kartonul k
+			    				for(int j = kKarton; j<((kKarton+1)*anzahlKarton); j++)
+			    				{
+			    					System.out.println("	sgtin_karton: " + sgtinKartonList.get(j));
+			    					for(int k = j*anzahlVKE; k < ((j+1)*anzahlVKE); k++)
+			    						System.out.println("		sgtin_vke: " + sgtinVKEList.get(k));
+			    				}
+			    				kKarton += 1;
+			    			}
+		    			
+		    			}
+		    			
+		    			
 		    			
 		    			
 		    		}
@@ -191,7 +229,7 @@ public class OrderProcessor
 					    		//acuma tb generate "qty" snr pt kartons
 				    			String teilSGTIN = header + filterVPE + partition + basisNr + produktNr;
 				    			List<String> sgtinList = generateSrn(Integer.parseInt(qty), serialNrKarton);
-				    			insertEPC(stmt, teilSGTIN, sgtinList, teilSGTIN, gln);
+				    			insertEPC(stmt, teilSGTIN, sgtinList, gtin, gln);
 				    	//-----ende kartons------
 				    			
 				    	//-------aici incep vke----------
@@ -281,7 +319,6 @@ public class OrderProcessor
 			
 			for(String s : sgtinList)
 			{
-				System.out.println(s);
 				String sgtinStuck = teilSGTIN + s;
 				stmt.executeQuery("insert into epc values("+sgtinStuck + "," + gtin + ", " 
 							+ gln + ", " + s + ",'" + date + "')");
