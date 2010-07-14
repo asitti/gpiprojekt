@@ -25,16 +25,19 @@ public interface OrderProcessorWebService {
 
     /**
      * 
+     * @param invoiceTemplateContent
      * @param xmlOrderContent
      * @return
-     *     returns boolean
+     *     returns java.lang.String
      */
     @WebMethod(operationName = "process-incoming-order")
     @WebResult(name = "success-result", targetNamespace = "")
     @RequestWrapper(localName = "process-incoming-order", targetNamespace = "http://services.paper4all/", className = "paper4all.wsdl.ProcessIncomingOrder")
     @ResponseWrapper(localName = "process-incoming-orderResponse", targetNamespace = "http://services.paper4all/", className = "paper4all.wsdl.ProcessIncomingOrderResponse")
-    public boolean processIncomingOrder(
+    public String processIncomingOrder(
         @WebParam(name = "xmlOrderContent", targetNamespace = "")
-        String xmlOrderContent);
+        String xmlOrderContent,
+        @WebParam(name = "invoiceTemplateContent", targetNamespace = "")
+        String invoiceTemplateContent);
 
 }

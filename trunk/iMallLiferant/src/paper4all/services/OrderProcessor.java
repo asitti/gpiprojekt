@@ -19,6 +19,7 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,7 +31,10 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import paper4all.messages.CDE;
 import paper4all.messages.Interchange;
+import paper4all.messages.Message;
+import paper4all.messages.Segment;
 
 
 @WebService(name="OrderProcessorWebService") 
@@ -40,7 +44,8 @@ public class OrderProcessor
 	
 	@WebMethod(operationName="process-incoming-order") 
 	@WebResult(name = "success-result") 
-	public boolean processOrder( @WebParam(name="xmlOrderContent")String input) 
+	public String processOrder( @WebParam(name="xmlOrderContent")String input, 
+			@WebParam(name="invoiceTemplateContent") String invoice) 
 	{ 
 		String header = "48";
 		String basisNr = "2965197";
@@ -56,7 +61,14 @@ public class OrderProcessor
 			FileWriter fw = new FileWriter(new File("temp.xml"));
 			fw.write(input);
 			fw.close();
-			Interchange interchange = (Interchange ) u.unmarshal(new File("temp.xml"));
+			
+			//cream fisierul pt invoice
+			fw = new FileWriter(new File("inv.xml"));
+			fw.write(invoice);
+			fw.close();
+			Interchange interchange = (Interchange ) u.unmarshal(new File("inv.xml"));
+			
+			
 		
 			//conexiune la baza de date
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -75,12 +87,26 @@ public class OrderProcessor
 		    XPathFactory factory = XPathFactory.newInstance();
 		    XPath xpath = factory.newXPath();
 		    
-		    //gln der kaufer
+		    //gln des kaufers
 		    XPathExpression expr = xpath.compile("/Interchange/Header/Segment[@name='UNB']/CDE[@name='S002']/DE[@name='0004']/text()");
 		    Object glnObj = expr.evaluate(doc, XPathConstants.NODESET);
 		    NodeList glnNode= (NodeList) glnObj;
 		    String gln = glnNode.item(0).getNodeValue();
 		    
+		    //schimbare gln des empfangers
+			((CDE) interchange.getHeader().getSegment().getCDEOrDE().get(2)).getDE().get(0).setvalue(gln);
+			
+			//datum
+			((CDE) interchange.getHeader().getSegment().getCDEOrDE().get(3)).getDE().get(0).setvalue(getActualDate());
+			((CDE) interchange.getHeader().getSegment().getCDEOrDE().get(3)).getDE().get(1).setvalue(getActualTime());
+			
+			//rechnungsnr + bagat in baza de date
+			int invoiceNr = getInvoiceNr(stmt);
+			((CDE)((Segment)((Message) interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().
+					get(0)).getCDEOrDE().get(1)).getDE().get(0).setvalue("IN" + invoiceNr);
+			stmt.executeQuery("insert into invoices values(" + invoiceNr + ", " + gln + ", " + getActualDate() + ")");
+			
+			
 		    
 		    //aici aflam cate produse au fost cerute
 		    expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28']");//cate sunt
@@ -176,7 +202,7 @@ public class OrderProcessor
 			    			insertEPC(stmt, teilSGTIN, sgtinVKEList, gtinVKE, gln);
 			    			
 			    			int kKarton=0, kVKE=0;
-			    			for(String sp : sgtinPaletteList)
+			    			/*for(String sp : sgtinPaletteList)
 			    			{
 			    				System.out.println("pt palette cu sgtin: " + sp);
 			    				
@@ -188,7 +214,7 @@ public class OrderProcessor
 			    						System.out.println("		sgtin_vke: " + sgtinVKEList.get(k));
 			    				}
 			    				kKarton += 1;
-			    			}
+			    			}*/
 		    			
 		    			}
 		    			
@@ -243,7 +269,7 @@ public class OrderProcessor
 				    			
 				    			//ordonarea karton - anzahl vke care se afla intr-un carton 
 				    			int k=0;
-				    			for(String sgtinVPE : sgtinList)
+				    			/*for(String sgtinVPE : sgtinList)
 				    			{
 				    				System.out.println("pt kartonul cu sgtin: " + sgtinVPE);
 				    				
@@ -253,7 +279,7 @@ public class OrderProcessor
 				    					System.out.println("	sgtin_vke: " + sgtinListVKE.get(j));
 				    				}
 				    				k+=anzahl;				    				
-				    			}
+				    			}*/
 				    		}				    		
 				    	}
 				    	
@@ -279,18 +305,18 @@ public class OrderProcessor
 			stmt.close();
 		    
 			
-			/*
-			JAXBContext jc2 = JAXBContext.newInstance("paper4all.ORDERS");
+			
+			JAXBContext jc2 = JAXBContext.newInstance("paper4all.messages");
 			Marshaller m = jc2.createMarshaller();
 			m.marshal(interchange, System.out);
-			*/
+			
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 		
-		return false;
+		return null;
 	}
 	
 	//metoda intoarce "anzahl" serial numbers produse, egal de care
@@ -357,7 +383,47 @@ public class OrderProcessor
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	private String getActualDate()
+	{
+		Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
+        return sdf.format(cal.getTime());
+	}
+	
+	private String getActualTime()
+	{
+		Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HHmm");
+        return sdf.format(cal.getTime());
+	}
+	
+	private int getInvoiceNr(Statement stmt)
+	{
+		try 
+		{
+			String nr = null;
+			ResultSet invoiceNr;
+			invoiceNr = stmt.executeQuery("select max(invoice_nr) from invoices");
+			
+			if(invoiceNr.next())
+			{
+				nr = invoiceNr.getString(1);
+			}
+			if(nr == null)
+				nr = "1000";//pt ca e 4-stellig
+			return Integer.parseInt(nr)+1;
+		} 
+		catch (SQLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return 1000;
+		}
 		
 		
 	}
+	
+	
 }	

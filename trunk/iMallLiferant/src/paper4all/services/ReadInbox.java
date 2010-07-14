@@ -35,17 +35,15 @@ public class ReadInbox
 	
 		    while (engine.hasNext()) 
 		    {
-		       FTPFile[] files = engine.getNext(100);  // "page size" you want
+		       FTPFile[] files = engine.getNext(1);  // "page size" you want
 		       //do whatever you want with these files, display them, etc.
 		       //expensive FTPFile objects not created until needed.
 		       
 		      // f.retrieveFile(arg0, arg1)
 		       
-		       for(int i=0;i<files.length;i++)
-		       {
-		    	   System.out.println(files[i].getName());
-		    	   
-		       }
+		       
+		       System.out.println(files[0].getName());
+		    	
 		       
 		       if(files.length>0)
 		       {
@@ -63,9 +61,11 @@ public class ReadInbox
 			   		      input += str;
 			   		   }
 			   		   in.close();
+			   		   f.deleteFile("in/" + files[0].getName());
 			   		   return input;
 		    	   }	    		   
 		       }
+		       
 		    }
 		    
 		    f.disconnect();
