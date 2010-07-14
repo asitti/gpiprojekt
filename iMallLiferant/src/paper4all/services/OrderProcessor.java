@@ -30,11 +30,8 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-import paper4all.ORDERS.CDE;
-import paper4all.ORDERS.DE;
-import paper4all.ORDERS.Interchange;
-import paper4all.ORDERS.Segment;
-import paper4all.ORDERS.SegmentGroup;
+import paper4all.messages.Interchange;
+
 
 @WebService(name="OrderProcessorWebService") 
 @SOAPBinding(style = SOAPBinding.Style.DOCUMENT) 
@@ -123,6 +120,39 @@ public class OrderProcessor
 		    		if(gtin.equals("2965197100125") || gtin.equals("2965197100224")
 		    				|| gtin.equals("2965197100323") || gtin.equals("2965197100422") || gtin.equals("2965197100521")  )
 		    		{
+		    			//tb vazut cate kartons contine si care e gtin-ul acestora
+		    			ResultSet karton =  stmt.executeQuery(
+		    					"select anzahl,gtin_karton from palette where gtin_palette='" 
+			    				+ gtin +"'");
+			    		int anzahlKarton=0;
+			    		String gtinKarton=null;
+			    		if(karton.next())
+			    		{
+			    			String  anz = karton.getString(1);
+			    			if(anz != null)
+			    				anzahlKarton = Integer.parseInt(anz);
+			    			gtinKarton = karton.getString(2);
+			    		}
+			    		
+			    		//si cate vke contine un karton cu gtin = gtinKarton
+			    		
+			    		ResultSet vke =  stmt.executeQuery(
+		    					"select anzahl,gtin_vke from karton where gtin_karton='" 
+			    				+ gtinKarton +"'");
+			    		int anzahlVKE=0;
+			    		String gtinVKE=null;
+			    		if(vke.next())
+			    		{
+			    			String  anz = vke.getString(1);
+			    			if(anz != null)
+			    				anzahlVKE = Integer.parseInt(anz);
+			    			gtinVKE = karton.getString(2);
+			    		}
+			    		
+		    			System.out.println("palette: " + gtin);
+		    			System.out.println("	karton: " + gtinKarton + " x " + anzahlKarton);
+		    			System.out.println("		vke: " + gtinVKE + " x " + anzahlVKE);
+			    		
 		    			String sgtinVerpackung = header + filterVPE + partition + basisNr + produktNr; //+ serial number
 		    			//mai tb sgtin generate pt nr de cartoane care sunt inauntru si pt fiecare unitate in parte
 		    			
@@ -137,14 +167,14 @@ public class OrderProcessor
 				    	{
 				    		 
 				    		//tb vazut cate bucati vke sunt intr-un carton
-				    		ResultSet karton =  stmt.executeQuery("select anzahl,gtin_vke from karton where gtin_karton='" 
+				    		ResultSet karton =  stmt.executeQuery(
+				    				"select anzahl,gtin_vke from karton where gtin_karton='" 
 				    				+ gtin +"'");
 				    		int anzahl=0;
 				    		String gtinVKE=null;
 				    		if(karton.next())
 				    		{
 				    			String  anz = karton.getString(1);
-				    			
 				    			if(anz != null)
 				    				anzahl = Integer.parseInt(anz);
 				    			gtinVKE = karton.getString(2);
@@ -157,7 +187,6 @@ public class OrderProcessor
 				    	//------kartons-------
 				    			//vedem care e ultimul srn pt vpe din baza de date
 					    		String serialNrKarton = getSRNEPC(stmt);
-					    		System.out.println("ultimul snr este:" + serialNrKarton);
 					    		
 					    		//acuma tb generate "qty" snr pt kartons
 				    			String teilSGTIN = header + filterVPE + partition + basisNr + produktNr;
@@ -168,7 +197,6 @@ public class OrderProcessor
 				    	//-------aici incep vke----------
 				    			//generare snr pt (gty kartons cerute) * (anzahl der vke) dintr-un carton
 				    			String serialNrVKE = getSRNEPC(stmt);
-					    		System.out.println("ultimul snr_vpe este:" + serialNrVKE);
 					    		
 					    		//acuma tb generate "qty" snr pt kartons
 				    			teilSGTIN = header + filterVKE + partition + basisNr + produktNr;
@@ -188,14 +216,7 @@ public class OrderProcessor
 				    				}
 				    				k+=anzahl;				    				
 				    			}
-				    			
-				    			
-				    			
-				    		}
-				    		
-				    		String sgtinVerpackung = header + filterVPE + partition + basisNr + produktNr; //+ serial number
-				    		//mai tb sgtin generate pt toate unitatile din interior
-				    		
+				    		}				    		
 				    	}
 				    	
 				    	//atunci e vke
@@ -262,8 +283,7 @@ public class OrderProcessor
 			{
 				System.out.println(s);
 				String sgtinStuck = teilSGTIN + s;
-				
-					stmt.executeQuery("insert into epc values("+sgtinStuck + "," + gtin + ", " 
+				stmt.executeQuery("insert into epc values("+sgtinStuck + "," + gtin + ", " 
 							+ gln + ", " + s + ",'" + date + "')");
 			} 
 		}

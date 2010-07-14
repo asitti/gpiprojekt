@@ -7,8 +7,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import paper4all.rubyParser.Interchange;
-import paper4all.rubyParser.Message;
+import paper4all.messages.Interchange;
+import paper4all.messages.Message;
+
 
 public class XMLtoJava 
 {

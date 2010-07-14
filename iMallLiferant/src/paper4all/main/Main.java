@@ -9,7 +9,6 @@ import java.io.IOException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
-import paper4all.rubyParser.Interchange;
 import paper4all.webservices.utils.Sended;
 import paper4all.wsdl.*;
 
