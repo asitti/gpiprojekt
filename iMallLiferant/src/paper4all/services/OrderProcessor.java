@@ -299,7 +299,7 @@ public class OrderProcessor
 		       NodeList qtyNode= (NodeList) qtyObj;
 		       String qty = qtyNode.item(0).getNodeValue();
 		      
-		       System.out.println(gtin + " : cerute " + qty);
+		       //System.out.println(gtin + " : cerute " + qty);
 		       
 		       ResultSet rset =
 			         stmt.executeQuery("select * from produkt where gtin="+ gtinNode.item(0).getNodeValue());
@@ -319,7 +319,6 @@ public class OrderProcessor
 			    		
 			    		//introducere elem
 			    		linCounter.setvalue(Integer.toString(anzahlLin));
-			    		System.out.println(gtin + ": " + linCounter.getvalue());
 			    		linGTIN.setvalue(gtin);
 			    		qtyMenge.setvalue(qty);
 			    		amount.setvalue(Float.toString(nettoP * Integer.parseInt(qty)));
@@ -363,9 +362,10 @@ public class OrderProcessor
 				    			gtinVKE = karton.getString(2);
 				    		}
 				    		
-			    			System.out.println("palette: " + gtin);
+			    			/*System.out.println("palette: " + gtin);
 			    			System.out.println("	karton: " + gtinKarton + " x " + anzahlKarton);
 			    			System.out.println("		vke: " + gtinVKE + " x " + anzahlVKE);
+				    		*/
 				    		
 			    			//generare qty sgtin pallette
 			    			String serialNrPalette= getSRNEPC(stmt);
@@ -463,7 +463,7 @@ public class OrderProcessor
 					    	else
 					    	{
 					    		String serialNr = getSRNEPC(stmt);
-					    		System.out.println("ultimul snr este:" + serialNr);
+					    		//System.out.println("ultimul snr este:" + serialNr);
 					    		
 				    			String teilSGTIN = header + filterVKE + partition + basisNr + produktNr;
 				    			List<String> sgtinList = generateSrn(Integer.parseInt(qty), serialNr);
@@ -475,7 +475,7 @@ public class OrderProcessor
 			    		//aici tb bagat in interchange
 			    		//sunt de la 0-8 seg si seggroup inaintea lui
 			    		((Message)interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().add(8+anzahlLin, sg26);
-			    		System.out.println("a bagat acuma");
+			    		
 				    }
 		       } 
 		    }

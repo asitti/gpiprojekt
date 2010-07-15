@@ -30,20 +30,10 @@ public class HubConnectionReceive
 			
 			//ftp.deleteFile("in1.xml");
 			Vector<String> vector = ftp.listRaw();
-			if(vector != null)
+			for(String s : vector)
 			{
-				for(String s : vector)
-				{
-					System.out.println(s);
-					//ftp.deleteFile(s);
-					
-					//System.out.println(ftp.deleteFile(s));
-				}
-				ftp.deleteFile(vector.get(0));
+				System.out.println(s);
 			}
-			else
-				System.out.println("es gibt keine Dateien zu loeschen!");
-			//ftp.closeServer();
 			 
 		}
 		catch (IOException e) 
