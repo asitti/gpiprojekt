@@ -78,7 +78,7 @@
             <Segment name="NAD">
                 <DE name="3035">SU</DE> <!-- Lieferant -->
                 <CDE name="C082">
-                    <DE name="3039">4012345500004</DE> <!-- GLN des Lieferanten -->
+                    <DE name="3039">2965197100002</DE> <!-- GLN des Lieferanten -->
                     <DE name="3055">9</DE>
                 </CDE>
             </Segment>
@@ -94,9 +94,9 @@
         </SegmentGroup>
         <SegmentGroup name="SG2">
             <Segment name="NAD">
-                <DE name="3035">DP</DE> <!-- Spediteur -->
+                <DE name="3035">DP</DE> <!-- Lager -->
                 <CDE name="C082">
-                    <DE name="3039">5412345678908</DE> <!-- GLN des Spediteurs -->
+                    <DE name="3039">2765197100008</DE> <!-- GLN des Lagers -->
                     <DE name="3055">9</DE>
                 </CDE>
             </Segment>
@@ -109,7 +109,7 @@
                     <DE name="6343">4</DE> <!-- RechnungsWaehrung -->
                 </CDE>
             </Segment>
-        </SegmentGroup>
+        </SegmentGroup>        
         <SegmentGroup name="SG8">
             <Segment name="PAT">
                 <DE name="4279">1</DE> <!-- Normale Bezahlung (kein Discount etc) -->
@@ -117,7 +117,7 @@
                     <DE name="2475">5</DE> <!-- 5: Rechnungsdatum -->
                     <DE name="2009">3</DE> <!-- 3: "After reference" (optional) -->
                     <DE name="2151">M</DE> <!-- M: Monat -->
-                    <DE name="2152">2</DE> <!-- 2 Monate fuer Zahlung -->
+                    <DE name="2152">1</DE> <!-- 1 Monat fuer Zahlung -->
                 </CDE>
             </Segment>
         </SegmentGroup>
