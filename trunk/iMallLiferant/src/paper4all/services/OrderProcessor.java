@@ -506,7 +506,7 @@ public class OrderProcessor
 			Marshaller m = jc2.createMarshaller();
 			File interch = new File("interch.xml");
 			m.marshal(interchange, interch);
-			
+			return getInput(interch);
 		}
 		catch(Exception e)
 		{

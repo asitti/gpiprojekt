@@ -36,8 +36,13 @@ public class Main
 		//System.out.println(edi.ediToXml(getInput(new File("in/in.edi"))));
 		
 		OrderProcessorWebService order = new OrderProcessorService().getOrderProcessorWebServicePort();
-		System.out.println(order.processIncomingOrder(getInput(new File("in/order_f.xml")), 
-				getInput(new File("src/paper4all/templates/invoic_template.xml"))));
+		String invoice_xml = order.processIncomingOrder(getInput(new File("in/order_f.xml")), 
+				getInput(new File("src/paper4all/templates/invoic_template.xml")));
+		XMLToEDIWebService s = new XMLToEDIService().getXMLToEDIWebServicePort();
+		String invoice_edi = s.xmlToEdi(invoice_xml);
+		System.out.println(invoice_edi);
+		//System.out.println(order.processIncomingOrder(getInput(new File("in/order_f.xml")), 
+				//getInput(new File("src/paper4all/templates/invoic_template.xml"))));
 		
 	}
 	public static void main( String[] args )
