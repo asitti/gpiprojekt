@@ -10,10 +10,6 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 
-import org.jruby.embed.LocalContextScope;
-import org.jruby.embed.PathType;
-import org.jruby.embed.ScriptingContainer;
-
  
 public class ConverterTests {
 	
