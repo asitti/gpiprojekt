@@ -99,7 +99,7 @@
             <Segment name="QTY">
                 <CDE name="C186">
                     <DE name="6063">1</DE>
-                    <DE name="6060">2</DE>
+                    <DE name="6060">1</DE>
                     <!--Menge-->
                 </CDE>
             </Segment>
@@ -108,7 +108,7 @@
             <Segment name="LIN">
                 <DE name="1082">2</DE>
                 <CDE name="C212">
-                    <DE name="7140">2165197000016</DE>
+                    <DE name="7140">2965197100415</DE>
                     <DE name="7143">SRV</DE>
                 </CDE>
             </Segment>
