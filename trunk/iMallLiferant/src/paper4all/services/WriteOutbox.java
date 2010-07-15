@@ -37,8 +37,8 @@ public class WriteOutbox
 	        ftp.binary();
 	        System.out.println(" OK");
 	        Calendar cal = Calendar.getInstance();
-	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	        String fileName = sdf.format(cal.getTime());
+	        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy_HHmmss");
+	        String fileName = sdf.format(cal.getTime())+".edi";
 
 	        
 	        FileWriter writer = new FileWriter(new File(fileName));

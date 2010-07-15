@@ -44,6 +44,9 @@ public class Main
 		//System.out.println(order.processIncomingOrder(getInput(new File("in/order_f.xml")), 
 				//getInput(new File("src/paper4all/templates/invoic_template.xml"))));
 		
+		WriteOutboxWebService write = new WriteOutboxService().getWriteOutboxWebServicePort();
+		System.out.println(write.writeToOutbox(invoice_edi));
+		
 	}
 	public static void main( String[] args )
 	{   

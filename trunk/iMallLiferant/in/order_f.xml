@@ -7,7 +7,7 @@
                 <DE name="0002">3</DE>
             </CDE>
             <CDE name="S002"> <!-- Absender -->
-                <DE name="0004">2965197100007</DE> <!-- GLN des Absenders -->
+                <DE name="0004">2765197100008</DE> <!-- GLN des Absenders -->
                 <DE name="0007">14</DE> <!-- EAN International -->
             </CDE>
             <CDE name="S003">
