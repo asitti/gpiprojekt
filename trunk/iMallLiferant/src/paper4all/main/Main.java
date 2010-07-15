@@ -36,7 +36,7 @@ public class Main
 		//System.out.println(edi.ediToXml(getInput(new File("in/in.edi"))));
 		
 		OrderProcessorWebService order = new OrderProcessorService().getOrderProcessorWebServicePort();
-		System.out.println(order.processIncomingOrder(getInput(new File("in/order1henry.xml")), 
+		System.out.println(order.processIncomingOrder(getInput(new File("in/order_f.xml")), 
 				getInput(new File("src/paper4all/templates/invoic_template.xml"))));
 		
 	}

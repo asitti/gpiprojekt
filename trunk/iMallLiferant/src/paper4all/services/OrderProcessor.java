@@ -32,6 +32,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import paper4all.messages.CDE;
+import paper4all.messages.DE;
 import paper4all.messages.Interchange;
 import paper4all.messages.Message;
 import paper4all.messages.Segment;
@@ -92,10 +93,10 @@ public class OrderProcessor
 		    XPathExpression expr = xpath.compile("/Interchange/Header/Segment[@name='UNB']/CDE[@name='S002']/DE[@name='0004']/text()");
 		    Object glnObj = expr.evaluate(doc, XPathConstants.NODESET);
 		    NodeList glnNode= (NodeList) glnObj;
-		    String gln = glnNode.item(0).getNodeValue();
+		    String glnHandler = glnNode.item(0).getNodeValue();
 		    
 		    //schimbare gln des empfangers
-			((CDE) interchange.getHeader().getSegment().getCDEOrDE().get(2)).getDE().get(0).setvalue(gln);
+			((CDE) interchange.getHeader().getSegment().getCDEOrDE().get(2)).getDE().get(0).setvalue(glnHandler);
 			
 			//datum
 			((CDE) interchange.getHeader().getSegment().getCDEOrDE().get(3)).getDE().get(0).setvalue(getActualDate());
@@ -105,7 +106,7 @@ public class OrderProcessor
 			int invoiceNr = getInvoiceNr(stmt);
 			((CDE)((Segment)((Message) interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().
 					get(0)).getCDEOrDE().get(1)).getDE().get(0).setvalue("IN" + invoiceNr);
-			stmt.executeQuery("insert into invoices values(" + invoiceNr + ", " + gln + ", " + getActualDate() + ")");
+			stmt.executeQuery("insert into invoices values(" + invoiceNr + ", " + glnHandler + ", " + getActualDate() + ")");
 			
 			//dok datum
 			((CDE)((Segment)((Message) interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().
@@ -123,12 +124,25 @@ public class OrderProcessor
 					.get(2)).getSegmentOrSegmentGroup().get(1)).getCDEOrDE().get(0)).getDE().get(1).
 					setvalue(dateNodes.item(0).getNodeValue());
 			
+			//gln des handlers
+			((CDE)((Segment)((SegmentGroup)((Message)interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup()
+					.get(3)).getSegmentOrSegmentGroup().get(0)).getCDEOrDE().get(1)).getDE().get(0).
+					setvalue(glnHandler);
+			
+			//rechnungsempfanger
+			((CDE)((Segment)((SegmentGroup)((Message)interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup()
+					.get(5)).getSegmentOrSegmentGroup().get(0)).getCDEOrDE().get(1)).getDE().get(0).
+					setvalue(glnHandler);
+			
+						
 					
 		    
 		    //aici aflam cate produse au fost cerute
 		    expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28']");//cate sunt
 		    Object result = expr.evaluate(doc, XPathConstants.NODESET);
 		    NodeList nodes = (NodeList) result;
+		    
+		    int anzahlLin = 0;
 		    //pt fiecare produs cerut ne uitam sa vedem ce gtin si in ce cantitate tb trimis
 		    for (int i = 0; i < nodes.getLength(); i++) 
 		    {
@@ -150,6 +164,134 @@ public class OrderProcessor
 		       
 		       ResultSet rset =
 			         stmt.executeQuery("select * from produkt where gtin="+ gtinNode.item(0).getNodeValue());
+		      
+	//pt adaugare de produse in rechnung
+		        SegmentGroup sg26 = new SegmentGroup();
+			    sg26.setName("SG26");
+			    //LIN
+			    Segment lin = new Segment();
+			    lin.setName("LIN");
+			    DE linCounter = new DE();
+			    linCounter.setName("1082");
+			    CDE linCDE = new CDE();
+			    linCDE.setName("C212");
+			    DE linGTIN = new DE();
+			    linGTIN.setName("7140");
+			    DE eanUCC = new DE();
+			    eanUCC.setName("7143");
+			    eanUCC.setvalue("SRV");
+			    linCDE.getDE().add(linGTIN);
+			    linCDE.getDE().add(eanUCC);
+			    lin.getCDEOrDE().add(linCounter);
+			    lin.getCDEOrDE().add(linCDE);
+			    sg26.getSegmentOrSegmentGroup().add(lin);
+			    //END LIN
+			    
+			    //QTY
+			    Segment qtyProdukt = new Segment();
+			    qtyProdukt.setName("QTY");
+			    CDE qtyCDE = new CDE();
+			    qtyCDE.setName("C186");
+			    DE qtyGeliefert = new DE();
+			    qtyGeliefert.setName("6063");
+			    qtyGeliefert.setvalue("46");
+			    DE qtyMenge = new DE();
+			    qtyMenge.setName("6060");
+			    qtyCDE.getDE().add(qtyGeliefert);
+			    qtyCDE.getDE().add(qtyMenge);
+			    qtyProdukt.getCDEOrDE().add(qtyCDE);
+			    sg26.getSegmentOrSegmentGroup().add(qtyProdukt);
+			    //END QTY
+			    
+			    //SegmentGroup SG27
+			    SegmentGroup sg27 = new SegmentGroup();
+			    sg27.setName("SG28");
+			    //Segment MOA
+			    Segment moa = new Segment();
+			    moa.setName("MOA");
+			    CDE moaCDE = new CDE();
+			    moaCDE.setName("C516");
+			    DE itemAmount = new DE();
+			    itemAmount.setName("5025");
+			    itemAmount.setvalue("203");
+			    DE amount = new DE();
+			    amount.setName("5004");
+			    moaCDE.getDE().add(itemAmount);
+			    moaCDE.getDE().add(amount);
+			    moa.getCDEOrDE().add(moaCDE);
+			    sg27.getSegmentOrSegmentGroup().add(moa);
+			    sg26.getSegmentOrSegmentGroup().add(sg27);
+			    
+			    //SegmentGroup SG29
+			    SegmentGroup sg29 = new SegmentGroup();
+			    sg29.setName("SG29");
+			    //Segment PRI
+			    Segment pri = new Segment();
+			    pri.setName("PRI");
+			    CDE priCDE = new CDE();
+			    priCDE.setName("C509");
+			    DE nettoPreis = new DE();
+			    nettoPreis.setName("5125");
+			    nettoPreis.setvalue("AAA");
+			    DE amountPRI = new DE();
+			    amountPRI.setName("5118");
+			    DE vertragsPreis = new DE();
+			    vertragsPreis.setName("5375");
+			    vertragsPreis.setvalue("CT");
+			    priCDE.getDE().add(nettoPreis);
+			    priCDE.getDE().add(amountPRI);
+			    priCDE.getDE().add(vertragsPreis);
+			    pri.getCDEOrDE().add(priCDE);
+			    sg29.getSegmentOrSegmentGroup().add(pri);
+			    sg26.getSegmentOrSegmentGroup().add(sg29);
+			    
+			    //SegmentGroup SG34
+			    SegmentGroup sg34  = new SegmentGroup();
+			    sg34.setName("SG34");
+			    //Segment TAX
+			    Segment tax = new Segment();
+			    tax.setName("TAX");
+			    DE steuern = new DE();
+			    steuern.setName("5283");
+			    steuern.setvalue("7");
+			    CDE c241 = new CDE();
+			    c241.setName("C241");
+			    DE mwst = new DE();
+			    mwst.setName("5153");
+			    mwst.setvalue("VAT");
+			    c241.getDE().add(mwst);
+			    CDE c243 = new CDE();
+			    c243.setName("C243");
+			    DE mwstWert = new DE();
+			    mwstWert.setName("5278");
+			    mwstWert.setvalue("19");
+			    c243.getDE().add(mwstWert);
+			    DE stdRate = new DE();
+			    stdRate.setName("5305");
+			    stdRate.setvalue("S");
+			    tax.getCDEOrDE().add(steuern);
+			    tax.getCDEOrDE().add(c241);
+			    tax.getCDEOrDE().add(c243);
+			    tax.getCDEOrDE().add(stdRate);
+			    sg34.getSegmentOrSegmentGroup().add(tax);
+			    //Segment MOA
+			    Segment moa2 = new Segment();
+			    moa2.setName("MOA");
+			    CDE moaCDE2 = new CDE();
+			    moaCDE2.setName("C516");
+			    DE taxAmount = new DE();
+			    taxAmount.setName("5025");
+			    taxAmount.setvalue("124");
+			    DE amount2 = new DE();
+			    amount2.setName("5004");
+			    moaCDE2.getDE().add(taxAmount);
+			    moaCDE2.getDE().add(amount2);
+			    moa2.getCDEOrDE().add(moaCDE2);
+			    sg34.getSegmentOrSegmentGroup().add(moa2);
+			    sg26.getSegmentOrSegmentGroup().add(sg34);
+		//--------------------------------------------------------
+		       
+		       
 		       while (rset.next()) 
 		       {
 		    	   //cate sunt disponibile in baza de date - anzahl_verfuegbar
@@ -158,68 +300,68 @@ public class OrderProcessor
 			    	
 			    	String produktNr = gtin.substring(7,11);
 			    	
-			    	//pt sa generam sgtin pt ce vindem
-			    	//daca e palette
-		    		if(gtin.equals("2965197100125") || gtin.equals("2965197100224")
-		    				|| gtin.equals("2965197100323") || gtin.equals("2965197100422") || gtin.equals("2965197100521")  )
-		    		{
-		    			//tb vazut cate kartons contine si care e gtin-ul acestora
-		    			ResultSet karton =  stmt.executeQuery(
-		    					"select anzahl,gtin_karton from palette where gtin_palette='" 
-			    				+ gtin +"'");
-			    		int anzahlKarton=0;
-			    		String gtinKarton=null;
-			    		if(karton.next())
+			    	if(verfugbar >= Integer.parseInt(qty))
+			    	{
+			    	
+			    		anzahlLin++;
+				    	//pt sa generam sgtin pt ce vindem
+				    	//daca e palette
+			    		if(gtin.equals("2965197100125") || gtin.equals("2965197100224")
+			    				|| gtin.equals("2965197100323") || gtin.equals("2965197100422") || gtin.equals("2965197100521")  )
 			    		{
-			    			String  anz = karton.getString(1);
-			    			if(anz != null)
-			    				anzahlKarton = Integer.parseInt(anz);
-			    			gtinKarton = karton.getString(2);
-			    		}
-			    		
-			    		//si cate vke contine un karton cu gtin = gtinKarton
-			    		
-			    		ResultSet vke =  stmt.executeQuery(
-		    					"select anzahl,gtin_vke from karton where gtin_karton='" 
-			    				+ gtinKarton +"'");
-			    		int anzahlVKE=0;
-			    		String gtinVKE=null;
-			    		if(vke.next())
-			    		{
-			    			String  anz = vke.getString(1);
-			    			if(anz != null)
-			    				anzahlVKE = Integer.parseInt(anz);
-			    			gtinVKE = karton.getString(2);
-			    		}
-			    		
-		    			System.out.println("palette: " + gtin);
-		    			System.out.println("	karton: " + gtinKarton + " x " + anzahlKarton);
-		    			System.out.println("		vke: " + gtinVKE + " x " + anzahlVKE);
-			    		
-		    			
-		    			//daca avem atatea disponibile
-		    			if(verfugbar >= Integer.parseInt(qty) )
-		    			{    			
+			    			//tb vazut cate kartons contine si care e gtin-ul acestora
+			    			ResultSet karton =  stmt.executeQuery(
+			    					"select anzahl,gtin_karton from palette where gtin_palette='" 
+				    				+ gtin +"'");
+				    		int anzahlKarton=0;
+				    		String gtinKarton=null;
+				    		if(karton.next())
+				    		{
+				    			String  anz = karton.getString(1);
+				    			if(anz != null)
+				    				anzahlKarton = Integer.parseInt(anz);
+				    			gtinKarton = karton.getString(2);
+				    		}
+				    		
+				    		//si cate vke contine un karton cu gtin = gtinKarton
+				    		
+				    		ResultSet vke =  stmt.executeQuery(
+			    					"select anzahl,gtin_vke from karton where gtin_karton='" 
+				    				+ gtinKarton +"'");
+				    		int anzahlVKE=0;
+				    		String gtinVKE=null;
+				    		if(vke.next())
+				    		{
+				    			String  anz = vke.getString(1);
+				    			if(anz != null)
+				    				anzahlVKE = Integer.parseInt(anz);
+				    			gtinVKE = karton.getString(2);
+				    		}
+				    		
+			    			System.out.println("palette: " + gtin);
+			    			System.out.println("	karton: " + gtinKarton + " x " + anzahlKarton);
+			    			System.out.println("		vke: " + gtinVKE + " x " + anzahlVKE);
+				    		
 			    			//generare qty sgtin pallette
 			    			String serialNrPalette= getSRNEPC(stmt);
 			    			String teilSGTIN = header + filterVPE + partition + basisNr + produktNr;
 			    			List<String> sgtinPaletteList = generateSrn(Integer.parseInt(qty), serialNrPalette);
-			    			insertEPC(stmt, teilSGTIN, sgtinPaletteList, gtin, gln);
+			    			insertEPC(stmt, teilSGTIN, sgtinPaletteList, gtin, glnHandler);
 			    			
 			    			//generare qty*anzahlKatron sgtin pt kartons
 			    			String serialNrKarton= getSRNEPC(stmt);
 			    			teilSGTIN = header + filterVPE + partition + basisNr + produktNr;
 			    			List<String> sgtinKartonList = generateSrn(Integer.parseInt(qty)* anzahlKarton, serialNrKarton);
-			    			insertEPC(stmt, teilSGTIN, sgtinKartonList, gtinKarton, gln);
+			    			insertEPC(stmt, teilSGTIN, sgtinKartonList, gtinKarton, glnHandler);
 			    			
 			    			//generare qty*anzahlKarton*anzahlVKE sgtin vke
 			    			String serialNrVKE= getSRNEPC(stmt);
 			    			teilSGTIN = header + filterVKE + partition + basisNr + produktNr;
 			    			List<String> sgtinVKEList = generateSrn(Integer.parseInt(qty)*anzahlKarton*anzahlVKE, serialNrPalette);
-			    			insertEPC(stmt, teilSGTIN, sgtinVKEList, gtinVKE, gln);
+			    			insertEPC(stmt, teilSGTIN, sgtinVKEList, gtinVKE, glnHandler);
 			    			
 			    			int kKarton=0, kVKE=0;
-			    			/*for(String sp : sgtinPaletteList)
+			    			for(String sp : sgtinPaletteList)
 			    			{
 			    				System.out.println("pt palette cu sgtin: " + sp);
 			    				
@@ -231,40 +373,31 @@ public class OrderProcessor
 			    						System.out.println("		sgtin_vke: " + sgtinVKEList.get(k));
 			    				}
 			    				kKarton += 1;
-			    			}*/
-		    			
-		    			}
-		    			
-		    			
-		    			
-		    			
-		    		}
-			    	else
-			    	{
-			    		//daca e karton
-				    	if(gtin.equals("2965197100118") || gtin.equals("2965197100217") ||
-				    			gtin.equals("2965197100316") || gtin.equals("2965197100415") 
-				    			|| gtin.equals("2965197100514")  )
+			    			}
+			    		}
+				    	else
 				    	{
-				    		 
-				    		//tb vazut cate bucati vke sunt intr-un carton
-				    		ResultSet karton =  stmt.executeQuery(
-				    				"select anzahl,gtin_vke from karton where gtin_karton='" 
-				    				+ gtin +"'");
-				    		int anzahl=0;
-				    		String gtinVKE=null;
-				    		if(karton.next())
-				    		{
-				    			String  anz = karton.getString(1);
-				    			if(anz != null)
-				    				anzahl = Integer.parseInt(anz);
-				    			gtinVKE = karton.getString(2);
-				    		}
-				    		System.out.println("gtin_karton: " + gtin + ", gtin_vke: " + gtinVKE + ", anzahl: " + anzahl );
-				    		
-				    		//vedem daca avem atatea disponibile si generam snr pt cartoane si vke
-				    		if(verfugbar >= Integer.parseInt(qty))
-				    		{
+				    		//daca e karton
+					    	if(gtin.equals("2965197100118") || gtin.equals("2965197100217") ||
+					    			gtin.equals("2965197100316") || gtin.equals("2965197100415") 
+					    			|| gtin.equals("2965197100514")  )
+					    	{
+					    		 
+					    		//tb vazut cate bucati vke sunt intr-un carton
+					    		ResultSet karton =  stmt.executeQuery(
+					    				"select anzahl,gtin_vke from karton where gtin_karton='" 
+					    				+ gtin +"'");
+					    		int anzahl=0;
+					    		String gtinVKE=null;
+					    		if(karton.next())
+					    		{
+					    			String  anz = karton.getString(1);
+					    			if(anz != null)
+					    				anzahl = Integer.parseInt(anz);
+					    			gtinVKE = karton.getString(2);
+					    		}
+					    		System.out.println("gtin_karton: " + gtin + ", gtin_vke: " + gtinVKE + ", anzahl: " + anzahl );
+					    		
 				    	//------kartons-------
 				    			//vedem care e ultimul srn pt vpe din baza de date
 					    		String serialNrKarton = getSRNEPC(stmt);
@@ -272,7 +405,7 @@ public class OrderProcessor
 					    		//acuma tb generate "qty" snr pt kartons
 				    			String teilSGTIN = header + filterVPE + partition + basisNr + produktNr;
 				    			List<String> sgtinList = generateSrn(Integer.parseInt(qty), serialNrKarton);
-				    			insertEPC(stmt, teilSGTIN, sgtinList, gtin, gln);
+				    			insertEPC(stmt, teilSGTIN, sgtinList, gtin, glnHandler);
 				    	//-----ende kartons------
 				    			
 				    	//-------aici incep vke----------
@@ -282,11 +415,11 @@ public class OrderProcessor
 					    		//acuma tb generate "qty" snr pt kartons
 				    			teilSGTIN = header + filterVKE + partition + basisNr + produktNr;
 				    			List<String> sgtinListVKE = generateSrn(Integer.parseInt(qty)*anzahl, serialNrVKE);
-				    			insertEPC(stmt, teilSGTIN, sgtinListVKE, gtinVKE, gln);
+				    			insertEPC(stmt, teilSGTIN, sgtinListVKE, gtinVKE, glnHandler);
 				    			
 				    			//ordonarea karton - anzahl vke care se afla intr-un carton 
 				    			int k=0;
-				    			/*for(String sgtinVPE : sgtinList)
+				    			for(String sgtinVPE : sgtinList)
 				    			{
 				    				System.out.println("pt kartonul cu sgtin: " + sgtinVPE);
 				    				
@@ -296,27 +429,27 @@ public class OrderProcessor
 				    					System.out.println("	sgtin_vke: " + sgtinListVKE.get(j));
 				    				}
 				    				k+=anzahl;				    				
-				    			}*/
-				    		}				    		
-				    	}
-				    	
-				    	//atunci e vke
-				    	else
-				    	{
-				    		String serialNr = getSRNEPC(stmt);
-				    		System.out.println("ultimul snr este:" + serialNr);
-				    		
-				    		//6-anzahl verfugbare produkte	
-				    		//daca avem mai multe decat se cer generam pt fiecare produs un sgtin si il bagam  in baza de date
-				    		if(verfugbar >= Integer.parseInt(qty))
-				    		{
+				    			}
+					    					    		
+					    	}
+					    	
+					    	//atunci e vke
+					    	else
+					    	{
+					    		String serialNr = getSRNEPC(stmt);
+					    		System.out.println("ultimul snr este:" + serialNr);
+					    		
 				    			String teilSGTIN = header + filterVKE + partition + basisNr + produktNr;
 				    			List<String> sgtinList = generateSrn(Integer.parseInt(qty), serialNr);
-				    			insertEPC(stmt, teilSGTIN, sgtinList, gtin, gln);
-				    		}
+				    			insertEPC(stmt, teilSGTIN, sgtinList, gtin, glnHandler);
+					    		
+					    	}
 				    	}
-			    	}
-			    }
+				    }
+		       }
+		       
+		       //aici se poate det cate produse pot fi livrate
+		       
 		    }
 			
 			stmt.close();
@@ -440,6 +573,127 @@ public class OrderProcessor
 		}
 		
 		
+	}
+	
+	private SegmentGroup getSG26()
+	{
+		SegmentGroup sg26 = new SegmentGroup();
+	    sg26.setName("SG26");
+	    //LIN
+	    Segment lin = new Segment();
+	    lin.setName("LIN");
+	    DE linCounter = new DE();
+	    linCounter.setName("1082");
+	    CDE linCDE = new CDE();
+	    linCDE.setName("C212");
+	    DE linGTIN = new DE();
+	    linGTIN.setName("7140");
+	    DE eanUCC = new DE();
+	    eanUCC.setName("7143");
+	    linCDE.getDE().add(linGTIN);
+	    linCDE.getDE().add(eanUCC);
+	    lin.getCDEOrDE().add(linCounter);
+	    lin.getCDEOrDE().add(linCDE);
+	    sg26.getSegmentOrSegmentGroup().add(lin);
+	    //END LIN
+	    
+	    //QTY
+	    Segment qty = new Segment();
+	    qty.setName("QTY");
+	    CDE qtyCDE = new CDE();
+	    qtyCDE.setName("C186");
+	    DE qtyGeliefert = new DE();
+	    qtyGeliefert.setName("6063");
+	    DE qtyMenge = new DE();
+	    qtyMenge.setName("6060");
+	    qtyCDE.getDE().add(qtyGeliefert);
+	    qtyCDE.getDE().add(qtyMenge);
+	    qty.getCDEOrDE().add(qtyCDE);
+	    sg26.getSegmentOrSegmentGroup().add(qty);
+	    //END QTY
+	    
+	    //SegmentGroup SG27
+	    SegmentGroup sg27 = new SegmentGroup();
+	    sg27.setName("SG28");
+	    //Segment MOA
+	    Segment moa = new Segment();
+	    moa.setName("MOA");
+	    CDE moaCDE = new CDE();
+	    moaCDE.setName("C516");
+	    DE itemAmount = new DE();
+	    itemAmount.setName("5025");
+	    DE amount = new DE();
+	    amount.setName("5004");
+	    moaCDE.getDE().add(itemAmount);
+	    moaCDE.getDE().add(amount);
+	    moa.getCDEOrDE().add(moaCDE);
+	    sg27.getSegmentOrSegmentGroup().add(moa);
+	    sg26.getSegmentOrSegmentGroup().add(sg27);
+	    
+	    //SegmentGroup SG29
+	    SegmentGroup sg29 = new SegmentGroup();
+	    sg29.setName("SG29");
+	    //Segment PRI
+	    Segment pri = new Segment();
+	    pri.setName("PRI");
+	    CDE priCDE = new CDE();
+	    priCDE.setName("C509");
+	    DE nettoPreis = new DE();
+	    nettoPreis.setName("5125");
+	    DE amountPRI = new DE();
+	    amountPRI.setName("5118");
+	    DE vertragsPreis = new DE();
+	    vertragsPreis.setName("5375");
+	    priCDE.getDE().add(nettoPreis);
+	    priCDE.getDE().add(amountPRI);
+	    priCDE.getDE().add(vertragsPreis);
+	    pri.getCDEOrDE().add(priCDE);
+	    sg29.getSegmentOrSegmentGroup().add(pri);
+	    sg26.getSegmentOrSegmentGroup().add(sg29);
+	    
+	    //SegmentGroup SG34
+	    SegmentGroup sg34  = new SegmentGroup();
+	    sg34.setName("SG34");
+	    //Segment TAX
+	    Segment tax = new Segment();
+	    tax.setName("TAX");
+	    DE steuern = new DE();
+	    steuern.setName("5283");
+	    CDE c241 = new CDE();
+	    c241.setName("C241");
+	    DE mwst = new DE();
+	    mwst.setName("5153");
+	    c241.getDE().add(mwst);
+	    CDE c243 = new CDE();
+	    c243.setName("C243");
+	    DE mwstWert = new DE();
+	    mwstWert.setName("5278");
+	    c243.getDE().add(mwstWert);
+	    DE stdRate = new DE();
+	    stdRate.setName("5305");
+	    tax.getCDEOrDE().add(steuern);
+	    tax.getCDEOrDE().add(c241);
+	    tax.getCDEOrDE().add(c243);
+	    tax.getCDEOrDE().add(stdRate);
+	    sg34.getSegmentOrSegmentGroup().add(tax);
+	    //Segment MOA
+	    Segment moa2 = new Segment();
+	    moa2.setName("MOA");
+	    CDE moaCDE2 = new CDE();
+	    moaCDE2.setName("C516");
+	    DE taxAmount = new DE();
+	    taxAmount.setName("5025");
+	    DE amount2 = new DE();
+	    amount2.setName("5004");
+	    moaCDE2.getDE().add(taxAmount);
+	    moaCDE2.getDE().add(amount2);
+	    moa2.getCDEOrDE().add(moaCDE2);
+	    sg34.getSegmentOrSegmentGroup().add(moa2);
+	    sg26.getSegmentOrSegmentGroup().add(sg34);
+	    
+	    
+	    return sg26;
+	       
 	}
 	
 	
