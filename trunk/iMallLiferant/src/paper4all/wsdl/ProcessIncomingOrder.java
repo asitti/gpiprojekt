@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="xmlOrderContent" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="invoiceTemplateContent" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="desadvTemplateContent" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,12 +30,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "process-incoming-order", propOrder = {
     "xmlOrderContent",
-    "invoiceTemplateContent"
+    "invoiceTemplateContent",
+    "desadvTemplateContent"
 })
 public class ProcessIncomingOrder {
 
     protected String xmlOrderContent;
     protected String invoiceTemplateContent;
+    protected String desadvTemplateContent;
 
     /**
      * Gets the value of the xmlOrderContent property.
@@ -82,6 +85,30 @@ public class ProcessIncomingOrder {
      */
     public void setInvoiceTemplateContent(String value) {
         this.invoiceTemplateContent = value;
+    }
+
+    /**
+     * Gets the value of the desadvTemplateContent property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getDesadvTemplateContent() {
+        return desadvTemplateContent;
+    }
+
+    /**
+     * Sets the value of the desadvTemplateContent property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setDesadvTemplateContent(String value) {
+        this.desadvTemplateContent = value;
     }
 
 }

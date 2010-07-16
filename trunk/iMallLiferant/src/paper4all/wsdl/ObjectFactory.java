@@ -35,19 +35,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ProcessIncomingOrder }
-     * 
-     */
-    public ProcessIncomingOrder createProcessIncomingOrder() {
-        return new ProcessIncomingOrder();
-    }
-
-    /**
      * Create an instance of {@link ProcessIncomingOrderResponse }
      * 
      */
     public ProcessIncomingOrderResponse createProcessIncomingOrderResponse() {
         return new ProcessIncomingOrderResponse();
+    }
+
+    /**
+     * Create an instance of {@link ProcessIncomingOrder }
+     * 
+     */
+    public ProcessIncomingOrder createProcessIncomingOrder() {
+        return new ProcessIncomingOrder();
     }
 
     /**

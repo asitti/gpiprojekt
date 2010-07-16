@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -51,21 +52,29 @@ public class OrderProcessor
 	
 	@WebMethod(operationName="process-incoming-order") 
 	@WebResult(name = "success-result") 
-	public String processOrder( @WebParam(name="xmlOrderContent")String input, 
-			@WebParam(name="invoiceTemplateContent") String invoice) 
+	public List<String> processOrder( @WebParam(name="xmlOrderContent")String input, 
+			@WebParam(name="invoiceTemplateContent") String invoice,
+			@WebParam(name="desadvTemplateContent") String desadv) 
 	{ 
-		String header = "48";
-		String basisNr = "2965197";
-		String filterVKE = "1";
-		String filterVPE = "2";
-		String partition = "4";
+		List<String> docum = new ArrayList<String>();
+		String header = "48";//"00110000";
+		String filterVKE = "1";//"001";
+		String filterVPE = "2";//"010";
+		String partition = "4";//"100";
+		String basisNr = "29651971";//Long.toBinaryString(29651971);
+		
+		//BigInteger bg = new BigInteger(basisNr, 2);
+		
+		
 		try
 		{
 			JAXBContext jc = JAXBContext.newInstance("paper4all.messages");
 			Unmarshaller u = jc.createUnmarshaller();
 			
 			//copiam continutul intr-un fisier pt a putea lucra cu el
-			FileWriter fw = new FileWriter(new File("temp.xml"));
+			File temp = new File("temp.xml");
+			
+			FileWriter fw = new FileWriter(temp);
 			fw.write(input);
 			fw.close();
 			
@@ -75,7 +84,12 @@ public class OrderProcessor
 			fw.close();
 			Interchange interchange = (Interchange ) u.unmarshal(new File("inv.xml"));
 			
-			
+			//cream fisierul pt desadv
+			fw = new FileWriter(new File("desadv.xml"));
+			fw.write(desadv);
+			fw.close();
+			Interchange dispatch = (Interchange ) u.unmarshal(new File("desadv.xml"));
+								
 		
 			//conexiune la baza de date
 			DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -89,7 +103,7 @@ public class OrderProcessor
 			DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 		    domFactory.setNamespaceAware(true); // never forget this!
 		    DocumentBuilder builder = domFactory.newDocumentBuilder();
-		    Document doc = builder.parse("temp.xml");
+		    Document doc = builder.parse(temp);
 
 		    XPathFactory factory = XPathFactory.newInstance();
 		    XPath xpath = factory.newXPath();
@@ -139,8 +153,40 @@ public class OrderProcessor
 					.get(5)).getSegmentOrSegmentGroup().get(0)).getCDEOrDE().get(1)).getDE().get(0).
 					setvalue(glnHandler);
 			
-						
-					
+			
+	//DEASDV
+			
+			//date
+			((CDE)dispatch.getHeader().getSegment().getCDEOrDE().get(3)).getDE().get(0).setvalue(getActualDate());
+			//time
+			((CDE)dispatch.getHeader().getSegment().getCDEOrDE().get(3)).getDE().get(1).setvalue(getActualTime());
+			//nr desadv
+			((CDE)((Segment)((Message) dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().
+					get(0)).getCDEOrDE().get(1)).getDE().get(0).setvalue("DES" + invoiceNr);
+			((DE)((Message) dispatch.getMessageOrMsgGroup().get(0)).getHeader().getSegment().getCDEOrDE().
+					get(0)).setvalue("DES" + invoiceNr);
+			((DE)((Message)dispatch.getMessageOrMsgGroup().get(0)).getTrailer().getSegment().getCDEOrDE().
+					get(1)).setvalue("DES" + invoiceNr);
+			//dok datum
+			((CDE)((Segment)((Message) dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().
+					get(1)).getCDEOrDE().get(0)).getDE().get(1).setvalue("20" + getActualDate());
+			//dispatch date
+			((CDE)((Segment)((Message) dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().
+					get(2)).getCDEOrDE().get(0)).getDE().get(1).setvalue("20" + getActualDate());
+			//delivery date
+			((CDE)((Segment)((Message) dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().
+					get(3)).getCDEOrDE().get(0)).getDE().get(1).setvalue("20" + getActualDate());
+			//order nr
+			((CDE)((Segment)((SegmentGroup)((Message) dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().get(4))
+			.getSegmentOrSegmentGroup().get(0)).getCDEOrDE().get(0)).getDE().get(1).setvalue("" + invoiceNr);
+			//bestell datum
+			((CDE)((Segment)((SegmentGroup)((Message) dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().get(4))
+			.getSegmentOrSegmentGroup().get(1)).getCDEOrDE().get(0)).getDE().get(1).setvalue(dateNodes.item(0).getNodeValue());
+			//gln handler
+			((CDE)((Segment)((SegmentGroup)((Message) dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().get(5))
+					.getSegmentOrSegmentGroup().get(0)).getCDEOrDE().get(1)).getDE().get(0).setvalue(glnHandler);
+			
+			
 		    
 		    //aici aflam cate produse au fost cerute
 		    expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28']");//cate sunt
@@ -149,12 +195,10 @@ public class OrderProcessor
 		    
 		    
 		 
-		    
-		    
-		    
 		    int anzahlLin = 0;
 		    float totalPreis = 0;
 		    float totalTaxes = 0;
+		    int seqNr = 1;
 		    //pt fiecare produs cerut ne uitam sa vedem ce gtin si in ce cantitate tb trimis
 		    for (int i = 0; i < nodes.getLength(); i++) 
 		    {
@@ -311,11 +355,14 @@ public class OrderProcessor
 		    	   	float nettoP = Float.parseFloat(rset.getString(7));
 			    	System.out.println(gtin + " : cerute " + qty + ": avute " + verfugbar);
 			    	
-			    	String produktNr = gtin.substring(7,11);
+			    	String produktNr = gtin.substring(8,12); //Long.toBinaryString(Long.parseLong(gtin.substring(8,12)));
 			    	
 			    	if(verfugbar >= Integer.parseInt(qty))
 			    	{
 			    		anzahlLin++;
+			    		
+			    		stmt.execute("update produkt set anzahl_verfuegbar=" + (verfugbar - Integer.parseInt(qty))
+			    				+ " where gtin=" + gtin);
 			    		
 			    		//introducere elem
 			    		linCounter.setvalue(Integer.toString(anzahlLin));
@@ -468,6 +515,72 @@ public class OrderProcessor
 				    			String teilSGTIN = header + filterVKE + partition + basisNr + produktNr;
 				    			List<String> sgtinList = generateSrn(Integer.parseInt(qty), serialNr);
 				    			insertEPC(stmt, teilSGTIN, sgtinList, gtin, glnHandler);
+				    			
+				    			SegmentGroup sg10  = new SegmentGroup();
+				    			sg10.setName("SG10");
+				    			//CPS
+				    			Segment cps = new Segment();
+				    			cps.setName("CPS");
+				    			DE de7164 = new DE();
+				    			de7164.setName("7164");
+				    			de7164.setvalue("" + seqNr);
+				    			cps.getCDEOrDE().add(de7164);
+				    			sg10.getSegmentOrSegmentGroup().add(cps);
+				    			//SG11
+				    			SegmentGroup sg11  = new SegmentGroup();
+				    			sg11.setName("SG11");
+				    			Segment pac = new Segment();
+				    			pac.setName("PAC");
+				    			DE de7224 = new DE();
+				    			de7224.setName("7224");
+				    			de7224.setvalue("1");
+				    			CDE c202 = new CDE();
+				    			c202.setName("C202");
+				    			DE de7065 = new DE();
+				    			de7065.setName("7065");
+				    			de7065.setvalue("EN");
+				    			DE de3055 = new DE();
+				    			de3055.setName("3055");
+				    			de3055.setvalue("9");
+				    			c202.getDE().add(de7065);
+				    			c202.getDE().add(de3055);
+				    			pac.getCDEOrDE().add(de7224);
+				    			pac.getCDEOrDE().add(c202);
+				    			sg11.getSegmentOrSegmentGroup().add(pac);
+				    			sg10.getSegmentOrSegmentGroup().add(sg11);
+				    			
+				    			for(int p=0; p<Integer.parseInt(qty); p++ )
+				    			{
+				    				//SG17
+					    			SegmentGroup sg17  = new SegmentGroup();
+					    			sg17.setName("SG17");
+					    			Segment linVKE = new Segment();
+					    			linVKE.setName("LIN");
+					    			DE de1082 = new DE();
+					    			de1082.setName("1082");
+					    			de1082.setvalue("" + (p+1));
+					    			CDE c212 = new CDE();
+					    			c212.setName("C212");
+					    			DE de7140 = new DE();
+					    			de7140.setName("7140");
+					    			de7140.setvalue("" + sgtinList.get(p));
+					    			DE de7143 = new DE();
+					    			de7143.setName("7143");
+					    			de7143.setvalue("SRV");
+					    			c212.getDE().add(de7140);
+					    			c212.getDE().add(de7143);
+					    			linVKE.getCDEOrDE().add(de1082);
+					    			linVKE.getCDEOrDE().add(c212);
+					    			sg17.getSegmentOrSegmentGroup().add(linVKE);
+					    			sg10.getSegmentOrSegmentGroup().add(sg17);
+				    			}
+				    			int afterSG2 = 8;
+				    			((Message)dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().add(afterSG2, sg10);
+				    			
+				    			
+				    			seqNr++;
+				    			
+				    			
 					    		
 					    	}
 				    	}
@@ -506,7 +619,22 @@ public class OrderProcessor
 			Marshaller m = jc2.createMarshaller();
 			File interch = new File("interch.xml");
 			m.marshal(interchange, interch);
-			return getInput(interch);
+			String inter = getInput(interch);
+			interch.delete();
+			System.out.println(inter);
+			docum.add(inter);
+			
+			
+			File des = new File("dispatch.xml");
+			m.marshal(dispatch, des);
+			String disp = getInput(des);
+			des.delete();
+			System.out.println(disp);
+			docum.add(disp);
+			
+			
+			temp.delete();
+			return docum;
 		}
 		catch(Exception e)
 		{
