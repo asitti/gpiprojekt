@@ -470,28 +470,22 @@ public class OrderProcessor
 					    			gtinVKE = karton.getString(2);
 					    		}
 					    		System.out.println("gtin_karton: " + gtin + ", gtin_vke: " + gtinVKE + ", anzahl: " + anzahl );
-					    		
-				    	//------kartons-------
-				    			//vedem care e ultimul srn pt vpe din baza de date
-					    		String serialNrKarton = getSRNEPC(stmt);
-					    		
-					    		//acuma tb generate "qty" snr pt kartons
-				    			String teilSGTIN = header + filterVPE + partition + basisNr + produktNr;
-				    			List<String> sgtinList = generateSrn(Integer.parseInt(qty), serialNrKarton);
-				    			insertEPC(stmt, teilSGTIN, sgtinList, gtin, glnHandler);
-				    	//-----ende kartons------
-				    			
-				    	//-------aici incep vke----------
-				    			//generare snr pt (gty kartons cerute) * (anzahl der vke) dintr-un carton
-				    			String serialNrVKE = getSRNEPC(stmt);
-					    		
-					    		//acuma tb generate "qty" snr pt kartons
-				    			teilSGTIN = header + filterVKE + partition + basisNr + produktNr;
-				    			List<String> sgtinListVKE = generateSrn(Integer.parseInt(qty)*anzahl, serialNrVKE);
-				    			insertEPC(stmt, teilSGTIN, sgtinListVKE, gtinVKE, glnHandler);
+					    						    			
 				    			
 				    			for(int j = 0; j<Integer.parseInt(qty); j++)
 				    			{
+				    				//------kartons-------
+					    			//vedem care e ultimul srn pt vpe din baza de date
+						    		String serialNrKarton = getSRNEPC(stmt);
+						    		
+						    		//acuma tb generate 1 snr pt kartons
+					    			String teilSGTIN = header + filterVPE + partition + basisNr + produktNr;
+					    			List<String> sgtinList = generateSrn(1, serialNrKarton);
+					    			insertEPC(stmt, teilSGTIN, sgtinList, gtin, glnHandler);
+					    			//-----ende kartons------
+					    			
+					    						    				
+				    				
 				    				//level 1
 				    				SegmentGroup sg10  = new SegmentGroup();
 					    			sg10.setName("SG10");
@@ -500,6 +494,7 @@ public class OrderProcessor
 					    			cps.setName("CPS");
 					    			DE de7164 = new DE();
 					    			de7164.setName("7164");
+					    			System.out.println("level 1: " +seqNr);
 					    			de7164.setvalue("" + seqNr);
 					    			cps.getCDEOrDE().add(de7164);
 					    			sg10.getSegmentOrSegmentGroup().add(cps);
@@ -526,7 +521,9 @@ public class OrderProcessor
 					    			sg11.getSegmentOrSegmentGroup().add(pac);
 					    			sg10.getSegmentOrSegmentGroup().add(sg11);
 					    			
-					    			seqNr++;
+					    			sgList.add(sg10);
+					    			
+					    			seqNr +=1;
 					    			
 					    			//level 2
 					    			SegmentGroup sg10karton = new SegmentGroup();
@@ -535,11 +532,15 @@ public class OrderProcessor
 					    			cpsKarton.setName("CPS");
 					    			DE de7164Karton = new DE();
 					    			de7164Karton.setName("7164");
-					    			de7164Karton.setvalue("" + seqNr);
+					    			System.out.println(seqNr);
+					    			de7164Karton.setvalue(Integer.toString(seqNr));
 					    			DE de7166 = new DE();
 					    			de7166.setName("7166");
-					    			de7166.setvalue("" + (seqNr-1));
 					    			cpsKarton.getCDEOrDE().add(de7164);
+					    			int tempSeq = seqNr;
+					    		 
+					    			System.out.println("level 2: " +seqNr + ", parent: " + tempSeq);
+					    			de7166.setvalue("" + (tempSeq-1));
 					    			cpsKarton.getCDEOrDE().add(de7166);
 					    			sg10karton.getSegmentOrSegmentGroup().add(cpsKarton);
 					    			//SG11
@@ -563,7 +564,7 @@ public class OrderProcessor
 					    			c202Karton.getDE().add(de3055Karton);
 					    			pacKarton.getCDEOrDE().add(de7224Karton);
 					    			pacKarton.getCDEOrDE().add(c202Karton);
-					    			sg11.getSegmentOrSegmentGroup().add(pacKarton);
+					    			sg11karton.getSegmentOrSegmentGroup().add(pacKarton);
 					    			
 					    			ResultSet grosse = stmt.executeQuery("select gewicht, masse from produkt where gtin = " + gtin);
 					    			
@@ -572,12 +573,12 @@ public class OrderProcessor
 					    			String gewicht = null;
 					    			if(grosse.next())
 					    			{
-					    				String dim = grosse.getString(1);
+					    				String dim = grosse.getString(2);
 					    				String[] s = dim.split("x");
 					    				length = s[0].trim();
 					    				width = s[1].trim();
 					    				
-					    				gewicht = grosse.getString(2);
+					    				gewicht = grosse.getString(1);
 					    			}
 					    			
 					    			for(int l = 0; l<3; l++)
@@ -594,10 +595,7 @@ public class OrderProcessor
 						    			DE de6313_1 = new DE();
 						    			de6313_1.setName("6313");
 						    			if(l==0)
-						    			{
 						    				de6313_1.setvalue("AAA");
-						    				
-						    			}
 						    			else 
 						    			{
 						    				if(l==1)
@@ -626,14 +624,13 @@ public class OrderProcessor
 						    					de6314_1.setvalue(length);
 						    			}
 						    			
-						    			
 						    			c174_1.getDE().add(de6411_1);
 						    			c174_1.getDE().add(de6314_1);
 						    			
 						    			mea1.getCDEOrDE().add(de6311_1);
 						    			mea1.getCDEOrDE().add(cde502_1);
 						    			mea1.getCDEOrDE().add(c174_1);
-						    			sg11.getSegmentOrSegmentGroup().add(mea1);
+						    			sg11karton.getSegmentOrSegmentGroup().add(mea1);
 					    			}
 					    			
 					    			SegmentGroup sg13_1 = new SegmentGroup();
@@ -655,7 +652,7 @@ public class OrderProcessor
 					    			c208_1.setName("C208");
 					    			DE de7402 = new DE();
 					    			de7402.setName("7402");
-					    			de7402.setvalue(sgtinList.get(j));
+					    			de7402.setvalue(teilSGTIN + sgtinList.get(0));
 					    			c208_1.getDE().add(de7402);
 					    			gin_1.getCDEOrDE().add(de7405);
 					    			gin_1.getCDEOrDE().add(c208_1);
@@ -665,31 +662,45 @@ public class OrderProcessor
 					    			sg11karton.getSegmentOrSegmentGroup().add(sg13_1);
 					    			sg10karton.getSegmentOrSegmentGroup().add(sg11karton);
 					    			
+					    			//-------aici incep vke----------
+					    			//generare snr pt (anzahl der vke) dintr-un carton
+					    			String serialNrVKE = getSRNEPC(stmt);
+					    			teilSGTIN = header + filterVKE + partition + basisNr + produktNr;
+					    			List<String> sgtinListVKE = generateSrn(anzahl, serialNrVKE);
+					    			insertEPC(stmt, teilSGTIN, sgtinListVKE, gtinVKE, glnHandler);
 					    			
 					    			for(int k = 0; k<anzahl; k++)
 					    			{
-					    				
+					    				//SG17
+						    			SegmentGroup sg17  = new SegmentGroup();
+						    			sg17.setName("SG17");
+						    			Segment linVKE = new Segment();
+						    			linVKE.setName("LIN");
+						    			DE de1082 = new DE();
+						    			de1082.setName("1082");
+						    			de1082.setvalue("" + (k+1));
+						    			CDE c212 = new CDE();
+						    			c212.setName("C212");
+						    			DE de7140 = new DE();
+						    			de7140.setName("7140");
+						    			de7140.setvalue("" + teilSGTIN + sgtinListVKE.get(k));
+						    			DE de7143 = new DE();
+						    			de7143.setName("7143");
+						    			de7143.setvalue("SRV");
+						    			c212.getDE().add(de7140);
+						    			c212.getDE().add(de7143);
+						    			linVKE.getCDEOrDE().add(de1082);
+						    			linVKE.getCDEOrDE().add(c212);
+						    			sg17.getSegmentOrSegmentGroup().add(linVKE);
+						    			sg10karton.getSegmentOrSegmentGroup().add(sg17);
+						    			
 					    			}
 					    			
-				    				
-				    				
+					    			
+					    			sgList.add(sg10karton);
+					    			
+					    			seqNr++;
 				    			}
-				    			
-				    			//ordonarea karton - anzahl vke care se afla intr-un carton 
-				    			//int k=0;
-				    			/*for(String sgtinVPE : sgtinList)
-				    			{
-				    				System.out.println("pt kartonul cu sgtin: " + sgtinVPE);
-				    				
-				    				//fiecare vke intre k si k+anzahl vor fi trecute la kartonul k
-				    				for(int j = k; j<(k+anzahl); j++)
-				    				{
-				    					System.out.println("	sgtin_vke: " + sgtinListVKE.get(j));
-				    				}
-				    				k+=anzahl;				    				
-				    			}
-				    			*/
-					    					    		
 					    	}
 					    	
 					    	//atunci e vke
