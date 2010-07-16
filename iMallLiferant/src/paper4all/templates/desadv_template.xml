@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<!DOCTYPE Interchange PUBLIC "-//FH Wiesbaden FB DCSM//DTD XML Representation of EDI data V1.2//EN" "http://edi01.informatik.fh-wiesbaden.de/edi4r/edi4r-1.2.dtd"[]>
+<Interchange version="3" standard_key="E">
+    <Header>
+        <Segment name="UNB">
+            <CDE name="S001">
+                <DE name="0001">UNOA</DE>
+                <DE name="0002">3</DE>
+            </CDE>
+            <CDE name="S002">
+                <DE name="0004">2965197100002</DE>
+                <DE name="0007">14</DE>
+            </CDE>
+            <CDE name="S003">
+                <DE name="0010">2765197100008</DE>
+                <DE name="0007">14</DE>
+            </CDE>
+            <CDE name="S004">
+                <DE name="0017">100714</DE>
+                <DE name="0019">1140</DE>
+            </CDE>
+            <DE name="0020">25001</DE>
+        </Segment>
+        <Parameter name="UNA">UNA:+.? '</Parameter>
+    </Header>
+    <Message>
+        <Header>
+            <Segment name="UNH">
+                <DE name="0062">DES587441</DE>
+                <CDE name="S009">
+                    <DE name="0065">DESADV</DE>
+                    <DE name="0052">D</DE>
+                    <DE name="0054">01B</DE>
+                    <DE name="0051">UN</DE>
+                    <DE name="0057">EAN007</DE>
+                </CDE>
+            </Segment>
+        </Header>
+        <Segment name="BGM">
+            <CDE name="C002">
+                <DE name="1001">351</DE>
+            </CDE>
+            <CDE name="C106">
+                <DE name="1004">DES587441</DE>
+            </CDE>
+            <DE name="1225">9</DE>
+        </Segment>
+        <Segment name="DTM">
+            <CDE name="C507">
+                <DE name="2005">137</DE> <!-- doc time -->
+                <DE name="2380">20020401</DE>
+                <DE name="2379">102</DE>
+            </CDE>
+        </Segment>
+        <Segment name="DTM">
+            <CDE name="C507">
+                <DE name="2005">11</DE> <!-- dispatch time -->
+                <DE name="2380">20020403</DE>
+                <DE name="2379">102</DE>
+            </CDE>
+        </Segment>
+        <Segment name="DTM">
+            <CDE name="C507">
+                <DE name="2005">358</DE> <!-- delivery date -->
+                <DE name="2380">20020403</DE>
+                <DE name="2379">102</DE>
+            </CDE>
+        </Segment>
+        <SegmentGroup name="SG1">
+            <Segment name="RFF">
+                <CDE name="C506">
+                    <DE name="1153">ON</DE>
+                    <DE name="1154">4506102649</DE> <!-- order number -->
+                </CDE>
+            </Segment>
+            <Segment name="DTM">
+                <CDE name="C507">
+                    <DE name="2005">171</DE> <!-- bestelldatum -->
+                    <DE name="2380">20020325</DE>
+                    <DE name="2379">102</DE>
+                </CDE>
+            </Segment>
+        </SegmentGroup>
+        <SegmentGroup name="SG2">
+            <Segment name="NAD">
+                <DE name="3035">BY</DE>
+                <CDE name="C082">
+                    <DE name="3039">4300234000002</DE> <!-- gln des haendlers -->
+                    <DE name="3055">9</DE>
+                </CDE>
+            </Segment>
+        </SegmentGroup>
+        <SegmentGroup name="SG2">
+            <Segment name="NAD">
+                <DE name="3035">DP</DE>
+                <CDE name="C082">
+                    <DE name="3039">2765197100008</DE> <!-- lager -->
+                    <DE name="3055">9</DE>
+                </CDE>
+            </Segment>
+        </SegmentGroup>
+        <SegmentGroup name="SG2">
+            <Segment name="NAD">
+                <DE name="3035">SU</DE>
+                <CDE name="C082">
+                    <DE name="3039">2965197100002</DE> <!-- lieferanten -->
+                    <DE name="3055">9</DE>
+                </CDE>
+            </Segment>
+        </SegmentGroup>
+        
+        <Trailer>
+            <Segment name="UNT">
+                <DE name="0074">32</DE> <!-- nr of segments in the message -->
+                <DE name="0062">DES587441</DE>
+            </Segment>
+        </Trailer>
+    </Message>
+    <Trailer>
+        <Segment name="UNZ">
+            <DE name="0036">1</DE>
+            <DE name="0020">25001</DE>
+        </Segment>
+    </Trailer>
+</Interchange>
