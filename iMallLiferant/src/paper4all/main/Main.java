@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -14,12 +15,6 @@ import paper4all.wsdl.*;
 
 public class Main 
 {
-	
-
-						
-					
-	
-	
 	public void runProgram()
 	{
 		/*ReadInboxWebService read = new ReadInboxService().getReadInboxWebServicePort();
@@ -36,16 +31,20 @@ public class Main
 		//System.out.println(edi.ediToXml(getInput(new File("in/in.edi"))));
 		
 		OrderProcessorWebService order = new OrderProcessorService().getOrderProcessorWebServicePort();
-		String invoice_xml = order.processIncomingOrder(getInput(new File("in/order_f.xml")), 
-				getInput(new File("src/paper4all/templates/invoic_template.xml")));
-		XMLToEDIWebService s = new XMLToEDIService().getXMLToEDIWebServicePort();
-		String invoice_edi = s.xmlToEdi(invoice_xml);
-		System.out.println(invoice_edi);
+		List<String> xmls = order.processIncomingOrder(getInput(new File("in/order_f.xml")), 
+				getInput(new File("src/paper4all/templates/invoic_template.xml"))
+				, getInput(new File("src/paper4all/templates/desadv_template.xml")));
+		//System.out.println("rechnung: " + xmls.get(0));
+		System.out.println("lieferavis: " + xmls.get(1));
+		
+		//XMLToEDIWebService s = new XMLToEDIService().getXMLToEDIWebServicePort();
+		//String invoice_edi = s.xmlToEdi(invoice_xml.get(0));
+		//System.out.println(invoice_edi);
 		//System.out.println(order.processIncomingOrder(getInput(new File("in/order_f.xml")), 
 				//getInput(new File("src/paper4all/templates/invoic_template.xml"))));
 		
-		WriteOutboxWebService write = new WriteOutboxService().getWriteOutboxWebServicePort();
-		System.out.println(write.writeToOutbox(invoice_edi));
+		//WriteOutboxWebService write = new WriteOutboxService().getWriteOutboxWebServicePort();
+		//System.out.println(write.writeToOutbox(invoice_edi));
 		
 	}
 	public static void main( String[] args )

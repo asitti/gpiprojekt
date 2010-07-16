@@ -1,6 +1,7 @@
 
 package paper4all.wsdl;
 
+import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -27,17 +28,20 @@ public interface OrderProcessorWebService {
      * 
      * @param invoiceTemplateContent
      * @param xmlOrderContent
+     * @param desadvTemplateContent
      * @return
-     *     returns java.lang.String
+     *     returns java.util.List<java.lang.String>
      */
     @WebMethod(operationName = "process-incoming-order")
     @WebResult(name = "success-result", targetNamespace = "")
     @RequestWrapper(localName = "process-incoming-order", targetNamespace = "http://services.paper4all/", className = "paper4all.wsdl.ProcessIncomingOrder")
     @ResponseWrapper(localName = "process-incoming-orderResponse", targetNamespace = "http://services.paper4all/", className = "paper4all.wsdl.ProcessIncomingOrderResponse")
-    public String processIncomingOrder(
+    public List<String> processIncomingOrder(
         @WebParam(name = "xmlOrderContent", targetNamespace = "")
         String xmlOrderContent,
         @WebParam(name = "invoiceTemplateContent", targetNamespace = "")
-        String invoiceTemplateContent);
+        String invoiceTemplateContent,
+        @WebParam(name = "desadvTemplateContent", targetNamespace = "")
+        String desadvTemplateContent);
 
 }
