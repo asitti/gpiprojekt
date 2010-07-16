@@ -199,6 +199,7 @@ public class OrderProcessor
 		    float totalPreis = 0;
 		    float totalTaxes = 0;
 		    int seqNr = 1;
+		    List<SegmentGroup> sgList = new ArrayList<SegmentGroup>();
 		    //pt fiecare produs cerut ne uitam sa vedem ce gtin si in ce cantitate tb trimis
 		    for (int i = 0; i < nodes.getLength(); i++) 
 		    {
@@ -563,7 +564,7 @@ public class OrderProcessor
 					    			c212.setName("C212");
 					    			DE de7140 = new DE();
 					    			de7140.setName("7140");
-					    			de7140.setvalue("" + sgtinList.get(p));
+					    			de7140.setvalue("" + teilSGTIN + sgtinList.get(p));
 					    			DE de7143 = new DE();
 					    			de7143.setName("7143");
 					    			de7143.setvalue("SRV");
@@ -574,8 +575,9 @@ public class OrderProcessor
 					    			sg17.getSegmentOrSegmentGroup().add(linVKE);
 					    			sg10.getSegmentOrSegmentGroup().add(sg17);
 				    			}
-				    			int afterSG2 = 8;
-				    			((Message)dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().add(afterSG2, sg10);
+				    			sgList.add(sg10);
+				    			
+				    			
 				    			
 				    			
 				    			seqNr++;
@@ -592,6 +594,12 @@ public class OrderProcessor
 				    }
 		       } 
 		    }
+		    int afterSG2 = 8;
+		    for(int k = sgList.size()-1; k>=0; k-- )
+		    	((Message)dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().add(afterSG2, sgList.get(k));
+		    
+		    
+		    
 		    //aici se poate det cate produse pot fi livrate
 	        //SG CNT
 			((CDE)((Segment)((Message)interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup()
