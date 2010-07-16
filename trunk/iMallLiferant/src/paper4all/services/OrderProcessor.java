@@ -490,8 +490,193 @@ public class OrderProcessor
 				    			List<String> sgtinListVKE = generateSrn(Integer.parseInt(qty)*anzahl, serialNrVKE);
 				    			insertEPC(stmt, teilSGTIN, sgtinListVKE, gtinVKE, glnHandler);
 				    			
+				    			for(int j = 0; j<Integer.parseInt(qty); j++)
+				    			{
+				    				//level 1
+				    				SegmentGroup sg10  = new SegmentGroup();
+					    			sg10.setName("SG10");
+					    			//CPS
+					    			Segment cps = new Segment();
+					    			cps.setName("CPS");
+					    			DE de7164 = new DE();
+					    			de7164.setName("7164");
+					    			de7164.setvalue("" + seqNr);
+					    			cps.getCDEOrDE().add(de7164);
+					    			sg10.getSegmentOrSegmentGroup().add(cps);
+					    			//SG11
+					    			SegmentGroup sg11  = new SegmentGroup();
+					    			sg11.setName("SG11");
+					    			Segment pac = new Segment();
+					    			pac.setName("PAC");
+					    			DE de7224 = new DE();
+					    			de7224.setName("7224");
+					    			de7224.setvalue("1");
+					    			CDE c202 = new CDE();
+					    			c202.setName("C202");
+					    			DE de7065 = new DE();
+					    			de7065.setName("7065");
+					    			de7065.setvalue("CT");
+					    			DE de3055 = new DE();
+					    			de3055.setName("3055");
+					    			de3055.setvalue("9");
+					    			c202.getDE().add(de7065);
+					    			c202.getDE().add(de3055);
+					    			pac.getCDEOrDE().add(de7224);
+					    			pac.getCDEOrDE().add(c202);
+					    			sg11.getSegmentOrSegmentGroup().add(pac);
+					    			sg10.getSegmentOrSegmentGroup().add(sg11);
+					    			
+					    			seqNr++;
+					    			
+					    			//level 2
+					    			SegmentGroup sg10karton = new SegmentGroup();
+					    			sg10karton.setName("SG10");
+					    			Segment cpsKarton = new Segment();
+					    			cpsKarton.setName("CPS");
+					    			DE de7164Karton = new DE();
+					    			de7164Karton.setName("7164");
+					    			de7164Karton.setvalue("" + seqNr);
+					    			DE de7166 = new DE();
+					    			de7166.setName("7166");
+					    			de7166.setvalue("" + (seqNr-1));
+					    			cpsKarton.getCDEOrDE().add(de7164);
+					    			cpsKarton.getCDEOrDE().add(de7166);
+					    			sg10karton.getSegmentOrSegmentGroup().add(cpsKarton);
+					    			//SG11
+					    			SegmentGroup sg11karton = new SegmentGroup();
+					    			sg11karton.setName("SG11");
+					    			//PAC level 2(VKE)
+					    			Segment pacKarton = new Segment();
+					    			pacKarton.setName("PAC");
+					    			DE de7224Karton = new DE();
+					    			de7224Karton.setName("7224");
+					    			de7224Karton.setvalue("1");
+					    			CDE c202Karton = new CDE();
+					    			c202Karton.setName("C202");
+					    			DE de7065Karton = new DE();
+					    			de7065Karton.setName("7065");
+					    			de7065Karton.setvalue("CT");
+					    			DE de3055Karton = new DE();
+					    			de3055Karton.setName("3055");
+					    			de3055Karton.setvalue("9");
+					    			c202Karton.getDE().add(de7065Karton);
+					    			c202Karton.getDE().add(de3055Karton);
+					    			pacKarton.getCDEOrDE().add(de7224Karton);
+					    			pacKarton.getCDEOrDE().add(c202Karton);
+					    			sg11.getSegmentOrSegmentGroup().add(pacKarton);
+					    			
+					    			ResultSet grosse = stmt.executeQuery("select gewicht, masse from produkt where gtin = " + gtin);
+					    			
+					    			String length = null;
+					    			String width = null;
+					    			String gewicht = null;
+					    			if(grosse.next())
+					    			{
+					    				String dim = grosse.getString(1);
+					    				String[] s = dim.split("x");
+					    				length = s[0].trim();
+					    				width = s[1].trim();
+					    				
+					    				gewicht = grosse.getString(2);
+					    			}
+					    			
+					    			for(int l = 0; l<3; l++)
+					    			{	
+					    			
+						    			//MEA greutate karton
+						    			Segment mea1 = new Segment();
+						    			mea1.setName("MEA");
+						    			DE de6311_1 = new DE();
+						    			de6311_1.setName("6311");
+						    			de6311_1.setvalue("PD");
+						    			CDE cde502_1 = new CDE();
+						    			cde502_1.setName("C502");
+						    			DE de6313_1 = new DE();
+						    			de6313_1.setName("6313");
+						    			if(l==0)
+						    			{
+						    				de6313_1.setvalue("AAA");
+						    				
+						    			}
+						    			else 
+						    			{
+						    				if(l==1)
+						    					de6313_1.setvalue("WD");
+							    			else 
+							    				de6313_1.setvalue("LN");
+						    			}
+						    			cde502_1.getDE().add(de6313_1);
+						    			CDE c174_1 = new CDE();
+						    			c174_1.setName("C174");
+						    			DE de6411_1 = new DE();
+						    			de6411_1.setName("6411");
+						    			DE de6314_1 = new DE();
+						    			de6314_1.setName("6314");
+						    			if(l==0)
+						    			{
+						    				de6411_1.setvalue("KGM");
+						    				de6314_1.setvalue(gewicht);
+						    			}
+						    			else 
+						    			{
+						    				de6411_1.setvalue("MMT");
+						    				if(l==1)
+						    					de6314_1.setvalue(width);
+						    				else
+						    					de6314_1.setvalue(length);
+						    			}
+						    			
+						    			
+						    			c174_1.getDE().add(de6411_1);
+						    			c174_1.getDE().add(de6314_1);
+						    			
+						    			mea1.getCDEOrDE().add(de6311_1);
+						    			mea1.getCDEOrDE().add(cde502_1);
+						    			mea1.getCDEOrDE().add(c174_1);
+						    			sg11.getSegmentOrSegmentGroup().add(mea1);
+					    			}
+					    			
+					    			SegmentGroup sg13_1 = new SegmentGroup();
+					    			sg13_1.setName("SG13");
+					    			Segment pci_1 = new Segment();
+					    			pci_1.setName("PCI");
+					    			DE de4233 = new DE();
+					    			de4233.setName("4233");
+					    			de4233.setvalue("33E");
+					    			pci_1.getCDEOrDE().add(de4233);
+					    			SegmentGroup sg15_1 = new SegmentGroup();
+					    			sg15_1.setName("SG15");
+					    			Segment gin_1 = new Segment();
+					    			gin_1.setName("GIN");
+					    			DE de7405 = new DE();
+					    			de7405.setName("7405");
+					    			de7405.setvalue("BJ");
+					    			CDE c208_1 = new CDE();
+					    			c208_1.setName("C208");
+					    			DE de7402 = new DE();
+					    			de7402.setName("7402");
+					    			de7402.setvalue(sgtinList.get(j));
+					    			c208_1.getDE().add(de7402);
+					    			gin_1.getCDEOrDE().add(de7405);
+					    			gin_1.getCDEOrDE().add(c208_1);
+					    			sg15_1.getSegmentOrSegmentGroup().add(gin_1);
+					    			sg13_1.getSegmentOrSegmentGroup().add(pci_1);
+					    			sg13_1.getSegmentOrSegmentGroup().add(sg15_1);
+					    			sg11karton.getSegmentOrSegmentGroup().add(sg13_1);
+					    			sg10karton.getSegmentOrSegmentGroup().add(sg11karton);
+					    			
+					    			
+					    			for(int k = 0; k<anzahl; k++)
+					    			{
+					    				
+					    			}
+					    			
+				    				
+				    				
+				    			}
+				    			
 				    			//ordonarea karton - anzahl vke care se afla intr-un carton 
-				    			int k=0;
+				    			//int k=0;
 				    			/*for(String sgtinVPE : sgtinList)
 				    			{
 				    				System.out.println("pt kartonul cu sgtin: " + sgtinVPE);
@@ -576,14 +761,7 @@ public class OrderProcessor
 					    			sg10.getSegmentOrSegmentGroup().add(sg17);
 				    			}
 				    			sgList.add(sg10);
-				    			
-				    			
-				    			
-				    			
 				    			seqNr++;
-				    			
-				    			
-					    		
 					    	}
 				    	}
 			    		
