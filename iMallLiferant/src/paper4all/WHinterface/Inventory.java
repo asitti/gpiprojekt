@@ -10,16 +10,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for sgtinWhereAbouts complex type.
+ * <p>Java class for inventory complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="sgtinWhereAbouts">
+ * &lt;complexType name="inventory">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="sgtin" type="{http://gpi/DataTypes}sgtinContainer" maxOccurs="unbounded" minOccurs="0"/>
+ *         &lt;element name="product" type="{http://gpi/DataTypes}product" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,41 +29,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "sgtinWhereAbouts", namespace = "http://gpi/DataTypes", propOrder = {
-    "sgtin"
+@XmlType(name = "inventory", namespace = "http://gpi/DataTypes", propOrder = {
+    "product"
 })
-public class SgtinWhereAbouts {
+public class Inventory {
 
     @XmlElement(nillable = true)
-    protected List<SgtinContainer> sgtin;
+    protected List<Product> product;
 
     /**
-     * Gets the value of the sgtin property.
+     * Gets the value of the product property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the sgtin property.
+     * This is why there is not a <CODE>set</CODE> method for the product property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getSgtin().add(newItem);
+     *    getProduct().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link SgtinContainer }
+     * {@link Product }
      * 
      * 
      */
-    public List<SgtinContainer> getSgtin() {
-        if (sgtin == null) {
-            sgtin = new ArrayList<SgtinContainer>();
+    public List<Product> getProduct() {
+        if (product == null) {
+            product = new ArrayList<Product>();
         }
-        return this.sgtin;
+        return this.product;
     }
 
 }
