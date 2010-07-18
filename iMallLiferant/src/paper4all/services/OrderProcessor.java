@@ -57,13 +57,20 @@ public class OrderProcessor
 			@WebParam(name="desadvTemplateContent") String desadv) 
 	{ 
 		List<String> docum = new ArrayList<String>();
-		String header = "48";//"00110000";
+		/*String header = "48";//"00110000";
 		String filterVKE = "1";//"001";
 		String filterVPE = "2";//"010";
 		String partition = "4";//"100";
-		String basisNr = "29651971";//Long.toBinaryString(29651971);
+		String basisNr = "29651971";//getBinaryPositions("29651971", 27);*/
 		
-		//BigInteger bg = new BigInteger(basisNr, 2);
+		
+		String header = "00110000";
+		String filterVKE = "001";
+		String filterVPE = "010";
+		String partition = "100";
+		String basisNr = getBinaryPositions("29651971", 27);
+		
+		
 		
 		
 		try
@@ -356,7 +363,8 @@ public class OrderProcessor
 		    	   	float nettoP = Float.parseFloat(rset.getString(7));
 			    	System.out.println(gtin + " : cerute " + qty + ": avute " + verfugbar);
 			    	
-			    	String produktNr = gtin.substring(8,12); //Long.toBinaryString(Long.parseLong(gtin.substring(8,12)));
+			    	String produktNr = getBinaryPositions(gtin.substring(8,12), 17);
+			    	
 			    	
 			    	if(verfugbar >= Integer.parseInt(qty))
 			    	{
@@ -680,7 +688,8 @@ public class OrderProcessor
 						    			c212.setName("C212");
 						    			DE de7140 = new DE();
 						    			de7140.setName("7140");
-						    			de7140.setvalue("" + teilSGTIN + sgtinListVKE.get(k));
+						    			BigInteger bg = new BigInteger(teilSGTIN + getBinaryPositions(sgtinListVKE.get(k),38), 2);
+						    			de7140.setvalue("" + bg);
 						    			DE de7143 = new DE();
 						    			de7143.setName("7143");
 						    			de7143.setvalue("SRV");
@@ -696,24 +705,7 @@ public class OrderProcessor
 					    			
 					    			sgList.add(sg10karton);
 					    			
-					    			System.out.println("---------------CPS------------------");
-					    			for(int p = 0; p< sgList.size(); p++)
-					    			{
-					    				List<Object> list = sgList.get(p).getSegmentOrSegmentGroup();
-					    				for(int r = 0;r < list.size(); r++)
-					    					if(list.get(r) instanceof Segment)
-					    					{
-					    						Segment seg = (Segment)list.get(r);
-					    						if(seg.getName().equals("CPS"))
-					    						{
-					    							System.out.println(((DE)seg.getCDEOrDE().get(0)).getName() + 
-					    									" : " + ((DE)seg.getCDEOrDE().get(0)).getvalue());
-					    						}
-					    					}
-					    			}
-					    			System.out.println("---------------ENDE------------------");
-					    			
-					    			
+					    								    			
 				    			}
 					    	}
 					    	
@@ -774,7 +766,8 @@ public class OrderProcessor
 					    			c212.setName("C212");
 					    			DE de7140 = new DE();
 					    			de7140.setName("7140");
-					    			de7140.setvalue("" + teilSGTIN + sgtinList.get(p));
+					    			BigInteger bg = new BigInteger(teilSGTIN + getBinaryPositions(sgtinList.get(p),38), 2);
+					    			de7140.setvalue("" + bg);
 					    			DE de7143 = new DE();
 					    			de7143.setName("7143");
 					    			de7143.setvalue("SRV");
@@ -881,8 +874,9 @@ public class OrderProcessor
 			
 			for(String s : sgtinList)
 			{
-				String sgtinStuck = teilSGTIN + s;
-				stmt.executeQuery("insert into epc values("+sgtinStuck + "," + gtin + ", " 
+				String sgtinStuck = teilSGTIN + getBinaryPositions(s, 38);
+				BigInteger bg = new BigInteger(sgtinStuck, 2);
+				stmt.executeQuery("insert into epc values("+ bg + "," + gtin + ", " 
 							+ gln + ", " + s + ",'" + date + "')");
 			} 
 		}
@@ -980,6 +974,16 @@ public class OrderProcessor
 		}
 		return null;
 	  
+	}
+	
+	private String getBinaryPositions(String s, int pos)
+	{
+		String temp = Long.toBinaryString(Long.parseLong(s));
+		while(temp.length() < pos)
+		{
+			temp = "0" + temp;
+		}
+		return temp;
 	}
 	
 }	
