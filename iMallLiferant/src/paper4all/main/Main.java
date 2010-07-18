@@ -92,8 +92,8 @@ public class Main
 		System.out.println(write.writeToOutbox("in1.xml"));*/
 		
 		EDIToXMLWebService edi = new EDIToXMLService().getEDIToXMLWebServicePort();
-		String bestell = edi.ediToXml(getInput(new File("in/572.edi")));
-		System.out.println(bestell);
+		String bestell = edi.ediToXml(getInput(new File("in/544.edi")));
+		System.out.println("bestell: " + bestell);
 		
 		OrderProcessorWebService order = new OrderProcessorService().getOrderProcessorWebServicePort();
 		List<String> xmls = order.processIncomingOrder(bestell, //getInput(new File("in/order_f.xml")) 
