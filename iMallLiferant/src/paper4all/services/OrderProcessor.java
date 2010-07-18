@@ -57,21 +57,12 @@ public class OrderProcessor
 			@WebParam(name="desadvTemplateContent") String desadv) 
 	{ 
 		List<String> docum = new ArrayList<String>();
-		/*String header = "48";//"00110000";
-		String filterVKE = "1";//"001";
-		String filterVPE = "2";//"010";
-		String partition = "4";//"100";
-		String basisNr = "29651971";//getBinaryPositions("29651971", 27);*/
-		
 		
 		String header = "00110000";
 		String filterVKE = "001";
 		String filterVPE = "010";
 		String partition = "100";
 		String basisNr = getBinaryPositions("29651971", 27);
-		
-		
-		
 		
 		try
 		{
@@ -193,15 +184,11 @@ public class OrderProcessor
 			((CDE)((Segment)((SegmentGroup)((Message) dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().get(5))
 					.getSegmentOrSegmentGroup().get(0)).getCDEOrDE().get(1)).getDE().get(0).setvalue(glnHandler);
 			
-			
-		    
 		    //aici aflam cate produse au fost cerute
 		    expr = xpath.compile("/Interchange/Message/SegmentGroup[@name='SG28']");//cate sunt
 		    Object result = expr.evaluate(doc, XPathConstants.NODESET);
 		    NodeList nodes = (NodeList) result;
 		    
-		    
-		 
 		    int anzahlLin = 0;
 		    float totalPreis = 0;
 		    float totalTaxes = 0;
@@ -210,7 +197,6 @@ public class OrderProcessor
 		    //pt fiecare produs cerut ne uitam sa vedem ce gtin si in ce cantitate tb trimis
 		    for (int i = 0; i < nodes.getLength(); i++) 
 		    {
-		    	
 		    	 //pt adaugare de produse in rechnung
 		        SegmentGroup sg26 = new SegmentGroup();
 			    sg26.setName("SG26");
@@ -351,8 +337,6 @@ public class OrderProcessor
 		       NodeList qtyNode= (NodeList) qtyObj;
 		       String qty = qtyNode.item(0).getNodeValue();
 		      
-		       //System.out.println(gtin + " : cerute " + qty);
-		       
 		       ResultSet rset =
 			         stmt.executeQuery("select * from produkt where gtin="+ gtinNode.item(0).getNodeValue());
 		      
@@ -362,14 +346,11 @@ public class OrderProcessor
 		    	   	int verfugbar = Integer.parseInt(rset.getString(6));
 		    	   	float nettoP = Float.parseFloat(rset.getString(7));
 			    	System.out.println(gtin + " : cerute " + qty + ": avute " + verfugbar);
-			    	
 			    	String produktNr = getBinaryPositions(gtin.substring(8,12), 17);
-			    	
 			    	
 			    	if(verfugbar >= Integer.parseInt(qty))
 			    	{
 			    		anzahlLin++;
-			    		
 			    		stmt.execute("update produkt set anzahl_verfuegbar=" + (verfugbar - Integer.parseInt(qty))
 			    				+ " where gtin=" + gtin);
 			    		
@@ -404,7 +385,6 @@ public class OrderProcessor
 				    		}
 				    		
 				    		//si cate vke contine un karton cu gtin = gtinKarton
-				    		
 				    		ResultSet vke =  stmt.executeQuery(
 			    					"select anzahl,gtin_vke from karton where gtin_karton='" 
 				    				+ gtinKarton +"'");
@@ -417,11 +397,6 @@ public class OrderProcessor
 				    				anzahlVKE = Integer.parseInt(anz);
 				    			gtinVKE = karton.getString(2);
 				    		}
-				    		
-			    			/*System.out.println("palette: " + gtin);
-			    			System.out.println("	karton: " + gtinKarton + " x " + anzahlKarton);
-			    			System.out.println("		vke: " + gtinVKE + " x " + anzahlVKE);
-				    		*/
 				    		
 			    			//generare qty sgtin pallette
 			    			String serialNrPalette= getSRNEPC(stmt);
@@ -492,7 +467,6 @@ public class OrderProcessor
 					    			insertEPC(stmt, teilSGTIN, sgtinList, gtin, glnHandler);
 					    			//-----ende kartons------
 					    			
-					    						    				
 				    				//level 1
 				    				SegmentGroup sg10  = new SegmentGroup();
 					    			sg10.setName("SG10");
@@ -529,7 +503,6 @@ public class OrderProcessor
 					    			sg10.getSegmentOrSegmentGroup().add(sg11);
 					    			seqNr +=1;
 					    			sgList.add(sg10);
-					    			
 					    			
 					    			//level 2
 					    			SegmentGroup sg10karton = new SegmentGroup();
@@ -701,11 +674,7 @@ public class OrderProcessor
 						    			sg10karton.getSegmentOrSegmentGroup().add(sg17);
 						    			
 					    			}
-					    			
-					    			
 					    			sgList.add(sg10karton);
-					    			
-					    								    			
 				    			}
 					    	}
 					    	
@@ -713,8 +682,6 @@ public class OrderProcessor
 					    	else
 					    	{
 					    		String serialNr = getSRNEPC(stmt);
-					    		//System.out.println("ultimul snr este:" + serialNr);
-					    		
 				    			String teilSGTIN = header + filterVKE + partition + basisNr + produktNr;
 				    			List<String> sgtinList = generateSrn(Integer.parseInt(qty), serialNr);
 				    			insertEPC(stmt, teilSGTIN, sgtinList, gtin, glnHandler);
@@ -786,15 +753,12 @@ public class OrderProcessor
 			    		//aici tb bagat in interchange
 			    		//sunt de la 0-8 seg si seggroup inaintea lui
 			    		((Message)interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().add(8+anzahlLin, sg26);
-			    		
 				    }
 		       } 
 		    }
 		    int afterSG2 = 8;
 		    for(int k = sgList.size()-1; k>=0; k-- )
 		    	((Message)dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().add(afterSG2, sgList.get(k));
-		    
-		    
 		    
 		    //aici se poate det cate produse pot fi livrate
 	        //SG CNT
@@ -820,11 +784,10 @@ public class OrderProcessor
 					.get(0)).setvalue("" + getSegmentCount(dispatch, doc, builder, xpath));
 			
 			stmt.close();
-		    
-			
 			
 			JAXBContext jc2 = JAXBContext.newInstance("paper4all.messages");
 			Marshaller m = jc2.createMarshaller();
+			
 			File interch = new File("interch.xml");
 			m.marshal(interchange, interch);
 			String inter = getInput(interch);
@@ -832,14 +795,12 @@ public class OrderProcessor
 			System.out.println(inter);
 			docum.add(inter);
 			
-			
 			File des = new File("dispatch.xml");
 			m.marshal(dispatch, des);
 			String disp = getInput(des);
 			des.delete();
 			System.out.println(disp);
 			docum.add(disp);
-			
 			
 			temp.delete();
 			return docum;
@@ -858,15 +819,12 @@ public class OrderProcessor
 		List<String> srnList = new ArrayList<String>();
 		for(int i=0; i<anzahl; i++)
 		{
-			
 			int nr = Integer.parseInt(srn)+1;
 			srn = Integer.toString(nr);
 			srnList.add(srn);
 		}
-		
 		return srnList;
 	}
-	
 	
 	private void insertEPC(Statement stmt, String teilSGTIN, List<String> sgtinList, String gtin, String gln )
 	{
@@ -884,13 +842,11 @@ public class OrderProcessor
 							+ gln + ", " + s + ",'" + date + "')");
 			} 
 		}
-			
 		catch (SQLException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
 	}
 	
 	
@@ -951,7 +907,6 @@ public class OrderProcessor
 		} 
 		catch (SQLException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return 1000;
 		}
@@ -977,7 +932,6 @@ public class OrderProcessor
 		  
 		}
 		return null;
-	  
 	}
 	
 	private String getBinaryPositions(String s, int pos)
@@ -999,8 +953,6 @@ public class OrderProcessor
 			
 			File des_count = new File("count_dispatch.xml");
 			m.marshal(dispatch, des_count);
-			//String cnt = getInput(des_count);
-			
 			doc = builder.parse(des_count);
 		    
 		    //anzahl der segmente
@@ -1018,8 +970,5 @@ public class OrderProcessor
 			e.printStackTrace();
 		}
 		return -1;
-	}
-
-
-	
+	}	
 }	
