@@ -3,14 +3,9 @@ package paper4all.main;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-
-import paper4all.webservices.utils.Sended;
 import paper4all.wsdl.*;
 
 public class Main 
@@ -147,14 +142,4 @@ public class Main
 	  
 	}
   
-	public static String display(Sended obj)
-	{
-		return "[SGTIN: " + obj.getSgtin()
-				+ ", GTIN: " + obj.getGtin()
-				+ ", VERLANGT: " + obj.getVerlangt()
-				+ ", GESCHIKT: " + obj.getGeschickt()
-				+ ", PREIS: " + obj.getPreis()
-				+"]";
-			
-	}
 }

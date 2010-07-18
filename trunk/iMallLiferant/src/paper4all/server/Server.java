@@ -1,6 +1,5 @@
 package paper4all.server;
 
-import javax.swing.JOptionPane; 
 import javax.xml.ws.Endpoint;
 
 import paper4all.services.DeleteFile;
@@ -12,10 +11,9 @@ import paper4all.services.XMLToEDI;
 
 public class Server 
 { 
-  public static void main( String[] args ) 
-  {
-	 
-	  
+	@SuppressWarnings("unused")
+  	public static void main( String[] args ) 
+	{
 	  Endpoint endpoint1 = Endpoint.publish( "http://localhost:8080/readinbox", 
               new ReadInbox() ); 
 	  Endpoint endpoint2 = Endpoint.publish( "http://localhost:8080/deletefile", 
@@ -28,7 +26,5 @@ public class Server
               new EDIToXML() ); 
 	  Endpoint endpoint6 = Endpoint.publish( "http://localhost:8080/orderprocessor", 
               new OrderProcessor() ); 
-	  
-     
-  } 
+	} 
 }
