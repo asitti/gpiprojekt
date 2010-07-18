@@ -17,6 +17,75 @@ public class Main
 {
 	public void runProgram()
 	{
+		
+		/*while(true)
+		{
+			System.out.print("reading hub content for incoming orders.....");
+			ReadInboxWebService read = new ReadInboxService().getReadInboxWebServicePort();
+			String bestellInput = read.readFromInbox();
+			if(bestellInput != null)
+			{
+				System.out.println("OK");
+				//System.out.println(bestellInput);
+					
+				System.out.print("transforming incoming order - edi to xml.....");
+				EDIToXMLWebService edi = new EDIToXMLService().getEDIToXMLWebServicePort();
+				String bestell = edi.ediToXml(bestellInput);
+				if(bestell !=null)
+				{
+					System.out.println("OK");
+					//System.out.println(bestell);
+					
+					System.out.print("processing order.....");
+					OrderProcessorWebService order = new OrderProcessorService().getOrderProcessorWebServicePort();
+					List<String> xmls = order.processIncomingOrder(bestell, //getInput(new File("in/order_f.xml")) 
+							getInput(new File("src/paper4all/templates/invoic_template.xml"))
+							, getInput(new File("src/paper4all/templates/desadv_template.xml")));
+					
+					if(xmls != null)
+					{
+						System.out.println("OK");
+						
+						//System.out.println("rechnung: " + xmls.get(0));
+						//System.out.println("lieferavis: " + xmls.get(1));
+						
+						
+						XMLToEDIWebService x2e = new XMLToEDIService().getXMLToEDIWebServicePort();
+						System.out.println("transforming invoice - xml to edi.....");
+						String rechnung = x2e.xmlToEdi(xmls.get(0));
+						
+						if(rechnung != null)
+						{
+							System.out.println("OK");
+							System.out.print("writing invoice to outbox.....");
+							WriteOutboxWebService write = new WriteOutboxService().getWriteOutboxWebServicePort();
+							boolean ok = write.writeToOutbox(rechnung);
+							if(ok)
+								System.out.println("OK");
+							else
+								System.out.println("ERROR");
+						}
+						
+						String lieferavis = x2e.xmlToEdi(xmls.get(1));
+						System.out.println("transforming desadv - xml to edi.....");
+						if(lieferavis != null)
+						{
+							System.out.println("OK");
+							System.out.print("writing desadv to outbox.....");
+							WriteOutboxWebService write = new WriteOutboxService().getWriteOutboxWebServicePort();
+							boolean ok = write.writeToOutbox(lieferavis);
+							if(ok)
+								System.out.println("OK");
+							else
+								System.out.println("ERROR");
+						}
+												
+						System.out.println();
+					}
+				}
+			}
+		}*/
+		
 		/*ReadInboxWebService read = new ReadInboxService().getReadInboxWebServicePort();
 		String name = read.readFromInbox();
 		if(name != null)
