@@ -1138,6 +1138,7 @@ public class OrderProcessor
 			{
 				String sgtinStuck = teilSGTIN + getBinaryPositions(s, 38);
 				BigInteger bg = new BigInteger(sgtinStuck, 2);
+				//System.out.println(sgtinStuck + " : " + sgtinStuck.length() + ", " + bg + " : " + bg.bitLength());
 				stmt.executeQuery("insert into epc values("+ bg + "," + gtin + ", " 
 							+ gln + ", " + s + ",'" + date + "')");
 			} 
