@@ -27,14 +27,15 @@ public class Main
 		WriteOutboxWebService write = new WriteOutboxService().getWriteOutboxWebServicePort();
 		System.out.println(write.writeToOutbox("in1.xml"));*/
 		
-		//EDIToXMLWebService edi = new EDIToXMLService().getEDIToXMLWebServicePort();
-		//System.out.println(edi.ediToXml(getInput(new File("in/in.edi"))));
+		EDIToXMLWebService edi = new EDIToXMLService().getEDIToXMLWebServicePort();
+		String bestell = edi.ediToXml(getInput(new File("in/572.edi")));
+		System.out.println(bestell);
 		
 		OrderProcessorWebService order = new OrderProcessorService().getOrderProcessorWebServicePort();
-		List<String> xmls = order.processIncomingOrder(getInput(new File("in/order_f.xml")), 
+		List<String> xmls = order.processIncomingOrder(bestell, //getInput(new File("in/order_f.xml")) 
 				getInput(new File("src/paper4all/templates/invoic_template.xml"))
 				, getInput(new File("src/paper4all/templates/desadv_template.xml")));
-		//System.out.println("rechnung: " + xmls.get(0));
+		System.out.println("rechnung: " + xmls.get(0));
 		System.out.println("lieferavis: " + xmls.get(1));
 		
 		//XMLToEDIWebService s = new XMLToEDIService().getXMLToEDIWebServicePort();
