@@ -485,7 +485,6 @@ public class OrderProcessor
 					    			//-----ende kartons------
 					    			
 					    						    				
-				    				
 				    				//level 1
 				    				SegmentGroup sg10  = new SegmentGroup();
 					    			sg10.setName("SG10");
@@ -494,7 +493,7 @@ public class OrderProcessor
 					    			cps.setName("CPS");
 					    			DE de7164 = new DE();
 					    			de7164.setName("7164");
-					    			System.out.println("level 1: " +seqNr);
+					    			//System.out.println("level 1: " +seqNr);
 					    			de7164.setvalue("" + seqNr);
 					    			cps.getCDEOrDE().add(de7164);
 					    			sg10.getSegmentOrSegmentGroup().add(cps);
@@ -520,10 +519,9 @@ public class OrderProcessor
 					    			pac.getCDEOrDE().add(c202);
 					    			sg11.getSegmentOrSegmentGroup().add(pac);
 					    			sg10.getSegmentOrSegmentGroup().add(sg11);
-					    			
+					    			seqNr +=1;
 					    			sgList.add(sg10);
 					    			
-					    			seqNr +=1;
 					    			
 					    			//level 2
 					    			SegmentGroup sg10karton = new SegmentGroup();
@@ -532,15 +530,14 @@ public class OrderProcessor
 					    			cpsKarton.setName("CPS");
 					    			DE de7164Karton = new DE();
 					    			de7164Karton.setName("7164");
-					    			System.out.println(seqNr);
+					    			//System.out.println(seqNr);
 					    			de7164Karton.setvalue(Integer.toString(seqNr));
+					    			cpsKarton.getCDEOrDE().add(de7164Karton);
 					    			DE de7166 = new DE();
 					    			de7166.setName("7166");
-					    			cpsKarton.getCDEOrDE().add(de7164);
-					    			int tempSeq = seqNr;
-					    		 
-					    			System.out.println("level 2: " +seqNr + ", parent: " + tempSeq);
-					    			de7166.setvalue("" + (tempSeq-1));
+					    			de7166.setvalue("" + (seqNr-1));
+					    			seqNr++;
+					    		 	
 					    			cpsKarton.getCDEOrDE().add(de7166);
 					    			sg10karton.getSegmentOrSegmentGroup().add(cpsKarton);
 					    			//SG11
@@ -699,7 +696,24 @@ public class OrderProcessor
 					    			
 					    			sgList.add(sg10karton);
 					    			
-					    			seqNr++;
+					    			System.out.println("---------------CPS------------------");
+					    			for(int p = 0; p< sgList.size(); p++)
+					    			{
+					    				List<Object> list = sgList.get(p).getSegmentOrSegmentGroup();
+					    				for(int r = 0;r < list.size(); r++)
+					    					if(list.get(r) instanceof Segment)
+					    					{
+					    						Segment seg = (Segment)list.get(r);
+					    						if(seg.getName().equals("CPS"))
+					    						{
+					    							System.out.println(((DE)seg.getCDEOrDE().get(0)).getName() + 
+					    									" : " + ((DE)seg.getCDEOrDE().get(0)).getvalue());
+					    						}
+					    					}
+					    			}
+					    			System.out.println("---------------ENDE------------------");
+					    			
+					    			
 				    			}
 					    	}
 					    	
