@@ -810,10 +810,14 @@ public class OrderProcessor
 			((CDE)((Segment)((SegmentGroup)((Message)interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup()
 					.get(12 + anzahlLin)).getSegmentOrSegmentGroup().get(0)).getCDEOrDE().get(0)).getDE().get(1).
 					setvalue(Float.toString(totalTaxes));
-			//22 + 6*anzahlLin
 			
+			//UNT rechnung
 			((DE)((Message)interchange.getMessageOrMsgGroup().get(0)).getTrailer().getSegment().getCDEOrDE()
-					.get(0)).setvalue(Integer.toString(22 + 6 * anzahlLin));
+					.get(0)).setvalue("" + getSegmentCount(interchange, doc, builder, xpath));
+			
+			//unt lieferavis
+			((DE)((Message)dispatch.getMessageOrMsgGroup().get(0)).getTrailer().getSegment().getCDEOrDE()
+					.get(0)).setvalue("" + getSegmentCount(dispatch, doc, builder, xpath));
 			
 			stmt.close();
 		    
@@ -985,5 +989,37 @@ public class OrderProcessor
 		}
 		return temp;
 	}
+	
+	private int getSegmentCount(Interchange dispatch, Document doc, DocumentBuilder builder, XPath xpath)
+	{
+		try
+		{
+			JAXBContext jc2 = JAXBContext.newInstance("paper4all.messages");
+			Marshaller m = jc2.createMarshaller();
+			
+			File des_count = new File("count_dispatch.xml");
+			m.marshal(dispatch, des_count);
+			//String cnt = getInput(des_count);
+			
+			doc = builder.parse(des_count);
+		    
+		    //anzahl der segmente
+			String xpath_query = "/Interchange/Message//Segment";
+			XPathExpression expr_count = xpath.compile(xpath_query);
+		    Object count_segments = expr_count.evaluate(doc, XPathConstants.NODESET);
+		    NodeList countNode= (NodeList) count_segments;
+		    
+		    int unt_counter = countNode.getLength();
+		    des_count.delete();
+		    return unt_counter;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+
 	
 }	
