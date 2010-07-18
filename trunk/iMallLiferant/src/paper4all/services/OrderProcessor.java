@@ -130,8 +130,12 @@ public class OrderProcessor
 					get(1)).getCDEOrDE().get(0)).getDE().get(1).setvalue("20" + getActualDate());
 			
 			//bestellnr
+			 expr = xpath.compile("/Interchange/Message/Segment[@name='BGM']/CDE[@name='C106']/DE[@name='1004']/text()");
+			 Object ordObj = expr.evaluate(doc, XPathConstants.NODESET);
+			 NodeList ordNode= (NodeList) ordObj;
+			 String orderNr = ordNode.item(0).getNodeValue();
 			((CDE)((Segment)((SegmentGroup)((Message)interchange.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup()
-					.get(2)).getSegmentOrSegmentGroup().get(0)).getCDEOrDE().get(0)).getDE().get(1).setvalue("ORD"+invoiceNr);
+					.get(2)).getSegmentOrSegmentGroup().get(0)).getCDEOrDE().get(0)).getDE().get(1).setvalue(orderNr);
 			
 			//referenzdatum der bestellung
 			expr = xpath.compile("/Interchange/Message/Segment[@name='DTM']/CDE[@name='C507']/DE[@name='2380']/text()");
@@ -176,7 +180,7 @@ public class OrderProcessor
 					get(3)).getCDEOrDE().get(0)).getDE().get(1).setvalue("20" + getActualDate());
 			//order nr
 			((CDE)((Segment)((SegmentGroup)((Message) dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().get(4))
-			.getSegmentOrSegmentGroup().get(0)).getCDEOrDE().get(0)).getDE().get(1).setvalue("" + invoiceNr);
+			.getSegmentOrSegmentGroup().get(0)).getCDEOrDE().get(0)).getDE().get(1).setvalue(orderNr);
 			//bestell datum
 			((CDE)((Segment)((SegmentGroup)((Message) dispatch.getMessageOrMsgGroup().get(0)).getSegmentOrSegmentGroup().get(4))
 			.getSegmentOrSegmentGroup().get(1)).getCDEOrDE().get(0)).getDE().get(1).setvalue(dateNodes.item(0).getNodeValue());
