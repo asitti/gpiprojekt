@@ -91,7 +91,7 @@
                 <DE name="1082">1</DE>
                 <!--Z�hler der bestellten Produkte-->
                 <CDE name="C212">
-                    <DE name="7140">2965197100101</DE>
+                    <DE name="7140">2965197100118</DE>
                     <!--GTIN-->
                     <DE name="7143">SRV</DE>
                 </CDE>
@@ -99,7 +99,7 @@
             <Segment name="QTY">
                 <CDE name="C186">
                     <DE name="6063">1</DE>
-                    <DE name="6060">4</DE>
+                    <DE name="6060">2</DE>
                     <!--Menge-->
                 </CDE>
             </Segment>
