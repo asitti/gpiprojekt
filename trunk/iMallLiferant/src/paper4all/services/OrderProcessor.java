@@ -350,7 +350,7 @@ public class OrderProcessor
 		    	   	int verfugbar = Integer.parseInt(rset.getString(6));
 		    	   	float nettoP = Float.parseFloat(rset.getString(7));
 			    	System.out.println(gtin + " : cerute " + qty + ": avute " + verfugbar);
-			    	String produktNr = getBinaryPositions(gtin.substring(8,12), 17);
+			    	String produktNr = getBinaryPositions(gtin.substring(8,13), 17);
 			    	
 			    	if(verfugbar >= Integer.parseInt(qty))
 			    	{
@@ -389,7 +389,7 @@ public class OrderProcessor
 				    			if(anz != null)
 				    				anzahlKarton = Integer.parseInt(anz);
 				    			gtinKarton = karton.getString(2);
-				    			produktNrKarton = getBinaryPositions(gtinKarton.substring(8, 12),38);
+				    			produktNrKarton = getBinaryPositions(gtinKarton.substring(8, 13),17);
 				    		}
 				    		
 				    		//si cate vke contine un karton cu gtin = gtinKarton
@@ -404,7 +404,7 @@ public class OrderProcessor
 				    			if(anz != null)
 				    				anzahlVKE = Integer.parseInt(anz);
 				    			gtinVKE = karton.getString(2);
-				    			produktNrVKE = getBinaryPositions(gtinVKE.substring(8, 12),38);
+				    			produktNrVKE = getBinaryPositions(gtinVKE.substring(8, 13),17);
 				    		}
 				    		String teilSGTIN = header + filterVPE + partition + basisNr + produktNr;
 				    		String teilSGTINKarton = header + filterVPE + partition + basisNr + produktNrKarton;
@@ -488,7 +488,7 @@ public class OrderProcessor
 				    			c202Karton.setName("C202");
 				    			DE de7065Karton = new DE();
 				    			de7065Karton.setName("7065");
-				    			de7065Karton.setvalue("CT");
+				    			de7065Karton.setvalue("201");
 				    			DE de3055Karton = new DE();
 				    			de3055Karton.setName("3055");
 				    			de3055Karton.setvalue("9");
@@ -611,7 +611,7 @@ public class OrderProcessor
 					    			c212.setName("C212");
 					    			DE de7140 = new DE();
 					    			de7140.setName("7140");
-					    			BigInteger bg1 = new BigInteger(teilSGTIN + getBinaryPositions(sgtinKartonList.get(k),38), 2);
+					    			BigInteger bg1 = new BigInteger(teilSGTINKarton + getBinaryPositions(sgtinKartonList.get(k),38), 2);
 					    			de7140.setvalue("" + bg1);
 					    			DE de7143 = new DE();
 					    			de7143.setName("7143");
@@ -665,6 +665,8 @@ public class OrderProcessor
 					    			pacVKE.getCDEOrDE().add(de7224VKE);
 					    			pacVKE.getCDEOrDE().add(c202VKE);
 					    			sg11VKE.getSegmentOrSegmentGroup().add(pacVKE);
+					    			sg10VKE.getSegmentOrSegmentGroup().add(sg11VKE);
+					    			
 					    			
 					    			//generare qty*anzahlKarton*anzahlVKE sgtin vke
 					    			String serialNrVKE= getSRNEPC(stmt);
@@ -686,7 +688,7 @@ public class OrderProcessor
 						    			c212VKE.setName("C212");
 						    			DE de7140VKE = new DE();
 						    			de7140VKE.setName("7140");
-						    			BigInteger bg3 = new BigInteger(teilSGTIN + getBinaryPositions(sgtinVKEList.get(p),38), 2);
+						    			BigInteger bg3 = new BigInteger(teilSGTINVKE + getBinaryPositions(sgtinVKEList.get(p),38), 2);
 						    			de7140VKE.setvalue("" + bg3);
 						    			DE de7143VKE = new DE();
 						    			de7143VKE.setName("7143");
@@ -700,34 +702,9 @@ public class OrderProcessor
 					    			}
 					    			
 					    			sgList.add(sg10VKE);
-					    			
-					    			
 				    			}
-				    	
-				    			
-				    			
 			    			}
 			    			
-			    			
-			    			
-			    			
-			    			
-			    			
-			    			
-			    			int kKarton=0, kVKE=0;
-			    			/*for(String sp : sgtinPaletteList)
-			    			{
-			    				System.out.println("pt palette cu sgtin: " + sp);
-			    				
-			    				//fiecare vke intre k si k+anzahl vor fi trecute la kartonul k
-			    				for(int j = kKarton; j<((kKarton+1)*anzahlKarton); j++)
-			    				{
-			    					System.out.println("	sgtin_karton: " + sgtinKartonList.get(j));
-			    					for(int k = j*anzahlVKE; k < ((j+1)*anzahlVKE); k++)
-			    						System.out.println("		sgtin_vke: " + sgtinVKEList.get(k));
-			    				}
-			    				kKarton += 1;
-			    			}*/
 			    		}
 				    	else
 				    	{
@@ -942,7 +919,7 @@ public class OrderProcessor
 					    			//-------aici incep vke----------
 					    			//generare snr pt (anzahl der vke) dintr-un carton
 					    			String serialNrVKE = getSRNEPC(stmt);
-					    			String produktNrVKE = getBinaryPositions(gtinVKE.substring(8,12),17);
+					    			String produktNrVKE = getBinaryPositions(gtinVKE.substring(8,13),17);
 					    			teilSGTIN = header + filterVKE + partition + basisNr + produktNrVKE;
 					    			List<String> sgtinListVKE = generateSrn(anzahl, serialNrVKE);
 					    			insertEPC(stmt, teilSGTIN, sgtinListVKE, gtinVKE, glnHandler);
@@ -1242,6 +1219,9 @@ public class OrderProcessor
 		{
 			temp = "0" + temp;
 		}
+		
+		System.out.println("s:"  + s + " : "+ pos + " : " + temp.length() + " : " + temp);
+		
 		return temp;
 	}
 	
