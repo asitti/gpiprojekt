@@ -42,123 +42,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Reservation }
-     * 
-     */
-    public Reservation createReservation() {
-        return new Reservation();
-    }
-
-    /**
-     * Create an instance of {@link GetSGTINWhereaboutsFromStorage }
-     * 
-     */
-    public GetSGTINWhereaboutsFromStorage createGetSGTINWhereaboutsFromStorage() {
-        return new GetSGTINWhereaboutsFromStorage();
-    }
-
-    /**
-     * Create an instance of {@link Inventory }
-     * 
-     */
-    public Inventory createInventory() {
-        return new Inventory();
-    }
-
-    /**
      * Create an instance of {@link SgtinWhereAbouts }
      * 
      */
     public SgtinWhereAbouts createSgtinWhereAbouts() {
         return new SgtinWhereAbouts();
-    }
-
-    /**
-     * Create an instance of {@link SendReservationToStorage }
-     * 
-     */
-    public SendReservationToStorage createSendReservationToStorage() {
-        return new SendReservationToStorage();
-    }
-
-    /**
-     * Create an instance of {@link SgtinContainer }
-     * 
-     */
-    public SgtinContainer createSgtinContainer() {
-        return new SgtinContainer();
-    }
-
-    /**
-     * Create an instance of {@link GetSGTINWhereaboutsFromStorageResponse }
-     * 
-     */
-    public GetSGTINWhereaboutsFromStorageResponse createGetSGTINWhereaboutsFromStorageResponse() {
-        return new GetSGTINWhereaboutsFromStorageResponse();
-    }
-
-    /**
-     * Create an instance of {@link ReservationPickup }
-     * 
-     */
-    public ReservationPickup createReservationPickup() {
-        return new ReservationPickup();
-    }
-
-    /**
-     * Create an instance of {@link GetInventoryFromStorageResponse }
-     * 
-     */
-    public GetInventoryFromStorageResponse createGetInventoryFromStorageResponse() {
-        return new GetInventoryFromStorageResponse();
-    }
-
-    /**
-     * Create an instance of {@link Arrivals }
-     * 
-     */
-    public Arrivals createArrivals() {
-        return new Arrivals();
-    }
-
-    /**
-     * Create an instance of {@link SaledProducts }
-     * 
-     */
-    public SaledProducts createSaledProducts() {
-        return new SaledProducts();
-    }
-
-    /**
-     * Create an instance of {@link SendOrderToStorage }
-     * 
-     */
-    public SendOrderToStorage createSendOrderToStorage() {
-        return new SendOrderToStorage();
-    }
-
-    /**
-     * Create an instance of {@link GetInventoryFromStorage }
-     * 
-     */
-    public GetInventoryFromStorage createGetInventoryFromStorage() {
-        return new GetInventoryFromStorage();
-    }
-
-    /**
-     * Create an instance of {@link Product }
-     * 
-     */
-    public Product createProduct() {
-        return new Product();
-    }
-
-    /**
-     * Create an instance of {@link PickUpReservationFromStorage }
-     * 
-     */
-    public PickUpReservationFromStorage createPickUpReservationFromStorage() {
-        return new PickUpReservationFromStorage();
     }
 
     /**
@@ -170,11 +58,123 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Arrivals }
+     * 
+     */
+    public Arrivals createArrivals() {
+        return new Arrivals();
+    }
+
+    /**
+     * Create an instance of {@link SendOrderToStorage }
+     * 
+     */
+    public SendOrderToStorage createSendOrderToStorage() {
+        return new SendOrderToStorage();
+    }
+
+    /**
+     * Create an instance of {@link Inventory }
+     * 
+     */
+    public Inventory createInventory() {
+        return new Inventory();
+    }
+
+    /**
+     * Create an instance of {@link SaledProducts }
+     * 
+     */
+    public SaledProducts createSaledProducts() {
+        return new SaledProducts();
+    }
+
+    /**
+     * Create an instance of {@link ReservationPickup }
+     * 
+     */
+    public ReservationPickup createReservationPickup() {
+        return new ReservationPickup();
+    }
+
+    /**
+     * Create an instance of {@link GetSGTINWhereaboutsFromStorageResponse }
+     * 
+     */
+    public GetSGTINWhereaboutsFromStorageResponse createGetSGTINWhereaboutsFromStorageResponse() {
+        return new GetSGTINWhereaboutsFromStorageResponse();
+    }
+
+    /**
+     * Create an instance of {@link PickUpReservationFromStorage }
+     * 
+     */
+    public PickUpReservationFromStorage createPickUpReservationFromStorage() {
+        return new PickUpReservationFromStorage();
+    }
+
+    /**
+     * Create an instance of {@link SgtinContainer }
+     * 
+     */
+    public SgtinContainer createSgtinContainer() {
+        return new SgtinContainer();
+    }
+
+    /**
+     * Create an instance of {@link GetSGTINWhereaboutsFromStorage }
+     * 
+     */
+    public GetSGTINWhereaboutsFromStorage createGetSGTINWhereaboutsFromStorage() {
+        return new GetSGTINWhereaboutsFromStorage();
+    }
+
+    /**
+     * Create an instance of {@link GetInventoryFromStorage }
+     * 
+     */
+    public GetInventoryFromStorage createGetInventoryFromStorage() {
+        return new GetInventoryFromStorage();
+    }
+
+    /**
+     * Create an instance of {@link SendReservationToStorage }
+     * 
+     */
+    public SendReservationToStorage createSendReservationToStorage() {
+        return new SendReservationToStorage();
+    }
+
+    /**
      * Create an instance of {@link SendSaledProductsToStorage }
      * 
      */
     public SendSaledProductsToStorage createSendSaledProductsToStorage() {
         return new SendSaledProductsToStorage();
+    }
+
+    /**
+     * Create an instance of {@link GetInventoryFromStorageResponse }
+     * 
+     */
+    public GetInventoryFromStorageResponse createGetInventoryFromStorageResponse() {
+        return new GetInventoryFromStorageResponse();
+    }
+
+    /**
+     * Create an instance of {@link Reservation }
+     * 
+     */
+    public Reservation createReservation() {
+        return new Reservation();
+    }
+
+    /**
+     * Create an instance of {@link Product }
+     * 
+     */
+    public Product createProduct() {
+        return new Product();
     }
 
     /**

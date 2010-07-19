@@ -27,7 +27,7 @@ public class EPCTracking {
 		{
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			String console_header = "epcTracking> ";
-			System.out.println("Usage: get [gln: n..13] [date: DD/MM/YY]");
+			System.out.println("Usage: get [gln: n..13] [date: DD/MM/YYYY]");
 			while(true)
 			{
 				System.out.print(console_header);
@@ -45,7 +45,7 @@ public class EPCTracking {
 						String date = input[1].trim();
 						
 						Statement stmt = connectToDB();
-						ResultSet rset = stmt.executeQuery("select sgtin from epc where gln='" + gln + "' and vk_datum='" + date + "'");
+						ResultSet rset = stmt.executeQuery("select sgtin,gtin from epc where gln='" + gln + "' and vk_datum='" + date + "'");
 						List<String> sgtins = new ArrayList<String>();
 						
 						int counter = 0; 
@@ -56,7 +56,7 @@ public class EPCTracking {
 				        	sgtins.add(rset.getString(1));*/
 				        	
 				        	String temp = rset.getString(1);
-				        	String gtin = getGtinFromSgtin(temp);
+				        	String gtin = rset.getString(2);
 				        	if(gtin.equals("2965197100101") ||
 				        			gtin.equals("2965197100200") ||
 				        			gtin.equals("2965197100309") ||
@@ -99,7 +99,7 @@ public class EPCTracking {
 		}
 		catch(Exception e)
 		{
-			//e.printStackTrace();
+			e.printStackTrace();
 			System.out.println("Internal error.");
 		}
 	}
