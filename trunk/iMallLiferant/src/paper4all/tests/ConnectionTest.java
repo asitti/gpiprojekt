@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
@@ -22,28 +24,16 @@ public class ConnectionTest {
 			FTPClient f = new FTPClient();
 		    f.connect("sokrates2.local.cs.hs-rm.de");
 		    f.login("hu000004", "1q2w3e");
-		    FTPListParseEngine engine = f.initiateListParsing("/out");
-		    
-		    System.out.println("s-a conectat");
-	
-		    while (engine.hasNext()) 
+		    FTPFile[] files = f.listFiles("out");
+		    for(int i=0; i< files.length; i++)
 		    {
-		       FTPFile[] files = engine.getNext(5);  // "page size" you want
-		       //do whatever you want with these files, display them, etc.
-		       //expensive FTPFile objects not created until needed.
-		       
-		      // f.retrieveFile(arg0, arg1)
-		       for(int i=0; i< files.length; i++)
-		       
-		      	System.out.println(files[i].getName());
-		       
-		    	
-		      		   
+		    	System.out.println(files[i].getName());
+		    	System.out.println(f.deleteFile("out/"+files[i].getName()));
 		    }
-		       
 		    
 		    
 		    f.disconnect();
+		  
 		}
 		catch(Exception e)
 		{
