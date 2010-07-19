@@ -31,43 +31,28 @@ public class ReadInbox
 			FTPClient f = new FTPClient();
 		    f.connect("sokrates2.local.cs.hs-rm.de");
 		    f.login("hu000004", "1q2w3e");
-		    FTPListParseEngine engine = f.initiateListParsing("/in");
-	
-		    while (engine.hasNext()) 
-		    {
-		       FTPFile[] files = engine.getNext(1);  // "page size" you want
-		       //do whatever you want with these files, display them, etc.
-		       //expensive FTPFile objects not created until needed.
-		       
-		      // f.retrieveFile(arg0, arg1)
-		       
-		       
-		       System.out.println(files[0].getName());
-		    	
-		       
-		       if(files.length>0)
-		       {
-		    	   File file = new File("in/temp.edi");
-		    	   OutputStream out = new FileOutputStream(file);
-		    	   
-		    	   if(f.retrieveFile("in/"+files[0].getName(), out))
-		    	   {
-		    		   out.close();
-		    		   String input = "";
-			   		   BufferedReader in = new BufferedReader(new FileReader(file));
-			   		   String str;
-			   		   while ((str = in.readLine()) != null) 
-			   		   {
-			   		      input += str;
-			   		   }
-			   		   in.close();
-			   		   f.deleteFile("in/" + files[0].getName());
-			   		   return input;
-		    	   }	    		   
-		       }
-		       
-		    }
 		    
+		    FTPFile[] files = f.listFiles("in");
+		    
+		    if(files.length>0)
+		    {
+		    	 File file = new File("in/temp.edi");
+		    	 OutputStream out = new FileOutputStream(file);
+		    	 if(f.retrieveFile("in/"+files[0].getName(), out))
+		    	 {
+		    		 out.close();
+		    		 String input = "";
+		    		 BufferedReader in = new BufferedReader(new FileReader(file));
+		    		 String str;
+		    		 while ((str = in.readLine()) != null) 
+		    		 {
+		    			 input += str;
+		    		 }
+		    		 in.close();
+		    		// f.deleteFile("in/" + files[0].getName());
+		    		 return input;
+		    	   }	    
+		    }
 		    f.disconnect();
 		}
 		catch(Exception e)

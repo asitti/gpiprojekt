@@ -42,8 +42,6 @@ public class JakartaTest {
 		    	   {
 		    		   //
 		    		   out.close();
-		    		   
-		    		   
 		    		   /*String input = "";
 			   		   BufferedReader in = new BufferedReader(new FileReader(file));
 			   		   String str;
