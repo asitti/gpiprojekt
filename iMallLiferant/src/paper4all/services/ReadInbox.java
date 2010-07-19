@@ -49,7 +49,7 @@ public class ReadInbox
 		    			 input += str;
 		    		 }
 		    		 in.close();
-		    		// f.deleteFile("in/" + files[0].getName());
+		    		 f.deleteFile("in/" + files[0].getName());
 		    		 return input;
 		    	   }	    
 		    }
