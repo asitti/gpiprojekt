@@ -349,7 +349,7 @@ public class OrderProcessor
 		    	   //cate sunt disponibile in baza de date - anzahl_verfuegbar
 		    	   	int verfugbar = Integer.parseInt(rset.getString(6));
 		    	   	float nettoP = Float.parseFloat(rset.getString(7));
-			    	System.out.println(gtin + " : cerute " + qty + ": avute " + verfugbar);
+			    	//System.out.println(gtin + " : cerute " + qty + ": avute " + verfugbar);
 			    	String produktNr = getBinaryPositions(gtin.substring(8,13), 17);
 			    	
 			    	if(verfugbar >= Integer.parseInt(qty))
@@ -727,7 +727,7 @@ public class OrderProcessor
 					    				anzahl = Integer.parseInt(anz);
 					    			gtinVKE = karton.getString(2);
 					    		}
-					    		System.out.println("gtin_karton: " + gtin + ", gtin_vke: " + gtinVKE + ", anzahl: " + anzahl );
+					    		//System.out.println("gtin_karton: " + gtin + ", gtin_vke: " + gtinVKE + ", anzahl: " + anzahl );
 					    						    			
 				    			
 				    			for(int j = 0; j<Integer.parseInt(qty); j++)
@@ -1069,14 +1069,14 @@ public class OrderProcessor
 			m.marshal(interchange, interch);
 			String inter = getInput(interch);
 			interch.delete();
-			System.out.println(inter);
+			//System.out.println(inter);
 			docum.add(inter);
 			
 			File des = new File("dispatch.xml");
 			m.marshal(dispatch, des);
 			String disp = getInput(des);
 			des.delete();
-			System.out.println(disp);
+			//System.out.println(disp);
 			docum.add(disp);
 			
 			temp.delete();
@@ -1219,9 +1219,6 @@ public class OrderProcessor
 		{
 			temp = "0" + temp;
 		}
-		
-		System.out.println("s:"  + s + " : "+ pos + " : " + temp.length() + " : " + temp);
-		
 		return temp;
 	}
 	
