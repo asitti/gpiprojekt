@@ -92,7 +92,9 @@ public class Main
 		System.out.println(write.writeToOutbox("in1.xml"));*/
 		
 		EDIToXMLWebService edi = new EDIToXMLService().getEDIToXMLWebServicePort();
-		String bestell = edi.ediToXml(getInput(new File("in/544.edi")));
+		//String bestell = edi.ediToXml(getInput(new File("in/544.edi")));
+		
+		String bestell = getInput(new File("in/order_f.xml"));
 		System.out.println("bestell: " + bestell);
 		
 		OrderProcessorWebService order = new OrderProcessorService().getOrderProcessorWebServicePort();
@@ -102,9 +104,9 @@ public class Main
 		System.out.println("rechnung: " + xmls.get(0));
 		System.out.println("lieferavis: " + xmls.get(1));
 		
-		//XMLToEDIWebService s = new XMLToEDIService().getXMLToEDIWebServicePort();
-		//String invoice_edi = s.xmlToEdi(invoice_xml.get(0));
-		//System.out.println(invoice_edi);
+		XMLToEDIWebService s = new XMLToEDIService().getXMLToEDIWebServicePort();
+		String invoice_edi = s.xmlToEdi(xmls.get(1));
+		System.out.println(invoice_edi);
 		//System.out.println(order.processIncomingOrder(getInput(new File("in/order_f.xml")), 
 				//getInput(new File("src/paper4all/templates/invoic_template.xml"))));
 		

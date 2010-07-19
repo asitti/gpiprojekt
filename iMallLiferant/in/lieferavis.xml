@@ -1,0 +1,1811 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Interchange version="3" standard_key="E">
+	<Header>
+		<Segment name="UNB">
+			<CDE instance="1" name="S001">
+				<DE instance="1" name="0001">UNOA</DE>
+				<DE instance="1" name="0002">3</DE>
+			</CDE>
+			<CDE instance="1" name="S002">
+				<DE instance="1" name="0004">2965197100002</DE>
+				<DE instance="1" name="0007">14</DE>
+			</CDE>
+			<CDE instance="1" name="S003">
+				<DE instance="1" name="0010">2765197100008</DE>
+				<DE instance="1" name="0007">14</DE>
+			</CDE>
+			<CDE instance="1" name="S004">
+				<DE instance="1" name="0017">100719</DE>
+				<DE instance="1" name="0019">1013</DE>
+			</CDE>
+			<DE instance="1" name="0020">25001</DE>
+		</Segment>
+		<Parameter name="UNA">UNA:+.? '</Parameter>
+	</Header>
+	<Message>
+		<Header>
+			<Segment name="UNH">
+				<DE instance="1" name="0062">DES1027</DE>
+				<CDE instance="1" name="S009">
+					<DE instance="1" name="0065">DESADV</DE>
+					<DE instance="1" name="0052">D</DE>
+					<DE instance="1" name="0054">01B</DE>
+					<DE instance="1" name="0051">UN</DE>
+					<DE instance="1" name="0057">EAN007</DE>
+				</CDE>
+			</Segment>
+		</Header>
+		<Segment name="BGM">
+			<CDE instance="1" name="C002">
+				<DE instance="1" name="1001">351</DE>
+			</CDE>
+			<CDE instance="1" name="C106">
+				<DE instance="1" name="1004">DES1027</DE>
+			</CDE>
+			<DE instance="1" name="1225">9</DE>
+		</Segment>
+		<Segment name="DTM">
+			<CDE instance="1" name="C507">
+				<DE instance="1" name="2005">137</DE>
+				<DE instance="1" name="2380">20100719</DE>
+				<DE instance="1" name="2379">102</DE>
+			</CDE>
+		</Segment>
+		<Segment name="DTM">
+			<CDE instance="1" name="C507">
+				<DE instance="1" name="2005">11</DE>
+				<DE instance="1" name="2380">20100719</DE>
+				<DE instance="1" name="2379">102</DE>
+			</CDE>
+		</Segment>
+		<Segment name="DTM">
+			<CDE instance="1" name="C507">
+				<DE instance="1" name="2005">358</DE>
+				<DE instance="1" name="2380">20100719</DE>
+				<DE instance="1" name="2379">102</DE>
+			</CDE>
+		</Segment>
+		<SegmentGroup name="SG1">
+			<Segment name="RFF">
+				<CDE instance="1" name="C506">
+					<DE instance="1" name="1153">ON</DE>
+					<DE instance="1" name="1154">000001</DE>
+				</CDE>
+			</Segment>
+			<Segment name="DTM">
+				<CDE instance="1" name="C507">
+					<DE instance="1" name="2005">171</DE>
+					<DE instance="1" name="2380">20100718</DE>
+					<DE instance="1" name="2379">102</DE>
+				</CDE>
+			</Segment>
+		</SegmentGroup>
+		<SegmentGroup name="SG2">
+			<Segment name="NAD">
+				<DE instance="1" name="3035">BY</DE>
+				<CDE instance="1" name="C082">
+					<DE instance="1" name="3039">2765197100005</DE>
+					<DE instance="1" name="3055">9</DE>
+				</CDE>
+			</Segment>
+		</SegmentGroup>
+		<SegmentGroup name="SG2">
+			<Segment name="NAD">
+				<DE instance="1" name="3035">DP</DE>
+				<CDE instance="1" name="C082">
+					<DE instance="1" name="3039">2765197100008</DE>
+					<DE instance="1" name="3055">9</DE>
+				</CDE>
+			</Segment>
+		</SegmentGroup>
+		<SegmentGroup name="SG2">
+			<Segment name="NAD">
+				<DE instance="1" name="3035">SU</DE>
+				<CDE instance="1" name="C082">
+					<DE instance="1" name="3039">2965197100002</DE>
+					<DE instance="1" name="3055">9</DE>
+				</CDE>
+			</Segment>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">1</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">201</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">2</DE>
+				<DE name="7166">1</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">201</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+				<Segment name="MEA">
+					<DE name="6311">PD</DE>
+					<CDE name="C502">
+						<DE name="6313">AAA</DE>
+					</CDE>
+					<CDE name="C174">
+						<DE name="6411">KGM</DE>
+						<DE name="6314">360</DE>
+					</CDE>
+				</Segment>
+				<Segment name="MEA">
+					<DE name="6311">PD</DE>
+					<CDE name="C502">
+						<DE name="6313">WD</DE>
+					</CDE>
+					<CDE name="C174">
+						<DE name="6411">MMT</DE>
+						<DE name="6314">860</DE>
+					</CDE>
+				</Segment>
+				<Segment name="MEA">
+					<DE name="6311">PD</DE>
+					<CDE name="C502">
+						<DE name="6313">LN</DE>
+					</CDE>
+					<CDE name="C174">
+						<DE name="6411">MMT</DE>
+						<DE name="6314">1200</DE>
+					</CDE>
+				</Segment>
+				<SegmentGroup name="SG13">
+					<Segment name="PCI">
+						<DE name="4233">33E</DE>
+					</Segment>
+					<SegmentGroup name="SG15">
+						<Segment name="GIN">
+							<DE name="7405">BJ</DE>
+							<CDE name="C208">
+								<DE name="7402">14953062861838108137330050113</DE>
+							</CDE>
+						</Segment>
+					</SegmentGroup>
+				</SegmentGroup>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050114</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050115</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050116</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050117</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050118</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050119</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050120</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050121</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050122</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050123</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050124</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050125</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">3</DE>
+				<DE name="7166">2</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">CT</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050126</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050127</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050128</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050129</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050130</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050131</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050132</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050133</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050134</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050135</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050136</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050137</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">4</DE>
+				<DE name="7166">2</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">CT</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050138</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050139</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050140</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050141</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050142</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050143</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050144</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050145</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050146</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050147</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050148</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050149</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">5</DE>
+				<DE name="7166">2</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">CT</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050150</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050151</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050152</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050153</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050154</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050155</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050156</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050157</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050158</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050159</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050160</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050161</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">6</DE>
+				<DE name="7166">2</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">CT</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050162</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050163</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050164</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050165</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050166</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050167</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050168</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050169</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050170</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050171</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050172</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050173</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">7</DE>
+				<DE name="7166">2</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">CT</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050174</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050175</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050176</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050177</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050178</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050179</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050180</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050181</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050182</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050183</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050184</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050185</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">8</DE>
+				<DE name="7166">2</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">CT</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050186</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050187</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050188</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050189</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050190</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050191</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050192</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050193</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050194</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050195</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050196</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050197</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">9</DE>
+				<DE name="7166">2</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">CT</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050198</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050199</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050200</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050201</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050202</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050203</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050204</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050205</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050206</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050207</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050208</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050209</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">10</DE>
+				<DE name="7166">2</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">CT</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050210</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050211</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050212</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050213</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050214</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050215</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050216</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050217</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050218</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050219</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050220</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050221</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">11</DE>
+				<DE name="7166">2</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">CT</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050222</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050223</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050224</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050225</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050226</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050227</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050228</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050229</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050230</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050231</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050232</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050233</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">12</DE>
+				<DE name="7166">2</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">CT</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050234</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050235</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050236</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050237</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050238</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050239</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050240</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050241</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050242</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050243</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050244</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050245</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">13</DE>
+				<DE name="7166">2</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">CT</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050246</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050247</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050248</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050249</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050250</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050251</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050252</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050253</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050254</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050255</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050256</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050257</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">14</DE>
+				<DE name="7166">2</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">CT</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050258</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050259</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">3</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050260</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">4</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050261</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">5</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050262</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">6</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050263</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">7</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050264</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">8</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050265</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">9</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050266</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">10</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050267</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">11</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050268</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">12</DE>
+					<CDE name="C212">
+						<DE name="7140">14953062861838108137330050269</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<SegmentGroup name="SG10">
+			<Segment name="CPS">
+				<DE name="7164">15</DE>
+			</Segment>
+			<SegmentGroup name="SG11">
+				<Segment name="PAC">
+					<DE name="7224">1</DE>
+					<CDE name="C202">
+						<DE name="7065">EN</DE>
+						<DE name="3055">9</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">1</DE>
+					<CDE name="C212">
+						<DE name="7140">14914377235610442202762708190</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+			<SegmentGroup name="SG17">
+				<Segment name="LIN">
+					<DE name="1082">2</DE>
+					<CDE name="C212">
+						<DE name="7140">14914377235610442202762708191</DE>
+						<DE name="7143">SRV</DE>
+					</CDE>
+				</Segment>
+			</SegmentGroup>
+		</SegmentGroup>
+		<Trailer>
+			<Segment name="UNT">
+				<DE instance="1" name="0074">204</DE>
+				<DE instance="1" name="0062">DES1027</DE>
+			</Segment>
+		</Trailer>
+	</Message>
+	<Trailer>
+		<Segment name="UNZ">
+			<DE instance="1" name="0036">1</DE>
+			<DE instance="1" name="0020">25001</DE>
+		</Segment>
+	</Trailer>
+</Interchange>
