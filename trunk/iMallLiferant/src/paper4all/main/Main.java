@@ -46,7 +46,7 @@ public class Main
 						
 						
 						XMLToEDIWebService x2e = new XMLToEDIService().getXMLToEDIWebServicePort();
-						System.out.println("transforming invoice - xml to edi.....");
+						System.out.print("transforming invoice - xml to edi.....");
 						String rechnung = x2e.xmlToEdi(xmls.get(0));
 						
 						if(rechnung != null)
