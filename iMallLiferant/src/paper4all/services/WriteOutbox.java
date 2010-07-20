@@ -32,10 +32,8 @@ public class WriteOutbox
 	        ftp = new FtpClient("sokrates2.local.cs.hs-rm.de");
 	        System.out.println(" OK");
 	        ftp.login("hu000004", "1q2w3e");
-	        System.out.println(" OK");
         
 	        ftp.binary();
-	        System.out.println(" OK");
 	        Calendar cal = Calendar.getInstance();
 	        SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy_HHmmss");
 	        String fileName = sdf.format(cal.getTime())+".edi";
