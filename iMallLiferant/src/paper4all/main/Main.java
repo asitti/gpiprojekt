@@ -13,7 +13,7 @@ public class Main
 	public void runProgram()
 	{
 		
-		/*while(true)
+		while(true)
 		{
 			System.out.print("reading hub content for incoming orders.....");
 			ReadInboxWebService read = new ReadInboxService().getReadInboxWebServicePort();
@@ -79,7 +79,9 @@ public class Main
 					}
 				}
 			}
-		}*/
+			else
+				System.out.println();
+		}
 		
 		/*ReadInboxWebService read = new ReadInboxService().getReadInboxWebServicePort();
 		String name = read.readFromInbox();
@@ -91,7 +93,7 @@ public class Main
 		WriteOutboxWebService write = new WriteOutboxService().getWriteOutboxWebServicePort();
 		System.out.println(write.writeToOutbox("in1.xml"));*/
 		
-		EDIToXMLWebService edi = new EDIToXMLService().getEDIToXMLWebServicePort();
+		/*EDIToXMLWebService edi = new EDIToXMLService().getEDIToXMLWebServicePort();
 		//String bestell = edi.ediToXml(getInput(new File("in/544.edi")));
 		
 		String bestell = getInput(new File("in/order_f.xml"));
@@ -111,7 +113,7 @@ public class Main
 				//getInput(new File("src/paper4all/templates/invoic_template.xml"))));
 		
 		//WriteOutboxWebService write = new WriteOutboxService().getWriteOutboxWebServicePort();
-		//System.out.println(write.writeToOutbox(invoice_edi));
+		//System.out.println(write.writeToOutbox(invoice_edi));*/
 		
 	}
 	public static void main( String[] args )
